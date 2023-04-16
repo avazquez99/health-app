@@ -9,6 +9,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.example.healthserviceapp.enums.Sexo;
+import javax.persistence.EnumType;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,7 +23,7 @@ public class Persona extends Usuario{
     private String nombre;
     private String apellido;
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private Sexo sexo;
     
     @Temporal(TemporalType.DATE)

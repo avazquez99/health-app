@@ -10,6 +10,7 @@ import javax.persistence.InheritanceType;
 import org.hibernate.annotations.GenericGenerator;
 
 import com.example.healthserviceapp.enums.Rol;
+import javax.persistence.EnumType;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,7 +28,7 @@ public class Usuario {
     private String email;
     private String password;
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private Rol rol;
     
     private Boolean activo;

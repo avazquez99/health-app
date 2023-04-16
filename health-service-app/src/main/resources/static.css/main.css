@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap');
+
+*{
+  font-size: 16px;
+  font-family: 'Josefin Sans', sans-serif;
+}
+
+.texto-nosotros{
+  font-size: 1.25rem
+}
+
+.profesionales {
+  background: rgba(147, 206, 130, 0.8);
+  padding-top: 4.375rem;
+  padding-bottom: 4.375rem;
+}
+
+.barraNav{
+  background: rgba(5, 40, 137, 0.8);
+}
+
+.profesionales .container {
+  display: flex;
+  flex-direction: row;
+  flex-flow: wrap;
+  align-items: center;
+}
+
+.profesionales .container .col {
+  width: 50%;
+}
+
+.profesionales .container .col.izq {
+  box-shadow: 0px 9px 32px -1px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+}
+
+.profesionales .container .col .titulo-seccion {
+  padding: 3.125rem;
+  padding-right: 0;
+}
+
+.profesionales .container .col .titulo-seccion h2 {
+  color: #ffffff;
+}
+.profesionales .container .col .titulo-seccion p {
+  color: #ffffff;
+  padding: 1.125rem;
+  font-size: 1.375rem;
+  line-height: 1.75;
+}
+.profesionales .container .col .titulo-seccion p:last-child {
+  padding-bottom: 0;
+}
+.profesionales .container .col .slider {
+  width: 400%;
+  display: flex;
+}
+.profesionales .container .col .slider .slide {
+  width: 100%;
+  min-height: 400px;
+  background-size: cover;
+  background-position: center;
+}
+.profesionales .container .col .slider .slide.foto1 {
+  background-image: url('../img/esp1.jpg');
+}
+.profesionales .container .col .slider .slide.foto2 {
+  background-image: url('../img/esp2.jpg');
+}
+.profesionales .container .col .slider .slide.foto3 {
+  background-image: url('../img/esp3.jpg');
+}
+.profesionales .container .col .slider .slide.foto4 {
+  background-image: url('../img/esp4.jpg');
+}
+.imagen-nosotros {
+  width: 650px;
+}
+
+.divisor{
+  color: green;
+  border-width: thick;
+}

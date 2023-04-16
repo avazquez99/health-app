@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.example.healthserviceapp.service;
 
 import com.example.healthserviceapp.Exceptions.MiException;
@@ -11,17 +6,28 @@ import static com.example.healthserviceapp.enums.Rol.PACIENTE;
 import com.example.healthserviceapp.repository.UsuarioRepository;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 /**
  *
  * @author ramir
  */
 @Service
-public class UsuarioService {
+public class UsuarioService implements UserDetailsService{
 
     @Autowired
     public UsuarioRepository usuarioRepository;
@@ -31,7 +37,7 @@ public class UsuarioService {
 
         verificarEmail(email);
         verificarPassword(password, password2);
-
+      
         Usuario usuario = new Usuario();
         usuario.setEmail(email);
         usuario.setPassword(password);
@@ -48,6 +54,7 @@ public class UsuarioService {
         verificarPassword(password, password2);
 
         Optional<Usuario> presente = usuarioRepository.findById(id);
+        
         if (presente.isPresent()) {
 
             Usuario usuario = presente.get();
@@ -60,11 +67,14 @@ public class UsuarioService {
     }
     
     @Transactional
-    public void eliminarUsuario(String email){
+    public void eliminarUsuario(String email, String id){
         
-        Optional<Usuario> presente = usuarioRepository.buscarPorEmail(email);
+        Usuario usuario = new Usuario();
+        
+        Optional<Usuario> presente = usuarioRepository.findById(id);
+        
         if (presente.isPresent()) {
-            Usuario usuario = presente.get();
+            usuario = presente.get();
             usuario.setActivo(FALSE);
             
         }
@@ -78,14 +88,7 @@ public class UsuarioService {
     public void verificarEmail(String email) throws MiException {
         if (email.isEmpty()) {
             throw new MiException("El email no puede estar vacío");
-        }
-        
-        Optional<Usuario> presente = usuarioRepository.buscarPorEmail(email);
-        
-        if (presente.isPresent()) {
-            throw new MiException("El email ya existe");
-        }
-
+        }        
     }
 
     public void verificarPassword(String password, String password2) throws MiException {
@@ -101,4 +104,29 @@ public class UsuarioService {
         }
 
     }
+
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+      
+        Usuario usuario = usuarioRepository.buscarPorEmail(email);
+        
+        if (usuario != null) {
+        
+            List<GrantedAuthority> permisos = new ArrayList<>();
+            
+            GrantedAuthority p = new SimpleGrantedAuthority("ROLE_" + usuario.getRol().toString());
+            
+            permisos.add(p);
+            
+            ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+
+            HttpSession sesion = attr.getRequest().getSession(true);
+            
+            sesion.setAttribute("usuariosesion", usuario);
+                    
+            return new User(usuario.getEmail(), usuario.getPassword(), permisos);
+        } else {
+            return null;
+        }
+}
 }

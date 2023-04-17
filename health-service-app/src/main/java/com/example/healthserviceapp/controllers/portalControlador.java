@@ -22,21 +22,21 @@ public class portalControlador {
         if (error != null) {
             modelo.put("error", "usuario o contraseña invalidos");
         }
-        return "login.html";
+        return "index.html";
     }
 
     @GetMapping("/")
     public String inicio() {
-        return "inicio.html";
+        return "index.html";
     }
 
-    @GetMapping("/registrar")
-    public String registrarUsuario() {
-        return "registro.html";
-    }
+    //@GetMapping("/registrar")
+    //public String registrarUsuario() {
+    //    return "registro.html";
+    //}
 
     @PostMapping("/registro")
-    public String registro(@RequestParam String nombre, @RequestParam String email, @RequestParam String password,
+    public String registroUsuario(@RequestParam String email, @RequestParam String password,
             String password2, ModelMap modelo) throws MiException{
 
         try {
@@ -45,11 +45,12 @@ public class portalControlador {
 
             modelo.put("exito", "Usuario registrado correctamente!");
 
-            return "inicio.html";
-        } catch (MiException e) {
+            return "index.html";
+        }  catch (MiException e) {
+            System.out.println(e.getMessage());
             modelo.put("error", e.getMessage());
             modelo.put("email", email);
-            return "registro.html";
+            return "index.html";
         }
 
     }

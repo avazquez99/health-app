@@ -29,7 +29,7 @@
           Cerrar Sesión
         </button> -->
     <ul class="dropdown-menu">
-      <form class="formulario p-3" th:action="@{/logincheck}" method="POST">
+      <form class="formulario p-3"  method="POST">
 
                 <div class="form-group my-3">
                     <h3 class="card-title">Ingrese sus datos</h3>
@@ -48,7 +48,7 @@
     </ul>
           <button type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Regístrese</button>
           <ul class="dropdown-menu">
-            <form class="formulario p-3" th:action="@{/logincheck}" method="POST">
+            <form class="formulario p-3" th:action="@{/registro}" method="POST">
 
                       <div class="form-group my-3">
                           <h3 class="card-title">Ingrese sus datos</h3>
@@ -63,7 +63,7 @@
                       </div>
 
                       <div class="form-group my-3">
-                          <input type="password" class="form-control" name="password" placeholder="REPETIR CONTRASEÑA">
+                          <input type="password" class="form-control" name="password2" placeholder="REPETIR CONTRASEÑA">
                       </div>
 
                       <button type="submit" class="btn btn-primary mt-3 botones">Registrarse</button>
@@ -107,7 +107,7 @@
   <section class="container mb-5">
     <div class="d-flex">
       <div class="me-5">
-        <div><img src="img/grupoMed.jpg" alt="" class="imagen-nosotros"></div>
+        <div><img src="/img/grupoMed.jpg" alt="" class="imagen-nosotros"></div>
       </div>
       <div class=" d-flex align-items-center">
         <div>
@@ -135,7 +135,7 @@
           <p class="lead">Podras ver el rating de que otros usuarios les a dado a cada profesional, no mas tendras que ir a una consulta a ciegas, teniendo la seguradid de un buen servicio.</p>
         </div>
         <div class="col-md-5">
-          <img src="img/rating.jpg" class="card-img" alt="...">
+          <img src="/img/rating.jpg" class="card-img" alt="...">
         </div>
       </div>
 
@@ -147,7 +147,7 @@
           <p class="lead">No se debera preocupar mas de olvidarse traer su historia clinica o que el personal de salud la pierda, ahora estaran guardadas en nuestra base de datos con el acceso restrigindo al profesional a cargo suyo.</p>
         </div>
         <div class="col-md-5 order-md-1">
-          <img src="img/hclinica.jpg" class="card-img" alt="...">
+          <img src="/img/hclinica.jpg" class="card-img" alt="...">
         </div>
       </div>
 
@@ -159,7 +159,7 @@
           <p class="lead">Con médicos en cada ciudad podras ver el servicio mas cercano y eleigir dependiendo de tu proximidad.</p>
         </div>
         <div class="col-md-5">
-          <img src="img/map.jpg" class="card-img" alt="...">
+          <img src="/img/map.jpg" class="card-img" alt="...">
         </div>
       </div>
 
@@ -174,7 +174,7 @@
     <div class="container card mb-5" id="contacto">
       <div class="row no-gutter">
         <div class="col-md-6 px-0">
-          <img src="img/consulta.jpg" class="card-img" alt="...">
+          <img src="/img/consulta.jpg" class="card-img" alt="...">
         </div>
 
       <div class="col-md-6" id="formulario">

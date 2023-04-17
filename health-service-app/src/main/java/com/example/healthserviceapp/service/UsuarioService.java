@@ -18,6 +18,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -40,7 +41,7 @@ public class UsuarioService implements UserDetailsService{
       
         Usuario usuario = new Usuario();
         usuario.setEmail(email);
-        usuario.setPassword(password);
+        usuario.setPassword(new BCryptPasswordEncoder().encode(password));
         usuario.setActivo(TRUE);
         usuario.setRol(PACIENTE);
 
@@ -89,6 +90,11 @@ public class UsuarioService implements UserDetailsService{
         if (email.isEmpty()) {
             throw new MiException("El email no puede estar vacío");
         }        
+             
+        if (usuarioRepository.buscarPorEmailOptional(email).isPresent()) {
+            throw new MiException("El email ya está registrado");
+        }
+                
     }
 
     public void verificarPassword(String password, String password2) throws MiException {

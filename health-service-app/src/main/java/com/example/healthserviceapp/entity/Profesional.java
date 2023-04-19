@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class Profesional extends Persona{
+    
     private String matricula;
 
     @Enumerated

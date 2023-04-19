@@ -28,19 +28,21 @@
 
 <div class="mb-3">
     <label class="form-label">Ingresar DNI</label>
-    <input type="number" name="dni"placeholder="95478532" required>
+    <input type="number" name="dni"placeholder="95478532" min="0" required>
   </div>
 
   <div class="form-group my-3">
 
-    <select name="sexo">
+    <label class="form-label">Seleccionar Sexo</label>
 
-        <option>Seleccionar Sexo</option>
+    <select name="sexo" required>
+
+        <option ></option>
 
         <option th:each="sexo : ${sexos}"
                 th:value="${sexo}"
                 th:text="${sexo}"
-                />
+                >
     </select>
 </div>
     
@@ -52,7 +54,7 @@
 
 <div class="mb-3">
     <label for="formFile" class="form-label">Subir foto</label>
-    <input class="form-control" type="file" nombre="imagen" id="formFile">
+    <input class="form-control" type="file" nombre="imagen" id="formFile" accept="image/*">
   </div>
   <button type="submit">Enviar</button>
 </form>

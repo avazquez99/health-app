@@ -37,9 +37,9 @@
 
         <option>Seleccionar Sexo</option>
 
-        <option th:each="sexo : ${T(java.com.example.healthserviceapp.enums.Sexo).values()}"
-                th:value="${Sexo}"
-                th:text="${Sexo}"
+        <option th:each="sexo : ${sexos}"
+                th:value="${sexo}"
+                th:text="${sexo}"
                 />
     </select>
 </div>

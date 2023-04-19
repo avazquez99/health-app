@@ -64,7 +64,7 @@ public class UsuarioService implements UserDetailsService{
     }
     
     @Transactional
-    public void eliminarUsuario(String email, String id){
+    public void eliminarUsuario(String id){
         
         Usuario usuario = new Usuario();
         

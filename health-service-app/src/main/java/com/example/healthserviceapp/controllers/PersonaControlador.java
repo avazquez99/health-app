@@ -7,6 +7,7 @@ import com.example.healthserviceapp.service.PersonaService;
 import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,8 +20,11 @@ public class PersonaControlador {
     @Autowired
     private PersonaService personaService;
     
-    @GetMapping("/Datos")
-    public String vistaDatosPerfil(){
+    @GetMapping("/datos")
+    public String vistaDatosPerfil(ModelMap modelo){
+        
+        modelo.put("sexos", Sexo.values());   
+        
         return "form.html";
     }
     

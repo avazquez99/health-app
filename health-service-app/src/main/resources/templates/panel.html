@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+        <link rel="stylesheet" href="/css/main.css">
+        <title>Admin dashboard</title>
+    </head>
+    <body>
+
+        <!-- NAVBAR -->
+
+        <header th:replace="fragments/navbar :: nav_bar"></header>
+
+
+        <!-- LISTA DE USUARIOS -->
+
+
+        <h1 class="text-muted text-center my-5">Lista de usuarios</h1>
+
+
+        <div class="container">
+            <table class="table" >
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Rol</th>
+                        <th scope="col">Activo</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody th:each="usuario : ${usuarios}">
+                    <tr>
+                        <th scope="row" th:text="${usuario.id}"></th>
+                        <td th:text="${usuario.email}"></td>
+                        <td th:text="${usuario.rol}"></td>
+                        <td th:text="${usuario.activo}"></td>
+                        <td>
+                            <button class="me-3 btn btn-warning">Dar baja</button>
+                            <button class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Modificar Rol</button>
+                            <ul class="dropdown-menu">
+                                <div>
+                                    <input type="radio" name="rol"> ADMIN
+                                    <br>
+                                    <input type="radio" name="rol"> PACIENTE
+                                    <br>
+                                    <input type="radio" name="rol"> PROFESIONAL
+                                </div>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- FOOTER -->
+
+        <div th:replace="fragments/footer :: footer"></div>
+
+
+        <script src="js/slider.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+    </body>
+</html>

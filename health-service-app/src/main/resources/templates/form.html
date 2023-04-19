@@ -13,7 +13,8 @@
 
 <header th:replace="fragments/navbar :: nav_bar"></header>
 <div class="container">
-<form>
+    
+<form class="formulario p-3" th:action="@{/actualizar}" method="POST">
 
 <div class="mb-3">
     <label class="form-label">Ingresar Nombre</label>
@@ -29,7 +30,7 @@
     <label class="form-label">Ingresar DNI</label>
     <input type="number" name="dni"placeholder="95478532" required>
   </div>
-<!--
+
   <div class="form-group my-3">
 
     <select name="sexo">
@@ -42,7 +43,7 @@
                 />
     </select>
 </div>
--->
+    
 
   <div class="mb-3">
     <label for="fecha">Fecha De Nacimiento</label>

@@ -18,19 +18,20 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class Persona extends Usuario{
-    private Integer dni;
+    
+    protected Integer dni;
 
-    private String nombre;
-    private String apellido;
+    protected String nombre;
+    protected String apellido;
 
     @Enumerated(EnumType.STRING)
-    private Sexo sexo;
+    protected Sexo sexo;
     
     @Temporal(TemporalType.DATE)
-    private Date fechaNacimiento;
+    protected Date fechaNacimiento;
 
     @OneToOne
-    private Imagen imagen;
+    protected Imagen imagen;
 
-    private String domilicio;
+    protected String domilicio;
 }

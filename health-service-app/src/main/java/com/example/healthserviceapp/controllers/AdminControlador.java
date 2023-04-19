@@ -20,7 +20,7 @@ public class AdminControlador {
     private UsuarioRepository usuarioRep;
     
     @GetMapping("/dashboard")
-    public String lista(@RequestParam String id, ModelMap modelo){
+    public String lista(ModelMap modelo){
         
         List<Usuario> usuario = new ArrayList<>();
         usuario = usuarioRep.buscarUsuarios();

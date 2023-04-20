@@ -1,12 +1,12 @@
 <header th:fragment="nav_bar" class="p-3 mb-5 barraNav">
     <div class="container">
       <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-        <a href="#" class="d-flex me-5 text-white text-decoration-none">
+        <a th:href="@{/}" class="d-flex me-5 text-white text-decoration-none">
           Health Service App
         </a>
 
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-          <li><a href="#" class="nav-link px-2 text-white">Inicio</a></li>
+          <li><a th:href="@{/}" class="nav-link px-2 text-white">Inicio</a></li>
         </ul>
 
         <div class="text-end">
@@ -17,7 +17,7 @@
           Cerrar Sesión
         </button> -->
     <ul class="dropdown-menu">
-      <form th:action="@{/login}" class="formulario p-3"  method="POST">
+      <form th:action="@{/logincheck}" class="formulario p-3"  method="POST">
                 <div class="form-group my-3">
                     <h3 class="card-title">Ingrese sus datos</h3>
                 </div>

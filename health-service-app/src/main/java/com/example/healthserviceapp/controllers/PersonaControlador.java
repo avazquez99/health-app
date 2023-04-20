@@ -32,9 +32,9 @@ public class PersonaControlador {
     @PostMapping("/actualizar")
     public String actualizarDatos(@RequestParam String nombre, @RequestParam String apellido,
             @RequestParam String domicilio, @RequestParam Integer dni, @RequestParam Sexo sexo,
-            @RequestParam Date fechaNacimiento, Imagen imagen) throws Exception{
+            @RequestParam Date fechaNacimiento) throws Exception{
         
-        personaService.createPersona(dni, nombre, apellido, sexo, fechaNacimiento, imagen, domicilio);
+        personaService.createPersona(dni, nombre, apellido, sexo, fechaNacimiento, domicilio);
         return "form.html";
     }
 }

@@ -23,7 +23,7 @@ public class PersonaService {
     
     @Transactional
     public void createPersona(Integer dni, String nombre, String apellido,
-            Sexo sexo, Date fechaNacimiento, Imagen imagen, String domicilio)throws MiException, Exception{
+            Sexo sexo, Date fechaNacimiento, String domicilio)throws MiException, Exception{
              
         verificarNombre(nombre);
         verificarApellido(apellido);
@@ -31,7 +31,7 @@ public class PersonaService {
         verificarDomicilio(domicilio);
         verificarFechaNacimiento(fechaNacimiento);
         verificarSexo(sexo);
-        
+                
         Persona persona = new Persona();
         
         persona.setNombre(nombre);
@@ -40,7 +40,7 @@ public class PersonaService {
         persona.setDomilicio(domicilio);
         persona.setFechaNacimiento(fechaNacimiento);
         persona.setSexo(sexo);
-        persona.setImagen(imagen);
+//        persona.setImagen(imagen);
         personaRep.save(persona);
         
     }

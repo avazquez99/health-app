@@ -3,8 +3,10 @@ package com.example.healthserviceapp.service;
 import com.example.healthserviceapp.Exceptions.MiException;
 import com.example.healthserviceapp.entity.Disponibilidad;
 import com.example.healthserviceapp.entity.Profesional;
+import com.example.healthserviceapp.entity.Usuario;
 import com.example.healthserviceapp.enums.Especialidad;
 import com.example.healthserviceapp.repository.ProfesionalRepository;
+import com.example.healthserviceapp.repository.UsuarioRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -17,17 +19,25 @@ public class ProfesionalService {
 
     @Autowired
     ProfesionalRepository profesionalRepository;
+    @Autowired
+    UsuarioRepository usuarioRepository;
 
     @Transactional
-    public void crearProfesional(Especialidad especialidad, Disponibilidad disponibilidad, String matricula) {
+    public void crearProfesional(String id, Especialidad especialidad, String matricula) {
 
         Profesional profesional = new Profesional();
 
-        profesional.setEspecialidad(especialidad);
-        profesional.setMatricula(matricula);
-        profesional.setDisponibilidad(disponibilidad);
+        Optional<Usuario> respuestaProfesional = usuarioRepository.findById(id);
 
-        profesionalRepository.save(profesional);
+        if (respuestaProfesional.isPresent()) {
+
+            profesional.setEspecialidad(especialidad);
+            profesional.setMatricula(matricula);
+            //profesional.setDisponibilidad(disponibilidad);
+
+            profesionalRepository.save(profesional);
+
+        }
 
     }
 
@@ -41,7 +51,8 @@ public class ProfesionalService {
 
     }
 
-    public void modificarProfesional(String idProfesional, Especialidad especialidad, Disponibilidad disponibilidad, String matricula) throws MiException {
+    public void modificarProfesional(String id, String idProfesional, Especialidad especialidad, Disponibilidad disponibilidad,
+            String matricula) throws MiException {
 
         Optional<Profesional> respuestaProfesional = profesionalRepository.findById(idProfesional); //Duda, si lo busco por matricula o por id
 
@@ -68,11 +79,7 @@ public class ProfesionalService {
     }
 
     //private void validarDisponibilidad(Disponibilidad disponibilidad) throws MiException {
-
     //}
-
     //private void validarEspecialidad(Especialidad especialidad) throws MiException {
-
     //}
-
 }

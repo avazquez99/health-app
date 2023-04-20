@@ -32,16 +32,16 @@ public class ProfesionalControlador {
     }
 
     @PostMapping("/registro")
-    public String registroProfesional(@RequestParam String matricula, @RequestParam Especialidad especialidad,
-            @RequestParam Disponibilidad disponibilidad) throws MiException {
+    public String registroProfesional(@RequestParam String id, @RequestParam String matricula, @RequestParam Especialidad especialidad) throws MiException {
+            //@RequestParam Disponibilidad disponibilidad) throws MiException {
 
-        profesionalServicio.crearProfesional(especialidad, disponibilidad, matricula);
+        profesionalServicio.crearProfesional(id, especialidad, matricula);
 
         //System.out.println("matricula: " + matricula);
         //System.out.println("especialidad: " + especialidad);
         //System.out.println("disponibilidad: " + disponibilidad);
 
-        return "index.html";
+        return "profesional_form.html";
 
     }
 

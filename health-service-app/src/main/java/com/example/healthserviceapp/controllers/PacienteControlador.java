@@ -42,7 +42,7 @@ public class PacienteControlador {
 
     }
 
-    @PostMapping("/modificar/{id}")
+    @PostMapping("/eliminar/{id}")
     public String eliminarPaciente(@PathVariable String id, ModelMap model, ObraSocial obraSocial) throws MiException {
         pacienteService.eliminarPaciente(id);
         return "index.hmtl";

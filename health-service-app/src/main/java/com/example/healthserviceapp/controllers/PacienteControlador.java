@@ -48,5 +48,4 @@ public class PacienteControlador {
         return "index.hmtl";
 
     }
-
 }

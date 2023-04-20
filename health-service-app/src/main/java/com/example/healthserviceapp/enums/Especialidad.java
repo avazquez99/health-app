@@ -1,5 +1,5 @@
 package com.example.healthserviceapp.enums;
 
 public enum Especialidad {
-    GINECOLOGIA, TRAUMATOLOGIA;
+    GINECOLOGÍA, TRAUMATOLOGÍA, ODONTOLOGÍA; //Agregar mas especialidades
 }

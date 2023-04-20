@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/")
-public class portalControlador {
+public class PortalControlador {
 
     @Autowired
     private UsuarioService usuarioServicio;

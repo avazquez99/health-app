@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+
+
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+
+    <header>
+        <div class="container">
+            <h2> Charge the author here! </h2>
+        </div>
+    </header>
+    <div class="container">
+        <form th:action="@{/profesional/registro}" method="POST">
+            <div class="form-group">
+                <input type="text" class="form-group" name="name" placeholder="Matrícula">
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</body>
+</html>

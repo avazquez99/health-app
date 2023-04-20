@@ -25,7 +25,7 @@ public class ProfesionalControlador {
     @GetMapping("/registrar")
     public String registrarProfesional(ModelMap modelo) {
         
-        modelo.put("especialidad", Especialidad.values());   
+        modelo.put("especialidades", Especialidad.values());   
         
         return "profesional_form.html";
 

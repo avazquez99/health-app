@@ -2,6 +2,7 @@
 package com.example.healthserviceapp.controllers;
 
 import com.example.healthserviceapp.entity.Imagen;
+import com.example.healthserviceapp.enums.ObraSocial;
 import com.example.healthserviceapp.enums.Sexo;
 import com.example.healthserviceapp.service.PersonaService;
 import java.util.Date;
@@ -24,14 +25,14 @@ public class PersonaControlador {
     public String vistaDatosPerfil(ModelMap modelo){
         
         modelo.put("sexos", Sexo.values());   
-        
+        modelo.put("obrasSociales", ObraSocial.values());
         return "form.html";
     }
     
     @PostMapping("/actualizar")
     public String actualizarDatos(@RequestParam String nombre, @RequestParam String apellido,
             @RequestParam String domicilio, @RequestParam Integer dni, @RequestParam Sexo sexo,
-            @RequestParam Date fechaNacimiento, @RequestParam Imagen imagen) throws Exception{
+            @RequestParam Date fechaNacimiento, Imagen imagen) throws Exception{
         
         personaService.createPersona(dni, nombre, apellido, sexo, fechaNacimiento, imagen, domicilio);
         return "form.html";

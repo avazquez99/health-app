@@ -30,6 +30,7 @@ public class PersonaService {
         verificarDni(dni);
         verificarDomicilio(domicilio);
         verificarFechaNacimiento(fechaNacimiento);
+        verificarSexo(sexo);
         
         Persona persona = new Persona();
         
@@ -74,5 +75,9 @@ public class PersonaService {
             throw new MiException("Error, el domicilio no puede estar vacio");
         }
 }
-    
+    public void verificarSexo(Sexo sexo) throws MiException{
+        if (!(Sexo.values().equals(sexo))) {
+            throw new MiException("Error, el sexo no es correcto");
+        }
+    }
 }

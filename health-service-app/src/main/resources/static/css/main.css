@@ -5,6 +5,28 @@
   font-family: 'Josefin Sans', sans-serif;
 }
 
+.especialidades{
+  background-image: url('../img/profesionales.jpg');
+  background-size: cover;
+}
+
+.contenidoE {
+  position: relative;
+  z-index: 5;
+}
+
+.contenidoE::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    opacity: 0.8;
+}
+
 .texto-nosotros{
   font-size: 1.25rem
 }
@@ -82,3 +104,35 @@
   color: green;
   border-width: thick;
 }
+
+.custom-select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 8px 32px 8px 12px;
+  font-size: 14px;
+  background-color: #fff;
+  background-image: url('arrow-down.svg');
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  cursor: pointer;
+  color: #333;
+}
+
+.custom-select:focus {
+  outline: none;
+  border-color: #666;
+}
+
+.custom-select option {
+  color: #333;
+  background-color: #fff;
+}
+
+
+
+
+
+

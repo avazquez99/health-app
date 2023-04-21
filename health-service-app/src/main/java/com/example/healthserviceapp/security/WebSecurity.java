@@ -1,5 +1,5 @@
 
-package com.example.healthserviceapp;
+package com.example.healthserviceapp.security;
 
 import com.example.healthserviceapp.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class webSecurity extends WebSecurityConfigurerAdapter{
+public class WebSecurity extends WebSecurityConfigurerAdapter{
     
     @Autowired
     private UsuarioService usuarioServicio;
@@ -37,15 +37,15 @@ public class webSecurity extends WebSecurityConfigurerAdapter{
                 .and()
                    .formLogin()
                    .loginPage("/login")
-                   .loginProcessingUrl("/login")
+                   .loginProcessingUrl("/logincheck")
                    .usernameParameter("email")
-                   .passwordParameter("pass")
-                   .defaultSuccessUrl("/index")
+                   .passwordParameter("password")
+                   .defaultSuccessUrl("/")
                    .permitAll()
                 .and()
                    .logout()
                    .logoutUrl("/logout")
-                   .logoutSuccessUrl("/index")
+                   .logoutSuccessUrl("/")
                    .permitAll()
                 .and()
                    .csrf()

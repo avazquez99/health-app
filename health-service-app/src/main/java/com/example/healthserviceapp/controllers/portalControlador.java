@@ -2,6 +2,9 @@
 
 import com.example.healthserviceapp.Exceptions.MiException;
 import com.example.healthserviceapp.service.UsuarioService;
+
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -12,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/")
-public class portalControlador {
+public class PortalControlador {
 
     @Autowired
     private UsuarioService usuarioServicio;
@@ -26,14 +29,9 @@ public class portalControlador {
     }
 
     @GetMapping("/")
-    public String inicio() {
+    public String inicio(HttpSession session) {
         return "index.html";
     }
-
-    //@GetMapping("/registrar")
-    //public String registrarUsuario() {
-    //    return "registro.html";
-    //}
 
     @PostMapping("/registro")
     public String registroUsuario(@RequestParam String email, @RequestParam String password,

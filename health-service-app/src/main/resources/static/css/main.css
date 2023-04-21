@@ -5,6 +5,28 @@
   font-family: 'Josefin Sans', sans-serif;
 }
 
+.especialidades{
+  background-image: url('../img/profesionales.jpg');
+  background-size: cover;
+}
+
+.contenidoE {
+  position: relative;
+  z-index: 5;
+}
+
+.contenidoE::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    opacity: 0.8;
+}
+
 .texto-nosotros{
   font-size: 1.25rem
 }

@@ -30,6 +30,12 @@ public class ProfesionalControlador {
         return "profesional_form.html";
 
     }
+    
+    @GetMapping("/especialidades")
+    public String listaEspecialidades(ModelMap modelo) {
+        
+        return "especialidades.html";
+    }
 
     @PostMapping("/registro")
     public String registroProfesional(@RequestParam String id, @RequestParam String matricula, @RequestParam Especialidad especialidad) throws MiException {

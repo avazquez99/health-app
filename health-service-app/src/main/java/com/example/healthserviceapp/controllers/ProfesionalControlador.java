@@ -1,12 +1,8 @@
 package com.example.healthserviceapp.controllers;
 
 import com.example.healthserviceapp.Exceptions.MiException;
-import com.example.healthserviceapp.entity.Disponibilidad;
 import com.example.healthserviceapp.enums.Especialidad;
-import com.example.healthserviceapp.enums.Sexo;
 import com.example.healthserviceapp.service.ProfesionalService;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;

@@ -1,5 +1,6 @@
 <header th:fragment="nav_bar" class="p-3 mb-5 barraNav">
     <div class="container">
+
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
             <a href="#" class="d-flex me-5 text-white text-decoration-none">
                 Health Service App
@@ -23,41 +24,63 @@
                             <h3 class="card-title">Ingrese sus datos</h3>
                         </div>
 
-                        <div class="form-group my-3">
-                            <input type="email" class="form-control" name="email" placeholder="EMAIL" required>
+                        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                            <a th:href="@{/}" class="d-flex me-5 text-white text-decoration-none">
+                                Health Service App
+                            </a>
+
+                            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                                <li><a th:href="@{/}" class="nav-link px-2 text-white">Inicio</a></li>
+                            </ul>
+
+                            <div class="text-end">
+                                <button class="btn btn-outline-light dropdown-toggle me-3" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Login
+                                </button>
+                                <button class="btn btn-secondary" type="button" aria-expanded="false">
+                                  Cerrar Sesión
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <form th:action="@{/logincheck}" class="formulario p-3"  method="POST">
+                                        <div class="form-group my-3">
+                                            <h3 class="card-title">Ingrese sus datos</h3>
+                                        </div>
+
+                                        <div class="form-group my-3">
+                                            <input type="email" class="form-control" name="email" placeholder="EMAIL" required>
+                                        </div>
+
+                                        <div class="form-group my-3">
+                                            <input type="password" class="form-control" name="password" placeholder="CONTRASEÑA" required>
+                                        </div>
+
+                                        <button type="submit" class="btn btn-primary mt-3 botones">Ingresar!</button>
+                                    </form>
+                                </ul>
+                                <button type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Regístrese</button>
+                                <ul class="dropdown-menu">
+                                    <form class="formulario p-3" th:action="@{/registro}" method="POST">
+
+                                        <div class="form-group my-3">
+                                            <h3 class="card-title">Ingrese sus datos</h3>
+                                        </div>
+
+                                        <div class="form-group my-3">
+                                            <input type="email" class="form-control" name="email" placeholder="EMAIL" required>
+                                        </div>
+
+                                        <div class="form-group my-3">
+                                            <input type="password" class="form-control" name="password" placeholder="CONTRASEÑA" minlength="6" required>
+                                        </div>
+
+                                        <div class="form-group my-3">
+                                            <input type="password" class="form-control" name="password2" placeholder="REPETIR CONTRASEÑA" minlength="6" required>
+                                        </div>
+
+                                        <button type="submit" class="btn btn-primary mt-3 botones">Registrarse</button>
+                                    </form>
+                                </ul>
+                            </div>
                         </div>
-
-                        <div class="form-group my-3">
-                            <input type="password" class="form-control" name="password" placeholder="CONTRASEÑA" required>
                         </div>
-
-                        <button type="submit" class="btn btn-primary mt-3 botones">Ingresar!</button>
-                    </form>
-                </ul>
-                <button type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Regístrese</button>
-                <ul class="dropdown-menu">
-                    <form class="formulario p-3" th:action="@{/registro}" method="POST">
-
-                        <div class="form-group my-3">
-                            <h3 class="card-title">Ingrese sus datos</h3>
-                        </div>
-
-                        <div class="form-group my-3">
-                            <input type="email" class="form-control" name="email" placeholder="EMAIL" required>
-                        </div>
-
-                        <div class="form-group my-3">
-                            <input type="password" class="form-control" name="password" placeholder="CONTRASEÑA" minlength="6" required>
-                        </div>
-
-                        <div class="form-group my-3">
-                            <input type="password" class="form-control" name="password2" placeholder="REPETIR CONTRASEÑA" minlength="6" required>
-                        </div>
-
-                        <button type="submit" class="btn btn-primary mt-3 botones">Registrarse</button>
-                    </form>
-                </ul>
-            </div>
-        </div>
-    </div>
-</header>
+                        </header>

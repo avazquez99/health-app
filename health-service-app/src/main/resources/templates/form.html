@@ -14,7 +14,7 @@
         <header th:replace="fragments/navbar :: nav_bar"></header>
         <div class="container">
 
-            <form class="formulario p-3" th:action="@{/actualizar}" method="POST">
+            <form class="formulario p-3" th:each="sesion : ${usuario}" th:action="@{/perfil/actualizar/__${sesion.id}__}"  method="POST">
 
                 <div class="mb-3">
                     <label class="form-label">Ingresar Nombre</label>
@@ -55,10 +55,6 @@
                 <div class="mb-3">
                     <label for="fecha">Fecha De Nacimiento</label>
                     <input type="date" name="fechaNacimiento" id="fecha" required>
-                </div>
-
-                <div th:each="sesion : ${usuario}">
-                    <input hidden th:value="${sesion.id}" name="id">
                 </div>
 
                 <!--<div class="mb-3">

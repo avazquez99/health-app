@@ -37,12 +37,8 @@ public class AdminControlador {
         return "panel.html";
     }
     
-    @GetMapping("/baja/{id}")
-<<<<<<< HEAD
-    public String bajaUsuario(@PathVariable String id){
-=======
+    @GetMapping("/baja/{id}")    
     public String bajaUsuario(@PathVariable String id, ModelMap modelo){
->>>>>>> 9e3d578941415875382f4e21911da5865059f3d9
         usuarioService.eliminarUsuario(id);
         return "redirect:/admin/dashboard";
     }

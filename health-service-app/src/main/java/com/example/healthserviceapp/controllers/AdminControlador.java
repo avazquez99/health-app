@@ -21,9 +21,9 @@ public class AdminControlador {
     
     @Autowired
     private UsuarioRepository usuarioRep;
+    
     @Autowired
     private UsuarioService usuarioService;
-    
     
     @GetMapping("/dashboard")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")

@@ -77,6 +77,10 @@ public class UsuarioService implements UserDetailsService{
         
     }
     
+    public Usuario buscarUsuarioPorEmail(String email){
+        return usuarioRepository.buscarPorEmail(email);
+    }
+    
     public Usuario getOne(String id){
         return usuarioRepository.getById(id);
     }

@@ -7,12 +7,17 @@ import com.example.healthserviceapp.repository.UsuarioRepository;
 import com.example.healthserviceapp.service.UsuarioService;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+
+import org.springframework.web.bind.annotation.PostMapping;
+
+
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -41,5 +46,12 @@ public class AdminControlador {
     public String bajaUsuario(@PathVariable String id, ModelMap modelo){
         usuarioService.eliminarUsuario(id);
         return "redirect:/admin/dashboard";
+    }
+    
+    @GetMapping("/buscar/{email}")
+    public String buscarPorEmail(@PathVariable String email, ModelMap model){
+        Usuario usuario = usuarioService.buscarUsuarioPorEmail(email);
+        model.addAttribute("usuario", usuario);
+        return "panel.html";
     }
 }

@@ -131,6 +131,13 @@
   background-color: #fff;
 }
 
+.error{
+    display: none;
+    color: #ff8c8c;
+    font-size: 15px;
+    margin-bottom: 10px;
+  }
+
 
 
 

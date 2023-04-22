@@ -27,38 +27,46 @@ public class PersonaControlador {
 
     @GetMapping("/datos")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_PACIENTE', 'ROLE_PROFESIONAL')")
-    public String vistaDatosPerfil(ModelMap modelo) {
+    public String vistaDatosPerfil(ModelMap modelo, HttpSession session) {
 
         modelo.put("sexos", Sexo.values());
         modelo.put("obrasSociales", ObraSocial.values());
+        String tipo = "Anonimo";
+        if (session.getAttribute("usuariosession") instanceof Usuario) {
+            tipo = "Usuario";
+        }
+        if (session.getAttribute("usuariosession") instanceof Persona) {
+            tipo = "Persona";
+        }
+        modelo.put("tipo", tipo);
         return "form.html";
     }
 
-     @GetMapping("/datos/modificar")
+    @GetMapping("/datos/modificar")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_PACIENTE', 'ROLE_PROFESIONAL')")
     public String vistaModificarPerfil(ModelMap modelo, HttpSession session) {
 
         Persona persona = (Persona) session.getAttribute("usuariosession");
-        
+
         modelo.put("logued", persona);
         modelo.put("sexos", Sexo.values());
         modelo.put("obrasSociales", ObraSocial.values());
         return "form_modify.html";
     }
-    
+
     @PostMapping("/actualizar")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_PACIENTE', 'ROLE_PROFESIONAL')")
     public String actualizarDatos(@RequestParam String nombre, @RequestParam String apellido, MultipartFile imagen,
             @RequestParam String domicilio, @RequestParam Integer dni, @RequestParam Sexo sexo,
             @RequestParam String fechaNacimiento, HttpSession session) throws Exception {
 
+        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+
+        Date dataFormateada = formato.parse(fechaNacimiento);
+
         if (session.getAttribute("usuariosession") instanceof Usuario) {
 
             Usuario usuario = (Usuario) session.getAttribute("usuariosession");
-
-            SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
-
-            Date dataFormateada = formato.parse(fechaNacimiento);
 
             personaService.createPersona(nombre, apellido, sexo, dataFormateada, domicilio, dni, usuario, imagen);
 
@@ -66,10 +74,6 @@ public class PersonaControlador {
         if (session.getAttribute("usuariosession") instanceof Persona) {
 
             Persona persona = (Persona) session.getAttribute("usuariosession");
-
-            SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
-
-            Date dataFormateada = formato.parse(fechaNacimiento);
 
             personaService.modifyPersona(nombre, apellido, sexo, dataFormateada, domicilio, dni, persona, imagen);
         }

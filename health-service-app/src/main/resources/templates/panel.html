@@ -50,11 +50,16 @@
                             <button class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Modificar Rol</button>
                             <ul class="dropdown-menu">
                                 <div>
-                                    <input type="radio" name="rol"> ADMIN
-                                    <br>
-                                    <input type="radio" name="rol"> PACIENTE
-                                    <br>
-                                    <input type="radio" name="rol"> PROFESIONAL
+                                    <form th:action="/usuario/modificarRol">
+                                        <input type="text" th:value="${usuario.id}" hidden>
+                                        <input type="radio" name="rol"> ADMIN
+                                        <br>
+                                        <input type="radio" name="rol"> PACIENTE
+                                        <br>
+                                        <input type="radio" name="rol"> PROFESIONAL
+                                        <br>
+                                        <button>Guardar</button>
+                                    </form>
                                 </div>
                             </ul>
                         </td>

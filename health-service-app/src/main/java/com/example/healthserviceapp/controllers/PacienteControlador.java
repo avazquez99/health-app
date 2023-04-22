@@ -1,8 +1,10 @@
 package com.example.healthserviceapp.controllers;
 
 import com.example.healthserviceapp.Exceptions.MiException;
+import com.example.healthserviceapp.entity.Persona;
 import com.example.healthserviceapp.enums.ObraSocial;
 import com.example.healthserviceapp.service.PacienteService;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -18,11 +20,14 @@ public class PacienteControlador {
     @Autowired
     private PacienteService pacienteService;
 
-    @PostMapping("/registro/{id}")
-    public String registroPaciente(@PathVariable String id, @RequestParam ObraSocial obrasocial, ModelMap model) {
+    @PostMapping("/registro")
+    public String registroPaciente(@RequestParam ObraSocial obraSocial,
+            ModelMap model, HttpSession sesion) {
 
+        Persona persona = (Persona) sesion.getAttribute("usuariosession");
+        
         try {
-            pacienteService.crearPaciente(obrasocial, id);
+            pacienteService.crearPaciente(obraSocial, persona);
             model.put("Exito", "Paciente registrado correctamente");
             return "form.html";
         } catch (MiException e) {

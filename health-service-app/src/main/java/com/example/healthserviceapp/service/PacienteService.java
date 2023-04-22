@@ -1,4 +1,3 @@
-
 package com.example.healthserviceapp.service;
 
 import com.example.healthserviceapp.Exceptions.MiException;
@@ -29,44 +28,62 @@ public class PacienteService {
 
     @Autowired
     public PersonaRepository personaRepository;
-    
+
     @Autowired
     public PacienteRepository pacienteRepository;
 //    
 //    @Autowired 
 //    public ImagenService IS;
 //
-    @Transactional
-    public void crearPaciente (ObraSocial obraSocial, String id) throws MiException {
 
-        verificarObraSocial(obraSocial);        
-        Optional<Persona> presente = personaRepository.findById(id);
-        if (presente.isPresent()) {
-            Paciente paciente = (Paciente) presente.get();
-            paciente.setObraSocial(obraSocial);
-            personaRepository.save(paciente);
-        }
-    }
-    
     @Transactional
-    public void modificarPaciente(ObraSocial obraSocial, String id) throws MiException{
-        verificarObraSocial(obraSocial);        
-        Optional<Paciente> presente = pacienteRepository.findById(id);
-        if (presente.isPresent()) {
-            Paciente paciente = (Paciente) presente.get();
-            paciente.setObraSocial(obraSocial);
-            personaRepository.save(paciente);
-        }
-    }
-    
-    
-    @Transactional
-    public void eliminarPaciente(String id){
+    public void crearPaciente(ObraSocial obraSocial, Persona persona) throws MiException {
+
+        verificarObraSocial(obraSocial);
+        Paciente paciente = new Paciente();
         
+            paciente.setId(persona.getId());
+            paciente.setEmail(persona.getEmail());
+            paciente.setPassword(persona.getPassword());
+            paciente.setRol(persona.getRol());
+            paciente.setActivo(persona.getActivo());
+            paciente.setNombre(persona.getNombre());
+            paciente.setApellido(persona.getApellido());
+            paciente.setDni(persona.getDni());
+            paciente.setDomilicio(persona.getDomilicio());
+            paciente.setFechaNacimiento(persona.getFechaNacimiento());
+            paciente.setSexo(persona.getSexo());
+            paciente.setImagen(null);
+            paciente.setObraSocial(obraSocial);
+        
+            eliminarPersona(persona);
+    }
+
+    @Transactional
+    public void eliminarPersona(Persona persona){
+         personaRepository.delete(persona);
+    }
+    
+    @Transactional
+    public void modificarPaciente(ObraSocial obraSocial, String id) throws MiException {
+        verificarObraSocial(obraSocial);
+        Optional<Paciente> presente = pacienteRepository.findById(id);
+        Paciente paciente = new Paciente();
+        if (presente.isPresent()) {
+            paciente = presente.get();
+            paciente.setObraSocial(obraSocial);
+            pacienteRepository.save(paciente);
+        }
+    }
+
+    @Transactional
+    public void eliminarPaciente(String id) {
+
         Optional<Paciente> presente = pacienteRepository.findById(id);
         if (presente.isPresent()) {
             Paciente paciente = presente.get();
             paciente.setActivo(FALSE);
+            pacienteRepository.save(paciente);
         }
     }
 
@@ -75,96 +92,4 @@ public class PacienteService {
             throw new MiException("La obra social no puede estar vacío");
         }
     }
-    }
-    
-    
-//
-//    @Transactional
-//    public void modificarPaciente(ObraSocial obraSocial, String id) throws MiException {
-//        verificarObraSocial(obraSocial);
-//
-//        Optional<Paciente> respuesta = PR.findById(id);
-//        if (respuesta.isPresent()) {
-//            Paciente paciente = respuesta.get();
-//            paciente.setEmail(email);
-//            paciente.setPassword(password);
-//            paciente.setDni(dni);
-//            paciente.setNombre(nombre);
-//            paciente.setApellido(apellido);
-//            paciente.setDomilicio(domicilio);
-//            paciente.setSexo(sexo);
-//            paciente.setFechaNacimiento(fechaNacimiento);
-//            paciente.setObraSocial(obraSocial);
-//            
-//            String idImagen = null;
-//                          
-//
-//            paciente.setImagen(imagen);
-//            PR.save(paciente);
-//
-//        }
-//    }
-//    
-//    public Paciente getOne(String id){
-//        return PR.getOne(id);
-//    }
-//    
-//    public String imagenPresente (Paciente paciente){
-//        if (paciente.getImagen() != null) {
-//            String idImagen = paciente.getImagen().getId();
-//            return idImagen;
-//        }
-//        return null;
-//    }
-//
-//    public void verificarEmail(String email) throws MiException {
-//        if (email.isEmpty()) {
-//            throw new MiException("El email no puede estar vacío");
-//        }
-//    }
-//
-//    public void verificarPassword(String password, String password2) throws MiException {
-//        if (password.isEmpty()) {
-//            throw new MiException("La constraseña no puede estar vacía");
-//        }
-//        if (!password.equals(password2)) {
-//            throw new MiException("Las contraseñas no coinciden");
-//        }
-//    }
-//
-//    public void verificarDni(Integer DNI) throws MiException {
-//        if (DNI == null) {
-//            throw new MiException("El DNI no puede estar vacío");
-//        }
-//    }
-//
-//    public void verificarNombre(String nombre) throws MiException {
-//        if (nombre.isEmpty()) {
-//            throw new MiException("El nombre no puede estar vacío");
-//        }
-//    }
-//
-//    public void verificarApellido(String apellido) throws MiException {
-//        if (apellido.isEmpty()) {
-//            throw new MiException("El apellido no puede estar vacío");
-//        }
-//    }
-//
-//    public void verificarDomicilio(String domicilio) throws MiException {
-//        if (domicilio.isEmpty()) {
-//            throw new MiException("El domicilio no puede estar vacío");
-//        }
-//    }
-////
-//    public void verificarSexo(Sexo sexo) throws MiException {
-//        if (sexo == null) {
-//            throw new MiException("El sexo no puede estar vacío");
-//        }
-//    }
-//
-//    public void verificarFecha(Date fecha) throws MiException {
-//        if (fecha == null) {
-//            throw new MiException("La fecha de nacimiento no puede estar vacío");
-//        }
-    
-
+}

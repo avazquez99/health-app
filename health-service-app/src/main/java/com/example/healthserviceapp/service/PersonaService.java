@@ -8,26 +8,29 @@ import com.example.healthserviceapp.enums.Sexo;
 import com.example.healthserviceapp.repository.PersonaRepository;
 import com.example.healthserviceapp.repository.UsuarioRepository;
 import java.util.Date;
-import java.util.Optional;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class PersonaService {
 
     @Autowired
+
     private UsuarioRepository usuarioRep;
 
     @Autowired
     private PersonaRepository personaRep;
 
+    @Autowired
+    private ImagenService imagenService;
+    
     @Transactional
     public void createPersona(String nombre, String apellido,
             Sexo sexo, Date fechaNacimiento, String domicilio, Integer dni,
-            Usuario usuario) throws MiException {
+            Usuario usuario, MultipartFile archivo) throws MiException {
 
-        
         verificarNombre(nombre);
         verificarApellido(apellido);
         verificarDomicilio(domicilio);
@@ -45,7 +48,8 @@ public class PersonaService {
         persona.setDomilicio(domicilio);
         persona.setFechaNacimiento(fechaNacimiento);
         persona.setSexo(sexo);
-        persona.setImagen(null);
+        Imagen imagen = imagenService.guardar(archivo);
+        persona.setImagen(imagen);
         personaRep.save(persona);
 
         borrarUsuario(usuario);
@@ -73,5 +77,21 @@ public class PersonaService {
         if (domicilio == null || domicilio.isEmpty() || domicilio.trim().isEmpty()) {
             throw new MiException("Error, el domicilio no puede estar vacio");
         }
+    }
+    
+    @Transactional
+    public void modifyPersona(String nombre, String apellido,
+            Sexo sexo, Date fechaNacimiento, String domicilio, Integer dni,
+            Persona persona, MultipartFile archivo) throws MiException{
+        
+       persona.setNombre(nombre);
+       persona.setApellido(apellido);
+       persona.setSexo(sexo);
+       persona.setDomilicio(domicilio);
+       persona.setFechaNacimiento(fechaNacimiento);
+       persona.setDni(dni);
+       Imagen imagen = imagenService.guardar(archivo);
+       persona.setImagen(imagen);
+       personaRep.save(persona);
     }
 }

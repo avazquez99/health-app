@@ -55,7 +55,7 @@ public class PacienteService {
             paciente.setSexo(persona.getSexo());
             paciente.setImagen(null);
             paciente.setObraSocial(obraSocial);
-        
+            pacienteRepository.save(paciente);
             eliminarPersona(persona);
     }
 

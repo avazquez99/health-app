@@ -2,6 +2,7 @@ package com.example.healthserviceapp.controllers;
 
 import com.example.healthserviceapp.Exceptions.MiException;
 import com.example.healthserviceapp.entity.Persona;
+import com.example.healthserviceapp.entity.Usuario;
 import com.example.healthserviceapp.enums.ObraSocial;
 import com.example.healthserviceapp.service.PacienteService;
 import javax.servlet.http.HttpSession;
@@ -22,12 +23,16 @@ public class PacienteControlador {
 
     @PostMapping("/registro")
     public String registroPaciente(@RequestParam ObraSocial obraSocial,
-            ModelMap model, HttpSession sesion) {
-
-        Persona persona = (Persona) sesion.getAttribute("usuariosession");
-        
+            ModelMap model, HttpSession session) {
+      
         try {
+            if (session.getAttribute("usuariosession") instanceof Usuario){
+            Usuario usuario = (Usuario) session.getAttribute("usuariosession");
+        }
+        if (session.getAttribute("usuariosession") instanceof Persona){
+            Persona persona = (Persona) session.getAttribute("usuariosession");
             pacienteService.crearPaciente(obraSocial, persona);
+        }          
             model.put("Exito", "Paciente registrado correctamente");
             return "form.html";
         } catch (MiException e) {

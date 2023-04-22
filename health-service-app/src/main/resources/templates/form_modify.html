@@ -17,48 +17,49 @@
         <header th:replace="fragments/navbar :: nav_bar"></header>
         <div class="container">
 
-            <form class="formulario p-3" th:action="@{/perfil/actualizar}" method="POST"
+            <form class="formulario p-3" th:each="usuario : ${logued}" th:action="@{/perfil/actualizar}" method="POST"
                   enctype="multipart/form-data">
 
                 <div class="mb-3">
                     <label class="form-label">Ingresar Nombre</label>
-                    <input type="text" class="form-control" name="nombre" placeholder="Alberto Juan" required>
+                    <input type="text" class="form-control" name="nombre" th:value="${usuario.nombre}" required>
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">Ingresar Apellido</label>
-                    <input type="text" class="form-control" name="apellido" placeholder="Caseres" required>
+                    <input type="text" class="form-control" name="apellido" th:value="${usuario.apellido}" required>
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">Ingresar Domicilio</label>
-                    <input type="text" class="form-control" name="domicilio" placeholder="San Martin 1150" required>
+                    <input type="text" class="form-control" name="domicilio" th:value="${usuario.domicilio}" required>
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">Ingresar DNI</label>
-                    <input type="number" name="dni" placeholder="95478532" min="0" required>
+                    <input type="number" name="dni" th:value="${usuario.dni}" min="0" required>
                 </div> 
 
                 <div class="form-group my-3">
                     <label class="form-label">Seleccionar Sexo</label>
                     <select class="custom-select" name="sexo" required>
                         <option></option>
-                        <option th:each="sexo : ${sexos}" th:value="${sexo}" th:text="${sexo}">
+                        <option th:each="sexo : ${sexos}" th:value="${usuario.sexo}" th:text="${sexo}">
                     </select>
                 </div> 
 
 
                 <div class="mb-3">
                     <label for="fecha">Fecha De Nacimiento</label>
-                    <input type="date" name="fechaNacimiento" id="fecha" required>
+                    <input type="date" name="fechaNacimiento" th:value="${usuario.fechaNacimiento}" id="fecha" required>
                 </div> 
 
 
 
                 <div class="mb-3">
                     <label for="formFile" class="form-label">Subir foto</label>
-                    <input class="form-control" type="file" name="imagen" id="formFile" accept="image/*" max-file-size="1024">
+                    <input class="form-control" type="file" name="imagen" id="formFile"
+                           accept="image/*" max-file-size="1024" th:value="${usuario.imagen}">
                 </div>
                 <button type="submit" class="btn btn-primary mt-3 botones">Enviar</button>
             </form>

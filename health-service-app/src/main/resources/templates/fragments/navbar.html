@@ -9,13 +9,12 @@
       <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
         <li><a th:href="@{/}" class="nav-link px-2 text-white">Inicio</a></li>
         <li><a th:href="@{/profesional/especialidades}" class="nav-link px-2 text-white">Especialidades</a></li>
-        <li><a th:href="@{/perfil/datos}" class="nav-link px-2 text-white" th:if="${session.usuariosession != null}">Perfil</a></li>
-      </ul>
+              </ul>
 
-      <div class="text-end">
+      <div class="text-end d-flex">
           <button class="btn btn-outline-light dropdown-toggle me-3" type="button" data-bs-toggle="dropdown"
             aria-expanded="false" th:if="${session.usuariosession == null}">
-            Login
+            Ingresar
           </button>
           <ul class="dropdown-menu">
             <form th:action="@{/logincheck}" class="formulario p-3" method="POST">
@@ -30,14 +29,25 @@
               <div class="form-group my-3">
                 <input type="password" class="form-control" name="password" placeholder="CONTRASEÑA" required>
               </div>
-              <button type="submit" class="btn btn-primary mt-3 botones">Ingresar!</button>
+              <div class="form-group">
+                <input class="form-control btn btn-outline-primary" type="submit" name="enviar" value="Iniciar Sesión">
+              </div>
             </form>
           </ul>
+          
+        
+                        
 
         <div th:if="${session.usuariosession != null}">
           <button class="btn btn-secondary me-3" type="button" aria-expanded="false" onclick="location.href='/logout';">
             Cerrar Sesión
           </button>
+        </div>
+          
+         <div th:if="${session.usuariosession != null}">
+          <a th:href="@{/perfil/datos}" class="btn btn-light me-3" type="button" aria-expanded="false">
+            Perfil
+          </a>
         </div>
 
           <button type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown"
@@ -63,7 +73,9 @@
                   minlength="6" required>
               </div>
 
-              <button type="submit" class="btn btn-primary mt-3 botones">Registrarse</button>
+              <div class="form-group">
+                <input class="form-control btn btn-outline-primary" type="submit" name="enviar" value="Registrarse">
+              </div>
             </form>
           </ul>
 

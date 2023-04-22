@@ -7,26 +7,26 @@ import com.example.healthserviceapp.entity.Persona;
 import com.example.healthserviceapp.entity.Usuario;
 import com.example.healthserviceapp.enums.Sexo;
 import com.example.healthserviceapp.repository.PersonaRepository;
-import com.example.healthserviceapp.repository.UsuarioRepository;
 import java.util.Date;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class PersonaService {
     
     @Autowired
-    private UsuarioRepository usuarioRep;
+    private ImagenService imagenService;
     
     @Autowired
     private PersonaRepository personaRep;
+
     
     @Transactional
     public void createPersona(Usuario usuario, String nombre, String apellido,
-
             // Sexo sexo,Date fechaNacimiento, Integer dni,
-            String domicilio)throws MiException, Exception{
+            String domicilio, MultipartFile archivo)throws MiException, Exception{
              
         verificarNombre(nombre);
         verificarApellido(apellido);
@@ -34,18 +34,23 @@ public class PersonaService {
         verificarDomicilio(domicilio);
         // verificarFechaNacimiento(fechaNacimiento);
         // verificarSexo(sexo);
-                
-        Persona persona = (Persona) usuario;
         
+        Persona persona = new Persona();
+        persona.setId(usuario.getId());
+        persona.setEmail(usuario.getEmail());
+        persona.setPassword(usuario.getPassword());
+        persona.setActivo(usuario.getActivo());
+        persona.setRol(usuario.getRol());
         persona.setNombre(nombre);
         persona.setApellido(apellido);
         persona.setDni(0);
         persona.setDomilicio(domicilio);
         persona.setFechaNacimiento(null);
-        persona.setSexo(Sexo.MASCULINO);
-        persona.setImagen(null);
+        persona.setSexo(null);
+        Imagen imagen = imagenService.guardar(archivo);
+        persona.setImagen(imagen);
         personaRep.save(persona);
-    }
+        }
     
     public void verificarNombre(String nombre) throws MiException{
         if (nombre == null || nombre.isEmpty() || nombre.trim().isEmpty()) {

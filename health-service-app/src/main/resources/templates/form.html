@@ -22,29 +22,35 @@
 
       <div class="mb-3">
         <label class="form-label">Ingresar Nombre</label>
-        <input type="text" class="form-control" name="nombre" placeholder="Alberto Juan" required th:if="${tipo} == 'Anonimo'" th:text="anonimo">
-        <input type="text" class="form-control" name="nombre" placeholder="Alberto Juan" required th:if="${tipo} == 'Persona'" th:text="persona">
-        <input type="text" class="form-control" name="nombre" placeholder="Alberto Juan" required th:if="${tipo} == 'Usuario'" th:text="usuario">
+        <input type="text" class="form-control" name="nombre" placeholder="Alberto Juan" required th:if="${tipo} == 'Persona'" th:value="${persona.nombre}">
+        <input type="text" class="form-control" name="nombre" placeholder="Alberto Juan" required th:if="${tipo} == 'Usuario'">
       </div>
 
       <div class="mb-3">
         <label class="form-label">Ingresar Apellido</label>
-        <input type="text" class="form-control" name="apellido" placeholder="Caseres" required>
+        <input type="text" class="form-control" name="apellido" placeholder="Caseres" required th:if="${tipo} == 'Persona'" th:value="${persona.apellido}">
+        <input type="text" class="form-control" name="apellido" placeholder="Caseres" required th:if="${tipo} == 'Usuario'">
       </div>
 
       <div class="mb-3">
         <label class="form-label">Ingresar Domicilio</label>
-        <input type="text" class="form-control" name="domicilio" placeholder="San Martin 1150" required>
+        <input type="text" class="form-control" name="domicilio" placeholder="San Martin 1150" required th:if="${tipo} == 'Persona'" th:value="${persona.domicilio}">
+        <input type="text" class="form-control" name="domicilio" placeholder="San Martin 1150" required th:if="${tipo} == 'Usuario'">
       </div>
 
       <div class="mb-3">
         <label class="form-label">Ingresar DNI</label>
-        <input type="number" name="dni" placeholder="95478532" min="0" required>
+        <input type="number" name="dni" placeholder="95478532" min="0" required th:if="${tipo} == 'Persona'" th:value="${persona.dni}">
+        <input type="number" name="dni" placeholder="95478532" min="0" required th:if="${tipo} == 'Usuario'">
       </div>
 
       <div class="form-group my-3">
         <label class="form-label">Seleccionar Sexo</label>
-        <select class="custom-select" name="sexo" required>
+        <select class="custom-select" name="sexo" required th:if="${tipo} == 'Persona'" >
+          <option></option>
+          <option th:each="sexo : ${sexos}" th:value="${sexo}" th:text="${sexo}" th:selected="${persona.sexo}">
+        </select>
+         <select class="custom-select" name="sexo" required th:if="${tipo} == 'Usuario'">
           <option></option>
           <option th:each="sexo : ${sexos}" th:value="${sexo}" th:text="${sexo}">
         </select>
@@ -53,7 +59,8 @@
 
       <div class="mb-3">
         <label for="fecha">Fecha De Nacimiento</label>
-        <input type="date" name="fechaNacimiento" id="fecha" required>
+        <input type="date" name="fechaNacimiento" id="fecha" required th:if="${tipo} == 'Persona'" th:value="${persona.fechaNacimiento}">
+         <input type="date" name="fechaNacimiento" id="fecha" required th:if="${tipo} == 'Usuario'">
       </div>
 
 

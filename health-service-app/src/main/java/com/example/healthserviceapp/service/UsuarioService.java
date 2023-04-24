@@ -2,6 +2,7 @@ package com.example.healthserviceapp.service;
 
 import com.example.healthserviceapp.Exceptions.MiException;
 import com.example.healthserviceapp.entity.Usuario;
+import com.example.healthserviceapp.enums.Rol;
 import static com.example.healthserviceapp.enums.Rol.PACIENTE;
 import com.example.healthserviceapp.repository.UsuarioRepository;
 import static java.lang.Boolean.FALSE;
@@ -63,6 +64,21 @@ public class UsuarioService implements UserDetailsService{
     }
     
     @Transactional
+    public void modificarRol(Rol rol, String id){
+        
+         Usuario usuario = new Usuario();
+        
+        Optional<Usuario> presente = usuarioRepository.findById(id);
+        
+        if (presente.isPresent()) {
+            usuario = presente.get();
+            usuario.setRol(rol);
+            usuarioRepository.save(usuario);
+        }
+    }
+    
+    
+    @Transactional
     public void eliminarUsuario(String id){
         
         Usuario usuario = new Usuario();
@@ -72,15 +88,11 @@ public class UsuarioService implements UserDetailsService{
         if (presente.isPresent()) {
             usuario = presente.get();
             usuario.setActivo(FALSE);
-            
+            usuarioRepository.save(usuario);
         }
         
     }
-    
-    public Usuario buscarUsuarioPorEmail(String email){
-        return usuarioRepository.buscarPorEmail(email);
-    }
-    
+      
     public Usuario getOne(String id){
         return usuarioRepository.getById(id);
     }

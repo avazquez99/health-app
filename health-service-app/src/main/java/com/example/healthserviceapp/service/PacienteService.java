@@ -50,7 +50,7 @@ public class PacienteService {
             paciente.setNombre(persona.getNombre());
             paciente.setApellido(persona.getApellido());
             paciente.setDni(persona.getDni());
-            paciente.setDomilicio(persona.getDomilicio());
+            paciente.setDomicilio(persona.getDomicilio());
             paciente.setFechaNacimiento(persona.getFechaNacimiento());
             paciente.setSexo(persona.getSexo());
             paciente.setImagen(null);

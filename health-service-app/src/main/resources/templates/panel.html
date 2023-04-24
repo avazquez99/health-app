@@ -20,8 +20,8 @@
         <h1 class="text-muted text-center my-5">Lista de usuarios</h1>
 
         <div class="container mb-5 ms-auto col-3">
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Buscar por email" aria-label="Search">
+            <form class="d-flex" role="search" th:action="@{/admin/buscar}">
+                <input class="form-control me-2" type="search" name="email" placeholder="Buscar por email" aria-label="Search">
                 <button class="btn btn-outline-primary" type="submit">Buscar</button>
             </form>
         </div>
@@ -47,21 +47,19 @@
                         <td th:text="${usuario.activo}"></td>
                         <td>
                             <a class="me-3 btn btn-warning" th:href="@{/admin/baja/__${usuario.id}__}">Dar baja</a>
-                            <button class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Modificar Rol</button>
+                            <button class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown"
+                                    aria-expanded="false">Modificar Rol</button>
                             <ul class="dropdown-menu">
                                 <div>
-                                    <form th:action="/usuario/modificarRol">
-                                        <input type="text" th:value="${usuario.id}" hidden>
-                                        <input type="radio" name="rol"> ADMIN
-                                        <br>
-                                        <input type="radio" name="rol"> PACIENTE
-                                        <br>
-                                        <input type="radio" name="rol"> PROFESIONAL
-                                        <br>
-                                        <button>Guardar</button>
+                                    <form th:action="@{/admin/rol/__${usuario.id}__}">  
+                                        <select class="custom-select-rol" name="rol">
+                                            <option th:each="rol : ${roles}" th:value="${rol}" th:text="${rol}"
+                                                    td:selected="${rol==usuario.rol}">
+                                        </select>   
+                                        <button type="submit">Guardar</button>
                                     </form>
-                                </div>
-                            </ul>
+                                </div>  
+                            </ul>  
                         </td>
                     </tr>
                 </tbody>
@@ -73,7 +71,7 @@
         <div th:replace="fragments/footer :: footer"></div>
 
 
-        
+
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
     </body>
 </html>

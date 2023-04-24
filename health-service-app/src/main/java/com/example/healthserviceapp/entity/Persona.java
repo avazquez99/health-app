@@ -33,5 +33,5 @@ public class Persona extends Usuario{
     @OneToOne
     protected Imagen imagen;
 
-    protected String domilicio;
+    private String domicilio;
 }

@@ -17,7 +17,6 @@ import org.springframework.web.multipart.MultipartFile;
 public class PersonaService {
 
     @Autowired
-
     private UsuarioRepository usuarioRep;
 
     @Autowired
@@ -45,7 +44,7 @@ public class PersonaService {
         persona.setNombre(nombre);
         persona.setApellido(apellido);
         persona.setDni(dni);
-        persona.setDomilicio(domicilio);
+        persona.setDomicilio(domicilio);
         persona.setFechaNacimiento(fechaNacimiento);
         persona.setSexo(sexo);
         Imagen imagen = imagenService.guardar(archivo);
@@ -84,10 +83,11 @@ public class PersonaService {
             Sexo sexo, Date fechaNacimiento, String domicilio, Integer dni,
             Persona persona, MultipartFile archivo) throws MiException{
         
+       
        persona.setNombre(nombre);
        persona.setApellido(apellido);
        persona.setSexo(sexo);
-       persona.setDomilicio(domicilio);
+       persona.setDomicilio(domicilio);
        persona.setFechaNacimiento(fechaNacimiento);
        persona.setDni(dni);
        Imagen imagen = imagenService.guardar(archivo);

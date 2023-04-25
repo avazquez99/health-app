@@ -141,7 +141,7 @@ public class UsuarioService implements UserDetailsService{
       
         Usuario usuario = usuarioRepository.buscarPorEmail(email);
         
-        if (usuario != null) {
+        if (usuario != null && usuario.getActivo()) {
         
             List<GrantedAuthority> permisos = new ArrayList<>();
             

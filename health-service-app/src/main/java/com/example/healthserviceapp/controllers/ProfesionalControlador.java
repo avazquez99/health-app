@@ -34,7 +34,12 @@ public class ProfesionalControlador {
     }
 
     @GetMapping("/especialidades")
-    public String listaEspecialidades(ModelMap modelo) {
+    public String listaEspecialidades(ModelMap modelo) throws MiException {
+
+        List<Profesional> profesionales = profesionalServicio.listarProfesionales();
+        modelo.addAttribute("profesionales", profesionales);
+
+        //modelo.put("exito", "La lista de profesionales se muestra a continuación");
 
         return "especialidades.html";
     }
@@ -42,8 +47,7 @@ public class ProfesionalControlador {
     @PostMapping("/registro")
     public String registroProfesional(@RequestParam String id, @RequestParam String matricula,
             @RequestParam Especialidad especialidad, @RequestParam Provincias provincia,
-            ModelMap modelo) throws MiException {
-        //@RequestParam Disponibilidad disponibilidad) throws MiException {
+            ModelMap modelo) {  ///FALTA LA DISPONIBILIDAD
 
         try {
 
@@ -51,13 +55,9 @@ public class ProfesionalControlador {
             modelo.put("exito", "Los datos fueron actualizados correctamente!");
 
         } catch (MiException e) {
-
-            List<Profesional> profesionales = profesionalServicio.listarProfesionales();
-
-            modelo.addAttribute("profesionales", profesionales);
-
+            
             modelo.put("error", e.getMessage());
-            return "profesional_form.html";
+            return "author_form.html";
 
         }
 
@@ -68,17 +68,17 @@ public class ProfesionalControlador {
     @PostMapping("/modificar/{id}")
     public String modificarProfesional(@PathVariable String id, String matricula,
             Especialidad especialidad, Provincias provincia, Disponibilidad disponibilidad) throws MiException {
-        
+
         profesionalServicio.modificarProfesional(id, matricula, especialidad, disponibilidad, matricula, provincia);
-        return "index.hmtl";
+        return "redirect:/profesional/registro";
 
     }
 
     @PostMapping("/eliminar/{id}")
     public String eliminarProfesional(@PathVariable String id) throws MiException {
-        
+
         profesionalServicio.eliminarProfesional(id);
-        return "index.hmtl";
+        return "redirect:/profesional/registro";
 
     }
 

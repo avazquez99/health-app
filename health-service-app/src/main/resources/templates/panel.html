@@ -46,7 +46,8 @@
                         <td th:text="${usuario.rol}"></td>
                         <td th:text="${usuario.activo}"></td>
                         <td>
-                            <a class="me-3 btn btn-warning" th:href="@{/admin/baja/__${usuario.id}__}">Dar baja</a>
+                            <a class="me-3 btn btn-warning" th:href="@{/admin/baja/__${usuario.id}__}" th:if="${usuario.activo} == TRUE">Dar baja</a>
+                            <a class="me-3 btn btn-warning" th:href="@{/admin/alta/__${usuario.id}__}" th:if="${usuario.activo} == FALSE">Dar Alta</a>
                             <button class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown"
                                     aria-expanded="false">Modificar Rol</button>
                             <ul class="dropdown-menu">

@@ -42,6 +42,14 @@ public class AdminControlador {
         usuarioService.eliminarUsuario(id);
         return "redirect:/admin/dashboard";
     }
+    
+    @GetMapping("/alta/{id}")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    public String altaUsuario(@PathVariable String id, ModelMap modelo){
+          usuarioService.darAlta(id);
+          return "redirect:/admin/dashboard";
+    }
+          
 
     @GetMapping("/buscar")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")

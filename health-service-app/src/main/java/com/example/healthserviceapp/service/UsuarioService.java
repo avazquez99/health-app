@@ -92,6 +92,20 @@ public class UsuarioService implements UserDetailsService{
         }
         
     }
+    
+    @Transactional
+    public void darAlta(String id){
+        
+        Usuario usuario = new Usuario();
+        
+        Optional<Usuario> presente = usuarioRepository.findById(id);
+        
+        if (presente.isPresent()) {
+            usuario = presente.get();
+            usuario.setActivo(TRUE);
+            usuarioRepository.save(usuario);
+        }
+    }
       
     public Usuario getOne(String id){
         return usuarioRepository.getById(id);

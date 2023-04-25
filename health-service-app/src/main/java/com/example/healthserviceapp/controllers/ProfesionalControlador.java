@@ -45,21 +45,8 @@ public class ProfesionalControlador {
             ModelMap modelo) throws MiException {
         //@RequestParam Disponibilidad disponibilidad) throws MiException {
 
-        try {
-
-            profesionalServicio.crearProfesional(id, especialidad, matricula, provincia);
-            modelo.put("exito", "Los datos fueron actualizados correctamente!");
-
-        } catch (MiException e) {
-
-            List<Profesional> profesionales = profesionalServicio.listarProfesionales();
-
-            modelo.addAttribute("profesionales", profesionales);
-
-            modelo.put("error", e.getMessage());
-            return "profesional_form.html";
-
-        }
+        profesionalServicio.crearProfesional(id, especialidad, matricula, provincia);
+        modelo.put("exito", "Los datos fueron actualizados correctamente!");
 
         return "profesional_form.html";
 

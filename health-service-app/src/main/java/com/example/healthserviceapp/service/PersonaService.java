@@ -8,6 +8,8 @@ import com.example.healthserviceapp.enums.Sexo;
 import com.example.healthserviceapp.repository.PersonaRepository;
 import com.example.healthserviceapp.repository.UsuarioRepository;
 import java.util.Date;
+import java.util.Optional;
+
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,7 +26,7 @@ public class PersonaService {
 
     @Autowired
     private ImagenService imagenService;
-    
+
     @Transactional
     public void createPersona(String nombre, String apellido,
             Sexo sexo, Date fechaNacimiento, String domicilio, Integer dni,
@@ -33,7 +35,7 @@ public class PersonaService {
         verificarNombre(nombre);
         verificarApellido(apellido);
         verificarDomicilio(domicilio);
-        
+
         Persona persona = new Persona();
 
         persona.setId(usuario.getId());
@@ -55,10 +57,10 @@ public class PersonaService {
     }
 
     @Transactional
-    public void borrarUsuario(Usuario usuario){
+    public void borrarUsuario(Usuario usuario) {
         usuarioRep.delete(usuario);
     }
-    
+
     public void verificarNombre(String nombre) throws MiException {
         if (nombre == null || nombre.isEmpty() || nombre.trim().isEmpty()) {
             throw new MiException("Error, el nombre no puede estar vacio");
@@ -77,21 +79,26 @@ public class PersonaService {
             throw new MiException("Error, el domicilio no puede estar vacio");
         }
     }
-    
+
     @Transactional
-    public void modifyPersona(String nombre, String apellido,
+    public void modifyPersona(Persona persona, String nombre, String apellido,
             Sexo sexo, Date fechaNacimiento, String domicilio, Integer dni,
-            Persona persona, MultipartFile archivo) throws MiException{
-        
-       
-       persona.setNombre(nombre);
-       persona.setApellido(apellido);
-       persona.setSexo(sexo);
-       persona.setDomicilio(domicilio);
-       persona.setFechaNacimiento(fechaNacimiento);
-       persona.setDni(dni);
-       Imagen imagen = imagenService.guardar(archivo);
-       persona.setImagen(imagen);
-       personaRep.save(persona);
+            MultipartFile archivo) throws MiException {
+
+        Optional<Persona> respuesta = personaRep.findById(persona.getId());
+
+        if (respuesta.isPresent()) {
+            Persona nueva_persona = respuesta.get();
+            nueva_persona.setNombre(nombre);
+            nueva_persona.setApellido(apellido);
+            nueva_persona.setSexo(sexo);
+            nueva_persona.setDomicilio(domicilio);
+            nueva_persona.setFechaNacimiento(fechaNacimiento);
+            nueva_persona.setDni(dni);
+            String id_imagen = nueva_persona.getImagen().getId();
+            Imagen imagen = imagenService.actualizar(id_imagen, archivo);
+            nueva_persona.setImagen(imagen);
+            personaRep.save(nueva_persona);
+        }
     }
 }

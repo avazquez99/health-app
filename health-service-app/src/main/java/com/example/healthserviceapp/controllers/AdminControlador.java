@@ -42,14 +42,13 @@ public class AdminControlador {
         usuarioService.eliminarUsuario(id);
         return "redirect:/admin/dashboard";
     }
-    
+
     @GetMapping("/alta/{id}")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    public String altaUsuario(@PathVariable String id, ModelMap modelo){
-          usuarioService.darAlta(id);
-          return "redirect:/admin/dashboard";
+    public String altaUsuario(@PathVariable String id, ModelMap modelo) {
+        usuarioService.darAlta(id);
+        return "redirect:/admin/dashboard";
     }
-          
 
     @GetMapping("/buscar")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
@@ -62,7 +61,6 @@ public class AdminControlador {
     @GetMapping("/rol/{id}")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public String cambiarRolUsuario(@PathVariable String id, Rol rol, ModelMap model) {
-
         usuarioService.modificarRol(rol, id);
         return "redirect:/admin/dashboard";
     }

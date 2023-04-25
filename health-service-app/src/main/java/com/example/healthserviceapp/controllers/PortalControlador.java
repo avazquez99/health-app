@@ -1,4 +1,4 @@
- package com.example.healthserviceapp.controllers;
+package com.example.healthserviceapp.controllers;
 
 import com.example.healthserviceapp.Exceptions.MiException;
 import com.example.healthserviceapp.entity.Paciente;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class PortalControlador {
 
     @Autowired
-    private UsuarioService usuarioServicio;
+    private UsuarioService usuarioService;
 
     @GetMapping("/login")
     public String ingresar(@RequestParam(required = false) String error, ModelMap modelo) {
@@ -32,30 +32,30 @@ public class PortalControlador {
 
     @GetMapping("/")
     public String inicio(HttpSession session, ModelMap modelo) {
-        
-        if (session.getAttribute("usuariosession") instanceof Persona){
+
+        if (session.getAttribute("usuariosession") instanceof Persona) {
             Persona persona = (Persona) session.getAttribute("usuariosession");
             modelo.put("usuario", persona);
-        } 
-        if (session.getAttribute("usuariosession") instanceof Paciente){
+        }
+        if (session.getAttribute("usuariosession") instanceof Paciente) {
             Paciente paciente = (Paciente) session.getAttribute("usuariosession");
             modelo.put("usuario", paciente);
-        } 
+        }
         return "index.html";
     }
 
     @PostMapping("/registro")
     public String registroUsuario(@RequestParam String email, @RequestParam String password,
-            String password2, ModelMap modelo) throws MiException{
+            String password2, ModelMap modelo) throws MiException {
 
         try {
 
-            usuarioServicio.guardarUsuario(email, password, password2);
+            usuarioService.guardarUsuario(email, password, password2);
 
             modelo.put("exito", "Usuario registrado correctamente!");
 
             return "index.html";
-        }  catch (MiException e) {
+        } catch (MiException e) {
             System.out.println(e.getMessage());
             modelo.put("error", e.getMessage());
             modelo.put("email", email);
@@ -63,5 +63,4 @@ public class PortalControlador {
         }
 
     }
-
 }

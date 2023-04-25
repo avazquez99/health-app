@@ -25,7 +25,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 @Service
-public class UsuarioService implements UserDetailsService{
+public class UsuarioService implements UserDetailsService {
 
     @Autowired
     public UsuarioRepository usuarioRepository;
@@ -35,95 +35,83 @@ public class UsuarioService implements UserDetailsService{
 
         verificarEmail(email);
         verificarPassword(password, password2);
-      
+
         Usuario usuario = new Usuario();
         usuario.setEmail(email);
         usuario.setPassword(new BCryptPasswordEncoder().encode(password));
         usuario.setActivo(TRUE);
         usuario.setRol(PACIENTE);
-
         usuarioRepository.save(usuario);
     }
 
     @Transactional
     public void modificarUsuario(String email, String password, String password2, String id) throws MiException {
-
         verificarPassword(password, password2);
 
         Optional<Usuario> presente = usuarioRepository.findById(id);
-        
-        if (presente.isPresent()) {
 
+        if (presente.isPresent()) {
             Usuario usuario = presente.get();
             usuario.setPassword(password);
-
             usuarioRepository.save(usuario);
-
         }
 
     }
-    
+
     @Transactional
-    public void modificarRol(Rol rol, String id){
-        
-         Usuario usuario = new Usuario();
-        
+    public void modificarRol(Rol rol, String id) {
+        Usuario usuario = new Usuario();
+
         Optional<Usuario> presente = usuarioRepository.findById(id);
-        
+
         if (presente.isPresent()) {
             usuario = presente.get();
             usuario.setRol(rol);
             usuarioRepository.save(usuario);
         }
     }
-    
-    
+
     @Transactional
-    public void eliminarUsuario(String id){
-        
+    public void eliminarUsuario(String id) {
         Usuario usuario = new Usuario();
-        
+
         Optional<Usuario> presente = usuarioRepository.findById(id);
-        
+
         if (presente.isPresent()) {
             usuario = presente.get();
             usuario.setActivo(FALSE);
             usuarioRepository.save(usuario);
         }
-        
     }
-    
+
     @Transactional
-    public void darAlta(String id){
-        
+    public void darAlta(String id) {
         Usuario usuario = new Usuario();
-        
+
         Optional<Usuario> presente = usuarioRepository.findById(id);
-        
+
         if (presente.isPresent()) {
             usuario = presente.get();
             usuario.setActivo(TRUE);
             usuarioRepository.save(usuario);
         }
     }
-      
-    public Usuario getOne(String id){
+
+    public Usuario getOne(String id) {
         return usuarioRepository.getById(id);
     }
 
     public void verificarEmail(String email) throws MiException {
         if (email.isEmpty()) {
             throw new MiException("El email no puede estar vacío");
-        }        
-             
+        }
         if (usuarioRepository.buscarPorEmailOptional(email).isPresent()) {
             throw new MiException("El email ya está registrado");
         }
-                
+
     }
 
-    public void verificarPassword(String password, String password2) throws MiException {
-
+    public boolean verificarPassword(String password, String password2) throws MiException {
         if (password.isEmpty()) {
             throw new MiException("La constraseña no puede estar vacía");
         }
@@ -133,31 +121,27 @@ public class UsuarioService implements UserDetailsService{
         if (!password.equals(password2)) {
             throw new MiException("Las contraseñas no coinciden");
         }
-
+        return true;
     }
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-      
         Usuario usuario = usuarioRepository.buscarPorEmail(email);
-        
-        if (usuario != null && usuario.getActivo()) {
-        
-            List<GrantedAuthority> permisos = new ArrayList<>();
-            
-            GrantedAuthority p = new SimpleGrantedAuthority("ROLE_" + usuario.getRol().toString());
-            
-            permisos.add(p);
-            
-            ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
 
-            HttpSession session = attr.getRequest().getSession(true);
-            
-            session.setAttribute("usuariosession", usuario);
-                    
-            return new User(usuario.getEmail(), usuario.getPassword(), permisos);
-        } else {
-            return null;
+        if (usuario == null) {
+            throw new UsernameNotFoundException("ERROR: Usuario no encontrado");
         }
-}
+
+        if (!usuario.getActivo()) {
+            throw new UsernameNotFoundException("ERROR: Usuario inactivo");
+        }
+
+        List<GrantedAuthority> permisos = new ArrayList<>();
+        GrantedAuthority p = new SimpleGrantedAuthority("ROLE_" + usuario.getRol().toString());
+        permisos.add(p);
+        ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+        HttpSession session = attr.getRequest().getSession(true);
+        session.setAttribute("usuariosession", usuario);
+        return new User(usuario.getEmail(), usuario.getPassword(), permisos);
+    }
 }

@@ -8,68 +8,72 @@
     integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
   <link rel="stylesheet" href="/css/main.css">
   <title>Health Service App</title>
-  <script src="js/preview_img.js"></script>
+  <script type="text/javascript" th:src="@{/js/preview_img.js}"></script>
 </head>
 
 <body>
-
   <!-- NAVBAR -->
-
   <header th:replace="fragments/navbar :: nav_bar"></header>
   <div class="container">
 
     <form class="formulario p-3" th:action="@{/perfil/actualizar}" method="POST" enctype="multipart/form-data">
+      <div class="mb-3">
+        <label for="formFile" class="form-label"></label>
+        <img id="previewImg" src="#" alt="Tu imagen" th:src="@{/perfil/imagen}"/>
+        <input class="form-control" type="file" name="imagen" id="formFile" accept="image/*" max-file-size="1024"
+          onchange="actualizarVistaPrevia();">
+      </div>
 
       <div class="mb-3">
         <label class="form-label">Ingresar Nombre</label>
-        <input type="text" class="form-control" name="nombre" placeholder="Alberto Juan" required th:if="${tipo} == 'Persona'" th:value="${persona.nombre}">
-        <input type="text" class="form-control" name="nombre" placeholder="Alberto Juan" required th:if="${tipo} == 'Usuario'">
+        <input type="text" class="form-control" name="nombre" placeholder="Alberto Juan" required
+          th:if="${tipo} == 'Persona'" th:value="${persona.nombre}">
+        <input type="text" class="form-control" name="nombre" placeholder="Alberto Juan" required
+          th:if="${tipo} == 'Usuario'">
       </div>
 
       <div class="mb-3">
         <label class="form-label">Ingresar Apellido</label>
-        <input type="text" class="form-control" name="apellido" placeholder="Caseres" required th:if="${tipo} == 'Persona'" th:value="${persona.apellido}">
-        <input type="text" class="form-control" name="apellido" placeholder="Caseres" required th:if="${tipo} == 'Usuario'">
+        <input type="text" class="form-control" name="apellido" placeholder="Caseres" required
+          th:if="${tipo} == 'Persona'" th:value="${persona.apellido}">
+        <input type="text" class="form-control" name="apellido" placeholder="Caseres" required
+          th:if="${tipo} == 'Usuario'">
       </div>
 
       <div class="mb-3">
         <label class="form-label">Ingresar Domicilio</label>
-        <input type="text" class="form-control" name="domicilio" placeholder="San Martin 1150" required th:if="${tipo} == 'Persona'" th:value="${persona.domicilio}">
-        <input type="text" class="form-control" name="domicilio" placeholder="San Martin 1150" required th:if="${tipo} == 'Usuario'">
+        <input type="text" class="form-control" name="domicilio" placeholder="San Martin 1150" required
+          th:if="${tipo} == 'Persona'" th:value="${persona.domicilio}">
+        <input type="text" class="form-control" name="domicilio" placeholder="San Martin 1150" required
+          th:if="${tipo} == 'Usuario'">
       </div>
 
       <div class="mb-3">
         <label class="form-label">Ingresar DNI</label>
-        <input type="number" name="dni" placeholder="95478532" min="0" required th:if="${tipo} == 'Persona'" th:value="${persona.dni}">
+        <input type="number" name="dni" placeholder="95478532" min="0" required th:if="${tipo} == 'Persona'"
+          th:value="${persona.dni}">
         <input type="number" name="dni" placeholder="95478532" min="0" required th:if="${tipo} == 'Usuario'">
       </div>
 
       <div class="form-group my-3">
         <label class="form-label">Seleccionar Sexo</label>
-        <select class="custom-select" name="sexo" required th:if="${tipo} == 'Persona'" >
+        <select class="custom-select" name="sexo" required th:if="${tipo} == 'Persona'">
           <option></option>
           <option th:each="sexo : ${sexos}" th:value="${sexo}" th:text="${sexo}" th:selected="${persona.sexo}">
         </select>
-         <select class="custom-select" name="sexo" required th:if="${tipo} == 'Usuario'">
+        <select class="custom-select" name="sexo" required th:if="${tipo} == 'Usuario'">
           <option></option>
           <option th:each="sexo : ${sexos}" th:value="${sexo}" th:text="${sexo}">
         </select>
       </div>
 
-
       <div class="mb-3">
         <label for="fecha">Fecha De Nacimiento</label>
-        <input type="date" name="fechaNacimiento" id="fecha" required th:if="${tipo} == 'Persona'" th:value="${persona.fechaNacimiento}">
-         <input type="date" name="fechaNacimiento" id="fecha" required th:if="${tipo} == 'Usuario'">
+        <input type="date" name="fechaNacimiento" id="fecha" required th:if="${tipo} == 'Persona'"
+          th:value="${#dates.format(persona.fechaNacimiento, 'yyyy-MM-dd')}">
+        <input type="date" name="fechaNacimiento" id="fecha" required th:if="${tipo} == 'Usuario'">
       </div>
 
-
-
-      <div class="mb-3">
-        <label for="formFile" class="form-label">Subir foto</label>
-        <input class="form-control" type="file" name="imagen" id="formFile" accept="image/*" max-file-size="1024" onchange="updatePreview(this, 'image-preview')">
-        <img id="previewImg" src="#" alt="Tu imagen"/>
-      </div>
       <button type="submit" class="btn btn-primary mt-3 botones">Enviar</button>
     </form>
   </div>

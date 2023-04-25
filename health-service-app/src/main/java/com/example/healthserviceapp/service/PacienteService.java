@@ -1,23 +1,16 @@
 package com.example.healthserviceapp.service;
 
 import com.example.healthserviceapp.Exceptions.MiException;
-import com.example.healthserviceapp.entity.Imagen;
 import com.example.healthserviceapp.entity.Paciente;
 import com.example.healthserviceapp.entity.Persona;
 import com.example.healthserviceapp.enums.ObraSocial;
-import com.example.healthserviceapp.enums.Rol;
-import com.example.healthserviceapp.enums.Sexo;
-import com.example.healthserviceapp.repository.ImagenRepository;
 import com.example.healthserviceapp.repository.PacienteRepository;
 import com.example.healthserviceapp.repository.PersonaRepository;
 import static java.lang.Boolean.FALSE;
-import static java.lang.Boolean.TRUE;
-import java.util.Date;
 import java.util.Optional;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -31,10 +24,6 @@ public class PacienteService {
 
     @Autowired
     public PacienteRepository pacienteRepository;
-//    
-//    @Autowired 
-//    public ImagenService IS;
-//
 
     @Transactional
     public void crearPaciente(ObraSocial obraSocial, Persona persona) throws MiException {

@@ -5,6 +5,7 @@ import com.example.healthserviceapp.entity.Disponibilidad;
 import com.example.healthserviceapp.entity.Profesional;
 import com.example.healthserviceapp.entity.Usuario;
 import com.example.healthserviceapp.enums.Especialidad;
+import com.example.healthserviceapp.enums.Provincias;
 import com.example.healthserviceapp.repository.ProfesionalRepository;
 import com.example.healthserviceapp.repository.UsuarioRepository;
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ public class ProfesionalService {
     UsuarioRepository usuarioRepository;
 
     @Transactional
-    public void crearProfesional(String id, Especialidad especialidad, String matricula) {
+    public void crearProfesional(String id, Especialidad especialidad, String matricula, Provincias provincia) {
 
         Profesional profesional = new Profesional();
 
@@ -33,6 +34,7 @@ public class ProfesionalService {
 
             profesional.setEspecialidad(especialidad);
             profesional.setMatricula(matricula);
+            profesional.setProvincia(provincia);
             //profesional.setDisponibilidad(disponibilidad);
 
             profesionalRepository.save(profesional);
@@ -52,7 +54,7 @@ public class ProfesionalService {
     }
 
     public void modificarProfesional(String id, String idProfesional, Especialidad especialidad, Disponibilidad disponibilidad,
-            String matricula) throws MiException {
+            String matricula, Provincias provincia) throws MiException {
 
         Optional<Profesional> respuestaProfesional = profesionalRepository.findById(idProfesional); //Duda, si lo busco por matricula o por id
 
@@ -61,6 +63,8 @@ public class ProfesionalService {
             Profesional profesional = respuestaProfesional.get();
 
             profesional.setDisponibilidad(disponibilidad);
+            
+            profesional.setProvincia(provincia);
 
             profesionalRepository.save(profesional);
 

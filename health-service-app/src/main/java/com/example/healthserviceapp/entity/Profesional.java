@@ -5,6 +5,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.OneToOne;
 
 import com.example.healthserviceapp.enums.Especialidad;
+import com.example.healthserviceapp.enums.Provincias;
+import javax.persistence.EnumType;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,9 +18,12 @@ public class Profesional extends Persona{
     
     private String matricula;
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private Especialidad especialidad;
 
     @OneToOne
     private Disponibilidad disponibilidad;
+    
+    @Enumerated(EnumType.STRING)
+    private Provincias provincia;
 }

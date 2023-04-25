@@ -2,6 +2,7 @@ package com.example.healthserviceapp.controllers;
 
 import com.example.healthserviceapp.Exceptions.MiException;
 import com.example.healthserviceapp.enums.Especialidad;
+import com.example.healthserviceapp.enums.Provincias;
 import com.example.healthserviceapp.service.ProfesionalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,6 +23,7 @@ public class ProfesionalControlador {
     public String registrarProfesional(ModelMap modelo) {
         
         modelo.put("especialidades", Especialidad.values());   
+        modelo.put("provincias", Provincias.values());
         
         return "profesional_form.html";
 
@@ -34,10 +36,11 @@ public class ProfesionalControlador {
     }
 
     @PostMapping("/registro")
-    public String registroProfesional(@RequestParam String id, @RequestParam String matricula, @RequestParam Especialidad especialidad) throws MiException {
+    public String registroProfesional(@RequestParam String id, @RequestParam String matricula,
+            @RequestParam Especialidad especialidad, @RequestParam Provincias provincia) throws MiException {
             //@RequestParam Disponibilidad disponibilidad) throws MiException {
 
-        profesionalServicio.crearProfesional(id, especialidad, matricula);
+        profesionalServicio.crearProfesional(id, especialidad, matricula, provincia);
 
         //System.out.println("matricula: " + matricula);
         //System.out.println("especialidad: " + especialidad);

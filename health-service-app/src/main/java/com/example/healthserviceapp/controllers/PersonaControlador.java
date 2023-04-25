@@ -10,6 +10,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -30,7 +34,7 @@ public class PersonaControlador {
     private UsuarioService usuarioService;
     
     @GetMapping("/datos")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_PACIENTE', 'ROLE_PROFESIONAL')")
+    @PreAuthorize("hasAnyRole('ROLE_PACIENTE', 'ROLE_PROFESIONAL')")
     public String vistaDatosPerfil(ModelMap modelo, HttpSession session) {
 
         modelo.put("sexos", Sexo.values());
@@ -59,23 +63,26 @@ public class PersonaControlador {
 
         Date dataFormateada = formato.parse(fechaNacimiento);
 
-        if (session.getAttribute("usuariosession") instanceof Usuario) {
-
-            Usuario usuario = (Usuario) session.getAttribute("usuariosession");
-
-            personaService.createPersona(nombre, apellido, sexo, dataFormateada, domicilio, dni, usuario, imagen);
-
-            usuarioService.loadUserByUsername(usuario.getEmail());
-        }
         if (session.getAttribute("usuariosession") instanceof Persona) {
-
             Persona persona = (Persona) session.getAttribute("usuariosession");
-
-            personaService.modifyPersona(nombre, apellido, sexo, dataFormateada, domicilio, dni, persona, imagen);
-            
+            personaService.modifyPersona(persona, nombre, apellido, sexo, dataFormateada, domicilio, dni, imagen);
             usuarioService.loadUserByUsername(persona.getEmail());
+        }
+        else if (session.getAttribute("usuariosession") instanceof Usuario) {
+            Usuario usuario = (Usuario) session.getAttribute("usuariosession");
+            personaService.createPersona(nombre, apellido, sexo, dataFormateada, domicilio, dni, usuario, imagen);
+            usuarioService.loadUserByUsername(usuario.getEmail());
         }
 
         return "redirect:/";
+    }
+
+    @GetMapping("/imagen")
+    public ResponseEntity<byte[]> imagenUsuario (HttpSession session){        
+       Persona persona = (Persona) session.getAttribute("usuariosession");
+       byte[] imagen= persona.getImagen().getContenido();
+       HttpHeaders headers = new HttpHeaders();
+       headers.setContentType(MediaType.IMAGE_JPEG);
+       return new ResponseEntity<>(imagen,headers, HttpStatus.OK); 
     }
 }

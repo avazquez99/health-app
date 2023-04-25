@@ -1,11 +1,13 @@
-function updatePreview(input, target) {
-    let file = input.files[0];
-    let reader = new FileReader();
-
-    reader.readAsDataURL(file);
-    reader.onload = function () {
-        let img = document.getElementById(target);
-        // can also use "this.result"
-        img.src = reader.result;
+function actualizarVistaPrevia() {
+    var archivoSeleccionado = document.getElementById("formFile").files[0];
+    var vistaPrevia = document.getElementById("previewImg");
+    var lector = new FileReader();
+    lector.onloadend = function () {
+        vistaPrevia.src = lector.result;
+    }
+    if (archivoSeleccionado) {
+        lector.readAsDataURL(archivoSeleccionado);
+    } else {
+        vistaPrevia.src = "#";
     }
 }

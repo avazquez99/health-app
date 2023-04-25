@@ -14,41 +14,42 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class WebSecurity extends WebSecurityConfigurerAdapter{
-    
+public class WebSecurity extends WebSecurityConfigurerAdapter {
+
     @Autowired
     private UsuarioService usuarioServicio;
-    
+
     @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth)throws Exception{
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(usuarioServicio).passwordEncoder(new BCryptPasswordEncoder());
     }
-    
-    
+
     @Override
-    protected void configure(HttpSecurity http) throws Exception{
+    protected void configure(HttpSecurity http) throws Exception {
         http
-                .authorizeHttpRequests()                 
-                    .antMatchers("/css/*","/js/*","/img/*", "/**")
-                    .permitAll()
-                    .antMatchers("/paciente/*").hasRole("PACIENTE")
-                    .antMatchers("/profesional/*").hasRole("PROFESIONAL")
-                    .antMatchers("/admin/*").hasRole("ADMIN")              
+                .authorizeHttpRequests()
+                .antMatchers("/css/*", "/js/*", "/img/*", "/**")
+                .permitAll()
+                .antMatchers("/paciente/*").hasRole("PACIENTE")
+                .antMatchers("/profesional/*").hasRole("PROFESIONAL")
+                .antMatchers("/admin/*").hasRole("ADMIN")
                 .and()
-                   .formLogin()
-                   .loginPage("/login")
-                   .loginProcessingUrl("/logincheck")
-                   .usernameParameter("email")
-                   .passwordParameter("password")
-                   .defaultSuccessUrl("/")
-                   .permitAll()
+                .formLogin()
+                .loginPage("/login")
+                .loginProcessingUrl("/logincheck")
+                .usernameParameter("email")
+                .passwordParameter("password")
+                .defaultSuccessUrl("/")
+                .failureUrl("/logout")
+                .permitAll()
                 .and()
-                   .logout()
-                   .logoutUrl("/logout")
-                   .logoutSuccessUrl("/")
-                   .permitAll()
+                .logout()
+                .logoutUrl("/logout")
+                .invalidateHttpSession(true)
+                .logoutSuccessUrl("/")
+                .permitAll()
                 .and()
-                   .csrf()
-                   .disable();
-    }  
+                .csrf()
+                .disable();
+    }
 }

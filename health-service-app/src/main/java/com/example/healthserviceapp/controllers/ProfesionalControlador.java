@@ -49,6 +49,7 @@ public class ProfesionalControlador {
             @RequestParam Especialidad especialidad, @RequestParam Provincias provincia,
             ModelMap modelo) {  ///FALTA LA DISPONIBILIDAD
 
+<<<<<<< HEAD
         try {
 
             profesionalServicio.crearProfesional(id, especialidad, matricula, provincia);
@@ -60,6 +61,10 @@ public class ProfesionalControlador {
             return "author_form.html";
 
         }
+=======
+        profesionalServicio.crearProfesional(id, especialidad, matricula, provincia);
+        modelo.put("exito", "Los datos fueron actualizados correctamente!");
+>>>>>>> d5a5260e0e1b04a73c2ddc0d81750a952f1e0aa7
 
         return "profesional_form.html";
 

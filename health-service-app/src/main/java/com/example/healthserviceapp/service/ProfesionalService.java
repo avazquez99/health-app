@@ -8,6 +8,7 @@ import com.example.healthserviceapp.enums.Especialidad;
 import com.example.healthserviceapp.enums.Provincias;
 import com.example.healthserviceapp.repository.ProfesionalRepository;
 import com.example.healthserviceapp.repository.UsuarioRepository;
+import static java.lang.Boolean.FALSE;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -53,6 +54,7 @@ public class ProfesionalService {
 
     }
 
+    @Transactional
     public void modificarProfesional(String id, String idProfesional, Especialidad especialidad, Disponibilidad disponibilidad,
             String matricula, Provincias provincia) throws MiException {
 
@@ -63,9 +65,23 @@ public class ProfesionalService {
             Profesional profesional = respuestaProfesional.get();
 
             profesional.setDisponibilidad(disponibilidad);
-            
+
             profesional.setProvincia(provincia);
 
+            profesionalRepository.save(profesional);
+
+        }
+
+    }
+
+    @Transactional
+    public void eliminarProfesional(String id) {
+
+        Optional<Profesional> presente = profesionalRepository.findById(id);
+        if (presente.isPresent()) {
+
+            Profesional profesional = presente.get();
+            profesional.setActivo(FALSE);
             profesionalRepository.save(profesional);
 
         }

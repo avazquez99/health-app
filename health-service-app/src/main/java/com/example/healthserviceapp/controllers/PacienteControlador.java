@@ -1,6 +1,5 @@
 package com.example.healthserviceapp.controllers;
 
-import com.example.healthserviceapp.Exceptions.MiException;
 import com.example.healthserviceapp.entity.Paciente;
 import com.example.healthserviceapp.entity.Usuario;
 import com.example.healthserviceapp.enums.ObraSocial;

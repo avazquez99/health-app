@@ -1,4 +1,4 @@
-<header th:fragment="nav_bar" class="p-3 mb-5 barraNav">
+<header th:fragment="nav_bar" class="p-3 barraNav">
     <div class="container">
 
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
@@ -9,6 +9,8 @@
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                 <li><a th:href="@{/}" class="nav-link px-2 text-white">Inicio</a></li>
                 <li><a th:href="@{/profesional/especialidades}" class="nav-link px-2 text-white">Especialidades</a></li>
+                <li><a th:href="@{/consulta}" class="nav-link px-2 text-white" th:if="${session.usuariosession != null}">Reservar consulta</a></li>
+                <li><a th:href="@{/profesional/turno}" th:if="${session.usuariosession != null}" class="nav-link px-2 text-white">Reservar turno</a></li>
             </ul>
 
             <div class="text-end d-flex">
@@ -34,8 +36,8 @@
                         </div>
                     </form>
                 </ul>
-
-
+                
+                
                 <div th:if="${session.usuariosession != null}" sec:authorize="hasAuthority('ROLE_PACIENTE')">
                     <a th:href="@{/perfil/datos}" class="btn btn-light me-3" type="button" aria-expanded="false">
                         Perfil

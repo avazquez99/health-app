@@ -5,7 +5,7 @@
         <meta charset="utf-8">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
         <link rel="stylesheet" href="/css/main.css">
-        <title>Admin dashboard</title>
+        <title>Especialidades</title>
     </head>
     <body>
 
@@ -27,38 +27,28 @@
                 </div>
             </div>
         </section>
-        
+
         <!-- SIDE BAR -->
 
-  <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-body-tertiary" style="width: 380px;">
-<div class="d-flex align-items-center flex-shrink-0 p-3 text-decoration-none border-bottom">
-  <span class="fs-5 fw-semibold">Especialidades</span>
-</div>
-<div class="list-group list-group-flush border-bottom scrollarea">
-  <a href="#" class="list-group-item list-group-item-action py-3 lh-sm">
-    <div class="d-flex w-100 align-items-center justify-content-between">
-      <strong class="mb-1">Ginecología</strong>
-    </div>
-  </a>
-  <a href="#" class="list-group-item list-group-item-action py-3 lh-sm">
-    <div class="d-flex w-100 align-items-center justify-content-between">
-      <strong class="mb-1">Odontología</strong>
-    </div>
-  </a>
-  <a href="#" class="list-group-item list-group-item-action py-3 lh-sm">
-    <div class="d-flex w-100 align-items-center justify-content-between">
-      <strong class="mb-1">Traumatología</strong>
-    </div>
-  </a>
-</div>
-</div>
+        <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-body-tertiary" style="width: 380px;">
+            <div class="d-flex align-items-center flex-shrink-0 p-3 text-decoration-none border-bottom">
+                <span class="fs-5 fw-semibold">Especialidades</span>
+            </div>
+            <div class="list-group list-group-flush border-bottom scrollarea">
+                <a th:each="especialidad : ${especialidades}" class="list-group-item list-group-item-action py-3 lh-sm">
+                    <div class=" d-flex w-100 align-items-center justify-content-between">
+                        <strong th:text="${especialidad}" class="mb-1"></strong>
+                    </div>
+                </a>
+            </div>
+        </div>
 
         <!-- FOOTER -->
 
         <div th:replace="fragments/footer :: footer"></div>
 
 
-        
+
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
     </body>
 </html>

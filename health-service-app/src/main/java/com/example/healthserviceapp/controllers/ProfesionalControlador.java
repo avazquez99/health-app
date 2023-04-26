@@ -64,14 +64,13 @@ public class ProfesionalControlador {
     }
 
     @PostMapping("/registro")
-    public String registroProfesional(@RequestParam String id, @RequestParam String matricula,
-            @RequestParam Especialidad especialidad, @RequestParam Provincias provincia,
-
-
+    public String registroProfesional(@RequestParam String id, String nombre, String apellido,
+            Sexo sexo, Date fechaNacimiento, String domicilio, Integer dni, MultipartFile archivo,
+            Provincias provincia, String matricula, Especialidad especialidad, Disponibilidad disponibilidad,
             ModelMap modelo) throws MiException {  ///FALTA LA DISPONIBILIDAD
 
 
-        profesionalServicio.crearProfesional(id, especialidad, matricula, provincia);
+        profesionalServicio.crearProfesional(nombre, apellido, sexo, fechaNacimiento, domicilio, dni, archivo, provincia, matricula, especialidad, disponibilidad);
         modelo.put("exito", "Los datos fueron actualizados correctamente!");
 
         return "profesional_form.html";

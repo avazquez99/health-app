@@ -2,19 +2,23 @@ package com.example.healthserviceapp.service;
 
 import com.example.healthserviceapp.Exceptions.MiException;
 import com.example.healthserviceapp.entity.Disponibilidad;
+import com.example.healthserviceapp.entity.Imagen;
 import com.example.healthserviceapp.entity.Profesional;
 import com.example.healthserviceapp.entity.Usuario;
 import com.example.healthserviceapp.enums.Especialidad;
 import com.example.healthserviceapp.enums.Provincias;
+import com.example.healthserviceapp.enums.Sexo;
 import com.example.healthserviceapp.repository.ProfesionalRepository;
 import com.example.healthserviceapp.repository.UsuarioRepository;
 import static java.lang.Boolean.FALSE;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class ProfesionalService {
@@ -23,6 +27,8 @@ public class ProfesionalService {
     ProfesionalRepository profesionalRepository;
     @Autowired
     UsuarioRepository usuarioRepository;
+    @Autowired
+    private ImagenService imagenService;
 
     @Transactional
     public void crearProfesional(String id, Especialidad especialidad, String matricula, Provincias provincia) {
@@ -44,6 +50,40 @@ public class ProfesionalService {
 
     }
 
+    @Transactional
+    public void crearProfesional(String nombre, String apellido,
+            Sexo sexo, Date fechaNacimiento, String domicilio, Integer dni, MultipartFile archivo,
+            Provincias provincia, String matricula, Especialidad especialidad, Disponibilidad disponibilidad) throws MiException {
+
+        verificarProfesional(nombre, apellido, domicilio, matricula);
+
+        Profesional profesional = new Profesional();
+
+        profesional.setId(profesional.getId());
+        profesional.setEmail(profesional.getEmail());
+        profesional.setPassword(profesional.getPassword());
+        profesional.setRol(profesional.getRol());
+        profesional.setActivo(profesional.getActivo());
+        profesional.setNombre(nombre);
+        profesional.setApellido(apellido);
+        profesional.setDni(dni);
+        profesional.setDomicilio(domicilio);
+        profesional.setFechaNacimiento(fechaNacimiento);
+        profesional.setSexo(sexo);
+        Imagen imagen = imagenService.guardar(archivo);
+        profesional.setImagen(imagen);
+        profesionalRepository.save(profesional);
+
+        borrarProfesional(profesional);
+    }
+
+    @Transactional
+    public void borrarProfesional(Profesional profesional) {
+
+        profesionalRepository.delete(profesional);
+
+    }
+
     public List<Profesional> listarProfesionales() {
 
         List<Profesional> profesionales = new ArrayList();
@@ -55,20 +95,30 @@ public class ProfesionalService {
     }
 
     @Transactional
-    public void modificarProfesional(String id, String idProfesional, Especialidad especialidad, Disponibilidad disponibilidad,
-            String matricula, Provincias provincia) throws MiException {
+    public void modificarProfesional(Profesional profesional, String nombre, String apellido,
+            Sexo sexo, Date fechaNacimiento, String domicilio, Integer dni, MultipartFile archivo,
+            Provincias provincia, String matricula, Especialidad especialidad, Disponibilidad disponibilidad) throws MiException {
 
-        Optional<Profesional> respuestaProfesional = profesionalRepository.findById(idProfesional); //Duda, si lo busco por matricula o por id
+        Optional<Profesional> respuesta = profesionalRepository.findById(profesional.getId());
 
-        if (respuestaProfesional.isPresent()) {
+        if (respuesta.isPresent()) {
 
-            Profesional profesional = respuestaProfesional.get();
+            Profesional nuevo_profesional = respuesta.get();
 
-            profesional.setDisponibilidad(disponibilidad);
-
-            profesional.setProvincia(provincia);
-
-            profesionalRepository.save(profesional);
+            nuevo_profesional.setNombre(nombre);
+            nuevo_profesional.setApellido(apellido);
+            nuevo_profesional.setSexo(sexo);
+            nuevo_profesional.setDomicilio(domicilio);
+            nuevo_profesional.setFechaNacimiento(fechaNacimiento);
+            nuevo_profesional.setDni(dni);
+            nuevo_profesional.setDisponibilidad(disponibilidad);
+            nuevo_profesional.setEspecialidad(especialidad);
+            nuevo_profesional.setMatricula(matricula);
+            nuevo_profesional.setProvincia(provincia);
+            String id_imagen = nuevo_profesional.getImagen().getId();
+            Imagen imagen = imagenService.actualizar(id_imagen, archivo);
+            nuevo_profesional.setImagen(imagen);
+            profesionalRepository.save(nuevo_profesional);
 
         }
 
@@ -88,18 +138,29 @@ public class ProfesionalService {
 
     }
 
-    private void validarMatricula(String matricula) throws MiException {
+    public void verificarProfesional(String nombre, String apellido, String domicilio, String matricula) throws MiException {
 
-        if (matricula.isEmpty() || matricula == null) {
+        if (nombre == null || nombre.isEmpty() || nombre.trim().isEmpty()) {
 
-            throw new MiException("La matrícula no puede ser un valor vacío o nulo");
+            throw new MiException("Error, el nombre no puede estar vacio");
+
+        }
+        if (apellido == null || apellido.isEmpty() || apellido.trim().isEmpty()) {
+
+            throw new MiException("Error, el apellido no puede estar vacio");
+
+        }
+        if (domicilio == null || domicilio.isEmpty() || domicilio.trim().isEmpty()) {
+
+            throw new MiException("Error, el domicilio no puede estar vacio");
+
+        }
+        if (matricula == null || matricula.isEmpty() || matricula.trim().isEmpty()) {
+
+            throw new MiException("Error, la matrícula no puede estar vacía o ser un valor nulo");
 
         }
 
     }
 
-    //private void validarDisponibilidad(Disponibilidad disponibilidad) throws MiException {
-    //}
-    //private void validarEspecialidad(Especialidad especialidad) throws MiException {
-    //}
 }

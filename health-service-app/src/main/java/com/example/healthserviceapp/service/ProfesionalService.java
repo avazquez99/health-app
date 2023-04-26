@@ -31,26 +31,6 @@ public class ProfesionalService {
     private ImagenService imagenService;
 
     @Transactional
-    public void crearProfesional(String id, Especialidad especialidad, String matricula, Provincias provincia) {
-
-        Profesional profesional = new Profesional();
-
-        Optional<Usuario> respuestaProfesional = usuarioRepository.findById(id);
-
-        if (respuestaProfesional.isPresent()) {
-
-            profesional.setEspecialidad(especialidad);
-            profesional.setMatricula(matricula);
-            profesional.setProvincia(provincia);
-            //profesional.setDisponibilidad(disponibilidad);
-
-            profesionalRepository.save(profesional);
-
-        }
-
-    }
-
-    @Transactional
     public void crearProfesional(String nombre, String apellido,
             Sexo sexo, Date fechaNacimiento, String domicilio, Integer dni, MultipartFile archivo,
             Provincias provincia, String matricula, Especialidad especialidad, Disponibilidad disponibilidad) throws MiException {

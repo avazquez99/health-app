@@ -58,11 +58,9 @@
                 <div class="form-group my-3">
                     <label class="form-label">Seleccionar Sexo</label>
                     <select class="custom-select" name="sexo" required th:if="${tipo} == 'Paciente'">
-                        <option></option>
                         <option th:each="sexo : ${sexos}" th:value="${sexo}" th:text="${sexo}" th:selected="${paciente.sexo}">
                     </select>
                     <select class="custom-select" name="sexo" required th:if="${tipo} == 'Usuario'">
-                        <option></option>
                         <option th:each="sexo : ${sexos}" th:value="${sexo}" th:text="${sexo}">
                     </select>
                 </div>
@@ -78,15 +76,10 @@
                 <label class="form-label">Seleccionar Obra Social</label>
 
                 <select class="custom-select" name="obraSocial" required th:if="${tipo} == 'Paciente'">
-
-                    <option th:each="ObraSocial : ${obrasSociales}" th:value="${ObraSocial}"
-                            th:text="${ObraSocial}" th:selected="${paciente.obraSocial}">
+                    <option th:each="ObraSocial : ${obrasSociales}" th:value="${ObraSocial}" th:text="${ObraSocial}" th:selected="${paciente.obraSocial}">
                 </select>
                 
                 <select class="custom-select" name="obraSocial" required th:if="${tipo} == 'Usuario'">
-
-                    <option></option>
-
                     <option th:each="ObraSocial : ${obrasSociales}" th:value="${ObraSocial}" th:text="${ObraSocial}">
                 </select>
         </div>

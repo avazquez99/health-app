@@ -32,18 +32,19 @@ public class ProfesionalService {
 
     @Transactional
     public void crearProfesional(String nombre, String apellido,
-            Sexo sexo, Date fechaNacimiento, String domicilio, Integer dni, MultipartFile archivo,
-            Provincias provincia, String matricula, Especialidad especialidad, Disponibilidad disponibilidad) throws MiException {
+            Sexo sexo, Date fechaNacimiento, String domicilio, Integer dni, 
+            MultipartFile archivo, Provincias provincia, String matricula, 
+            Especialidad especialidad, Disponibilidad disponibilidad, Usuario usuario) throws MiException {
 
         verificarProfesional(nombre, apellido, domicilio, matricula);
 
         Profesional profesional = new Profesional();
 
-        profesional.setId(profesional.getId());
-        profesional.setEmail(profesional.getEmail());
-        profesional.setPassword(profesional.getPassword());
-        profesional.setRol(profesional.getRol());
-        profesional.setActivo(profesional.getActivo());
+        profesional.setId(usuario.getId());
+        profesional.setEmail(usuario.getEmail());
+        profesional.setPassword(usuario.getPassword());
+        profesional.setRol(usuario.getRol());
+        profesional.setActivo(usuario.getActivo());
         profesional.setNombre(nombre);
         profesional.setApellido(apellido);
         profesional.setDni(dni);

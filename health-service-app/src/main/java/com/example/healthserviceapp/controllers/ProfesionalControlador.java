@@ -40,31 +40,29 @@ public class ProfesionalControlador {
         modelo.addAttribute("profesionales", profesionales);
 
         //modelo.put("exito", "La lista de profesionales se muestra a continuación");
+        modelo.put("especialidades", Especialidad.values());
 
         return "especialidades.html";
+    }
+    
+    @GetMapping("/turno")
+    public String reservarTurno(ModelMap modelo) throws MiException {
+        
+         List<Profesional> profesionales = profesionalServicio.listarProfesionales();
+        modelo.addAttribute("profesionales", profesionales);
+
+        
+        modelo.put("especialidades", Especialidad.values());
+
+        return "turno.html";
     }
 
     @PostMapping("/registro")
     public String registroProfesional(@RequestParam String id, @RequestParam String matricula,
             @RequestParam Especialidad especialidad, @RequestParam Provincias provincia,
             ModelMap modelo) {  ///FALTA LA DISPONIBILIDAD
-
-<<<<<<< HEAD
-        try {
-
-            profesionalServicio.crearProfesional(id, especialidad, matricula, provincia);
-            modelo.put("exito", "Los datos fueron actualizados correctamente!");
-
-        } catch (MiException e) {
-            
-            modelo.put("error", e.getMessage());
-            return "author_form.html";
-
-        }
-=======
         profesionalServicio.crearProfesional(id, especialidad, matricula, provincia);
         modelo.put("exito", "Los datos fueron actualizados correctamente!");
->>>>>>> d5a5260e0e1b04a73c2ddc0d81750a952f1e0aa7
 
         return "profesional_form.html";
 

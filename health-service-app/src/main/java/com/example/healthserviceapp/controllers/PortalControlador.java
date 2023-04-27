@@ -34,14 +34,20 @@ public class PortalControlador {
     @GetMapping("/")
     public String inicio(HttpSession session, ModelMap modelo) {
 
+        String tipo = "";
+        
         if (session.getAttribute("usuariosession") instanceof Profesional) {
             Profesional profesional = (Profesional) session.getAttribute("usuariosession");
             modelo.put("usuario", profesional);
+            tipo = "Profesional";
         }
         if (session.getAttribute("usuariosession") instanceof Paciente) {
             Paciente paciente = (Paciente) session.getAttribute("usuariosession");
             modelo.put("usuario", paciente);
+            tipo = "Paciente";
         }
+        
+        modelo.put("tipo", tipo);
         return "index.html";
     }
 

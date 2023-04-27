@@ -25,14 +25,14 @@ public class ConsultaControlador {
     @Autowired
     private UsuarioService usuarioService;
 
-    @GetMapping("")
+    @GetMapping("/provincia")
     public String provincias(HttpSession session, ModelMap modelo){
         modelo.put("paso", 1);
         modelo.put("provincias", Provincias.values());
         return "consulta.html";
     }
 
-    @GetMapping("/provincia")
+    @GetMapping("/especialidad")
     public String especialidades(@RequestParam String provincia, HttpSession session, ModelMap modelo){
         modelo.put("paso", 2);
         modelo.put("provincia", provincia);
@@ -40,7 +40,7 @@ public class ConsultaControlador {
         return "consulta.html";
     }
 
-    @GetMapping("/especialidad")
+    @GetMapping("/profesional")
     public String profesionales(@RequestParam String provincia, @RequestParam String especialidad, HttpSession session, ModelMap modelo){
         modelo.put("paso", 3);
         modelo.put("provincia", provincia);
@@ -50,8 +50,8 @@ public class ConsultaControlador {
         return "consulta.html";
     }
 
-    @GetMapping("/profesional")
-    public String disponibilidad(@RequestParam String provincia, @RequestParam String especialidad, @RequestParam String profesional, HttpSession session, ModelMap modelo){
+    @GetMapping("/disponibilidad")
+    public String disponibilidadProfesional(@RequestParam String provincia, @RequestParam String especialidad, @RequestParam String profesional, HttpSession session, ModelMap modelo){
         modelo.put("paso", 4);
         modelo.put("provincia", provincia);
         modelo.put("especialidad", especialidad);

@@ -3,17 +3,20 @@ package com.example.healthserviceapp.controllers;
 import com.example.healthserviceapp.Exceptions.MiException;
 import com.example.healthserviceapp.entity.Disponibilidad;
 import com.example.healthserviceapp.entity.Profesional;
+import com.example.healthserviceapp.entity.Usuario;
 import com.example.healthserviceapp.enums.Especialidad;
 import com.example.healthserviceapp.enums.Provincias;
 import com.example.healthserviceapp.enums.Sexo;
 import com.example.healthserviceapp.service.ProfesionalService;
+import com.example.healthserviceapp.service.UsuarioService;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,6 +28,9 @@ public class ProfesionalControlador {
 
     @Autowired
     private ProfesionalService profesionalServicio;
+
+    @Autowired
+    private UsuarioService usuarioServicio;
 
     @GetMapping("/registrar")
     public String registrarProfesional(ModelMap modelo) {
@@ -43,21 +49,18 @@ public class ProfesionalControlador {
         modelo.addAttribute("profesionales", profesionales);
 
         //modelo.put("exito", "La lista de profesionales se muestra a continuación");
-
         modelo.put("especialidades", Especialidad.values());
-
 
         return "especialidades.html";
 
     }
-    
+
     @GetMapping("/turno")
     public String reservarTurno(ModelMap modelo) throws MiException {
-        
-         List<Profesional> profesionales = profesionalServicio.listarProfesionales();
+
+        List<Profesional> profesionales = profesionalServicio.listarProfesionales();
         modelo.addAttribute("profesionales", profesionales);
 
-        
         modelo.put("especialidades", Especialidad.values());
 
         return "turno.html";
@@ -65,34 +68,29 @@ public class ProfesionalControlador {
 
     @PostMapping("/registro")
     public String registroProfesional(@RequestParam String id, String nombre, String apellido,
-            Sexo sexo, Date fechaNacimiento, String domicilio, Integer dni, MultipartFile archivo,
+            Sexo sexo, String fechaNacimiento, String domicilio, Integer dni, MultipartFile imagen,
             Provincias provincia, String matricula, Especialidad especialidad, Disponibilidad disponibilidad,
-            ModelMap modelo) throws MiException {  ///FALTA LA DISPONIBILIDAD
+            ModelMap modelo, HttpSession session) throws Exception {  ///FALTA LA DISPONIBILIDAD
 
+        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
 
-        profesionalServicio.crearProfesional(nombre, apellido, sexo, fechaNacimiento, domicilio, dni, archivo, provincia, matricula, especialidad, disponibilidad);
-        modelo.put("exito", "Los datos fueron actualizados correctamente!");
+        Date dataFormateada = formato.parse(fechaNacimiento);
 
-        return "profesional_form.html";
+        if (session.getAttribute("usuariosession") instanceof Profesional) {
 
-    }
+            Profesional profesional = (Profesional) session.getAttribute("usuariosession");
+            profesionalServicio.modificarProfesional(profesional, nombre, apellido, sexo, dataFormateada, domicilio, dni, imagen, provincia, matricula, especialidad, disponibilidad);
+            usuarioServicio.loadUserByUsername(profesional.getEmail());
 
-    @PostMapping("/modificar/{id}")
-    public String modificarProfesional(@PathVariable String id, Profesional profesional, String nombre, String apellido,
-            Sexo sexo, Date fechaNacimiento, String domicilio, Integer dni, MultipartFile archivo,
-            Provincias provincia, String matricula, Especialidad especialidad, Disponibilidad disponibilidad) throws MiException {
+        } else if (session.getAttribute("usuariosession") instanceof Usuario) {
 
-        profesionalServicio.modificarProfesional(profesional, nombre, apellido, sexo, fechaNacimiento, domicilio, dni, archivo, provincia, matricula, especialidad, disponibilidad);
-        return "redirect:/profesional/registro";
+            Usuario usuario = (Usuario) session.getAttribute("usuariosession");
+            profesionalServicio.crearProfesional(nombre, apellido, sexo, dataFormateada, domicilio, dni, imagen, provincia, matricula, especialidad, disponibilidad, usuario);
+            usuarioServicio.loadUserByUsername(usuario.getEmail());
 
-    }
+        }
 
-    @PostMapping("/eliminar/{id}")
-    public String eliminarProfesional(@PathVariable String id) throws MiException {
-
-        profesionalServicio.eliminarProfesional(id);
-        return "redirect:/profesional/registro";
-
+        return "redirect:/";
     }
 
 }

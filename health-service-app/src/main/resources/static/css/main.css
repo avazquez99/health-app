@@ -137,6 +137,18 @@
     font-size: 15px;
     margin-bottom: 10px;
   }
+  
+  .mensajeError{
+    width: 100%;
+    margin: auto;
+    text-align: center;
+}
+
+.mensajeExito{
+    width: 100%;
+    margin: auto;
+    text-align: center;
+}
 
 #previewImg {
   max-width: 10%;

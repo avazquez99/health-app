@@ -37,6 +37,9 @@
                     </form>
                 </ul>
                 
+                <div>
+                    <p class="text-white me-3" sec:authorize="hasAuthority('ROLE_PACIENTE')" th:if="${session.usuariosession != null}" th:text=" 'Bienvenido '+ ${session.usuariosession.nombre}"></p>
+                </div>
                 
                 <div th:if="${session.usuariosession != null}" sec:authorize="hasAuthority('ROLE_PACIENTE')">
                     <a th:href="@{/perfil/datos}" class="btn btn-light me-3" type="button" aria-expanded="false">

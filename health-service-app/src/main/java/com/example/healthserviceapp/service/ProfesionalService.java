@@ -53,6 +53,9 @@ public class ProfesionalService {
         profesional.setSexo(sexo);
         Imagen imagen = imagenService.guardar(archivo);
         profesional.setImagen(imagen);
+        profesional.setProvincia(provincia);
+        profesional.setEspecialidad(especialidad);
+        profesional.setDisponibilidad(null);
         profesionalRepository.save(profesional);
 
         borrarProfesional(profesional);
@@ -99,6 +102,7 @@ public class ProfesionalService {
             String id_imagen = nuevo_profesional.getImagen().getId();
             Imagen imagen = imagenService.actualizar(id_imagen, archivo);
             nuevo_profesional.setImagen(imagen);
+            nuevo_profesional.setDisponibilidad(null);
             profesionalRepository.save(nuevo_profesional);
 
         }

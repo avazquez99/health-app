@@ -36,10 +36,15 @@
                         </div>
                     </form>
                 </ul>
-                
-                               
+                         
                 <div th:if="${session.usuariosession != null}" sec:authorize="hasAuthority('ROLE_PACIENTE')">
                     <a th:href="@{/perfil/datos}" class="btn btn-light me-3" type="button" aria-expanded="false">
+                        Perfil
+                    </a>
+                </div>
+
+                <div th:if="${session.usuariosession != null}" sec:authorize="hasAuthority('ROLE_PROFESIONAL')">
+                    <a th:href="@{/profesional/perfil}" class="btn btn-light me-3" type="button" aria-expanded="false">
                         Perfil
                     </a>
                 </div> 

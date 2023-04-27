@@ -2,12 +2,9 @@ package com.example.healthserviceapp.controllers;
 
 import com.example.healthserviceapp.Exceptions.MiException;
 import com.example.healthserviceapp.entity.Paciente;
-import com.example.healthserviceapp.entity.Persona;
 import com.example.healthserviceapp.entity.Profesional;
 import com.example.healthserviceapp.service.UsuarioService;
-
 import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;

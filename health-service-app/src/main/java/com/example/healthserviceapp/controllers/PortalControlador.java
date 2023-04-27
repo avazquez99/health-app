@@ -3,6 +3,7 @@ package com.example.healthserviceapp.controllers;
 import com.example.healthserviceapp.Exceptions.MiException;
 import com.example.healthserviceapp.entity.Paciente;
 import com.example.healthserviceapp.entity.Persona;
+import com.example.healthserviceapp.entity.Profesional;
 import com.example.healthserviceapp.service.UsuarioService;
 
 import javax.servlet.http.HttpSession;
@@ -33,9 +34,9 @@ public class PortalControlador {
     @GetMapping("/")
     public String inicio(HttpSession session, ModelMap modelo) {
 
-        if (session.getAttribute("usuariosession") instanceof Persona) {
-            Persona persona = (Persona) session.getAttribute("usuariosession");
-            modelo.put("usuario", persona);
+        if (session.getAttribute("usuariosession") instanceof Profesional) {
+            Profesional profesional = (Profesional) session.getAttribute("usuariosession");
+            modelo.put("usuario", profesional);
         }
         if (session.getAttribute("usuariosession") instanceof Paciente) {
             Paciente paciente = (Paciente) session.getAttribute("usuariosession");

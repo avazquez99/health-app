@@ -23,7 +23,7 @@ public class PortalControlador {
     @GetMapping("/login")
     public String ingresar(@RequestParam(required = false) String error, ModelMap modelo) {       
         if (error != null) {
-            modelo.put("error", "usuario o contraseña invalidos");
+            modelo.put("error", "email y contraseña no coinciden");
         }
         return "index.html";
     }

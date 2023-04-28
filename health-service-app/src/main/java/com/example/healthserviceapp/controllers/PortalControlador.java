@@ -3,7 +3,10 @@ package com.example.healthserviceapp.controllers;
 import com.example.healthserviceapp.Exceptions.MiException;
 import com.example.healthserviceapp.entity.Paciente;
 import com.example.healthserviceapp.entity.Profesional;
+import com.example.healthserviceapp.enums.Especialidad;
+import com.example.healthserviceapp.service.ProfesionalService;
 import com.example.healthserviceapp.service.UsuarioService;
+import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,20 +22,35 @@ public class PortalControlador {
 
     @Autowired
     private UsuarioService usuarioService;
+    @Autowired
+    private ProfesionalService profesionalService;
 
     @GetMapping("/login")
-    public String ingresar(@RequestParam(required = false) String error, ModelMap modelo) {       
+    public String ingresar(@RequestParam(required = false) String error, ModelMap modelo) {
         if (error != null) {
             modelo.put("error", "email y contraseña no coinciden");
         }
         return "index.html";
     }
 
+    @GetMapping("/especialidades")
+    public String listaEspecialidades(ModelMap modelo) throws MiException {
+
+        List<Profesional> profesionales = profesionalService.listarProfesionales();
+        modelo.addAttribute("profesionales", profesionales);
+
+        //modelo.put("exito", "La lista de profesionales se muestra a continuación");
+        modelo.put("especialidades", Especialidad.values());
+
+        return "especialidades.html";
+
+    }
+
     @GetMapping("/")
     public String inicio(HttpSession session, ModelMap modelo) {
 
         String tipo = "";
-        
+
         if (session.getAttribute("usuariosession") instanceof Profesional) {
             Profesional profesional = (Profesional) session.getAttribute("usuariosession");
             modelo.put("usuario", profesional);
@@ -43,7 +61,7 @@ public class PortalControlador {
             modelo.put("usuario", paciente);
             tipo = "Paciente";
         }
-        
+
         modelo.put("tipo", tipo);
         return "index.html";
     }

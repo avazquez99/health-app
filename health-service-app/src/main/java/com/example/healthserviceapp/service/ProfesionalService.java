@@ -37,8 +37,8 @@ public class ProfesionalService {
 
     @Transactional
     public void crearProfesional(String nombre, String apellido,
-            Sexo sexo, Date fechaNacimiento, String domicilio, Integer dni, 
-            MultipartFile archivo, Provincias provincia, String matricula, 
+            Sexo sexo, Date fechaNacimiento, String domicilio, Integer dni,
+            MultipartFile archivo, Provincias provincia, String matricula,
             Especialidad especialidad, Disponibilidad disponibilidad, Usuario usuario) throws MiException {
 
         verificarProfesional(nombre, apellido, domicilio, matricula);
@@ -81,6 +81,18 @@ public class ProfesionalService {
 
         return profesionales;
 
+    }
+
+    public List<Profesional> listarPorEspecialidad(Especialidad especialidad) {
+        List<Profesional> profesionales = new ArrayList();
+        profesionales = profesionalRepository.buscarPorEspecialidad(especialidad);
+        return profesionales;
+    }
+
+    public List<Profesional> listarPorLocalidad(Provincias provincia) {
+        List<Profesional> profesionales = new ArrayList();
+        profesionales = profesionalRepository.buscarPorLocalidad(provincia);
+        return profesionales;
     }
 
     @Transactional

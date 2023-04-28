@@ -55,6 +55,7 @@ public class ProfesionalService {
         profesional.setDni(dni);
         profesional.setDomicilio(domicilio);
         profesional.setFechaNacimiento(fechaNacimiento);
+        profesional.setMatricula(matricula);
         profesional.setSexo(sexo);
         Imagen imagen = imagenService.guardar(archivo);
         profesional.setImagen(imagen);

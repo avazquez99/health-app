@@ -86,16 +86,19 @@ public class ProfesionalControlador {
     public String registroProfesional(String nombre, String apellido,
             Sexo sexo, String fechaNacimiento, String domicilio, Integer dni, MultipartFile imagen,
             Provincias provincia, String matricula, Especialidad especialidad,
-            ModelMap modelo, HttpSession session, String[] diasLaborales) throws Exception { /// FALTA LA DISPONIBILIDAD
+            String[] diasLaborales, Integer entrada, Integer inicio_descanso, Integer fin_descanso, Integer salida,
+            ModelMap modelo, HttpSession session) throws Exception {
 
         SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
         Date dataFormateada = formato.parse(fechaNacimiento);
+
         Disponibilidad disponibilidad = new Disponibilidad();
         disponibilidad.setDias(diasLaborales);
-        disponibilidad.setEntrada(null);
-        disponibilidad.setInicioDescanso(null);
-        disponibilidad.setFinDescanso(null);
-        disponibilidad.setSalida(null);
+        disponibilidad.setEntrada(entrada);
+        disponibilidad.setInicioDescanso(inicio_descanso);
+        disponibilidad.setFinDescanso(fin_descanso);
+        disponibilidad.setSalida(salida);
+
         if (session.getAttribute("usuariosession") instanceof Profesional) {
             Profesional profesional = (Profesional) session.getAttribute("usuariosession");
             profesionalServicio.modificarProfesional(profesional, nombre, apellido, sexo, dataFormateada, domicilio,

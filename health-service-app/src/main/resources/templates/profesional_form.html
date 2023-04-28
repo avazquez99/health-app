@@ -114,18 +114,26 @@
       </div>
 
       <div class="mb-3">
-        <label class="form-label">Seleccionar Horarios</label>
+        <label class="form-label">Seleccionar Horarios</label><br>
         <div th:if="${tipo} == 'Usuario'">
-          <!-- <input type="time" name="entrada" step="3600" required>
-          <input type="time" name="inicio_descanso" step="3600" required>
-          <input type="time" name="fin_descanso" step="3600" required>
-          <input type="time" name="salida" step="3600" required> -->
+          <label class="form-label">Inicio de jornada</label>
+          <input type="number" name="entrada" min="0" max="23" step="1" required>
+          <label class="form-label">Inicio de descanso</label>
+          <input type="number" name="inicio_descanso" min="0" max="23" step="1" required>
+          <label class="form-label">Fin de descanso</label>
+          <input type="number" name="fin_descanso" min="0" max="23" step="1" required>
+          <label class="form-label">Fin de jornada</label>
+          <input type="number" name="salida" min="0" max="23" step="1" required>
         </div>
         <div th:if="${tipo} == 'Profesional'">
-          <!-- <input type="time" name="entrada" step="3600" th:value="${profesional.disponibilidad.entrada}" required> -->
-          <!-- <input type="time" name="inicio_descanso" step="3600" th:value="${profesional.disponibilidad.inicioDescanso}" required>
-          <input type="time" name="fin_descanso" step="3600" th:value="${profesional.disponibilidad.finDescanso}" required>
-          <input type="time" name="salida" step="3600" th:value="${profesional.disponibilidad.salida}" required> -->
+          <label class="form-label">Inicio de jornada</label>
+          <input type="number" name="entrada" min="0" max="23" step="1" th:value="${profesional.disponibilidad.entrada}" required>
+          <label class="form-label">Inicio de descanso</label>
+          <input type="number" name="inicio_descanso" min="0" max="23" step="1" th:value="${profesional.disponibilidad.inicioDescanso}" required>
+          <label class="form-label">Fin de descanso</label>
+          <input type="number" name="fin_descanso" min="0" max="23" step="1" th:value="${profesional.disponibilidad.finDescanso}" required>
+          <label class="form-label">Fin de jornada</label>
+          <input type="number" name="salida" min="0" max="23" step="1" th:value="${profesional.disponibilidad.salida}" required>
         </div>
       </div>
       <button type="submit" class="btn btn-primary mt-3 botones">Enviar</button>

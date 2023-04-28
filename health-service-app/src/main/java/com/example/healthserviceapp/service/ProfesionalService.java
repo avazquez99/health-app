@@ -8,16 +8,15 @@ import com.example.healthserviceapp.entity.Usuario;
 import com.example.healthserviceapp.enums.Especialidad;
 import com.example.healthserviceapp.enums.Provincias;
 import com.example.healthserviceapp.enums.Sexo;
-import com.example.healthserviceapp.repository.DisponibilidadRepository;
 import com.example.healthserviceapp.repository.ProfesionalRepository;
 import static java.lang.Boolean.FALSE;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
@@ -163,6 +162,30 @@ public class ProfesionalService {
 
         }
 
+    }
+
+    @Transactional(readOnly = true)
+    public List<String> listarProvincias() {
+        List<String> provincias = new ArrayList();
+        provincias = profesionalRepository.listarProvincias();
+        return provincias;
+    }
+
+    @Transactional(readOnly = true)
+    public List<String> listarEspecialidadesPorProvincia(String provincia) {
+        List<String> especialidades = new ArrayList();
+        Provincias prov = Provincias.valueOf(provincia);
+        especialidades = profesionalRepository.listarEspecialidadesPorProvincia(prov);
+        return especialidades;
+    }
+
+    @Transactional(readOnly = true)
+    public List<String> listarProfesionalPorEspecialidadesPorProvincia(String provincia, String especialidad) {
+        List<String> profesionales = new ArrayList();
+        Provincias prov = Provincias.valueOf(provincia);
+        Especialidad esp = Especialidad.valueOf(especialidad);
+        profesionales = profesionalRepository.listarProfesionalPorEspecialidadesPorProvincia(prov, esp);
+        return profesionales;
     }
 
 }

@@ -11,12 +11,21 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 @Repository
-public interface ProfesionalRepository extends JpaRepository<Profesional, String>{
-    
+public interface ProfesionalRepository extends JpaRepository<Profesional, String> {
+
     @Query("SELECT p FROM Profesional p WHERE p.especialidad = :especialidad")
     public List<Profesional> buscarPorEspecialidad(@Param("especialidad") Especialidad especialidad);
-    
+
     @Query("SELECT p FROM Profesional p WHERE p.provincia = :provincia")
     public List<Profesional> buscarPorLocalidad(@Param("provincia") Provincias provincia);
-    
+
+    @Query("SELECT DISTINCT(p.provincia) FROM Profesional p")
+    public List<String> listarProvincias();
+
+    @Query("SELECT DISTINCT(p.especialidad) FROM Profesional p WHERE p.provincia = :provincia")
+    public List<String> listarEspecialidadesPorProvincia(@Param("provincia") Provincias provincia);
+
+    @Query("SELECT DISTINCT(p.id) FROM Profesional p WHERE (p.provincia = :provincia AND p.especialidad = :especialidad)")
+    public List<String> listarProfesionalPorEspecialidadesPorProvincia(@Param("provincia") Provincias provincia,
+            @Param("especialidad") Especialidad especialidad);
 }

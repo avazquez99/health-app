@@ -15,7 +15,7 @@
   <header th:replace="fragments/navbar :: nav_bar"></header>
 
   <div th:if="${paso==1}">
-    <form method="GET" th:action="@{/consulta/provincia}">
+    <form method="GET" th:action="@{/consulta/especialidad}">
       <div class="form-group my-3">
         <label class="form-label">Seleccione provincia</label>
         <select class="custom-select" name="provincia" required>
@@ -28,7 +28,7 @@
 
   <div th:if="${paso==2}">
     <p th:text="'Usted selecciono la provincia de ' + ${provincia}"></p>
-    <form method="GET" th:action="@{/consulta/especialidad}">
+    <form method="GET" th:action="@{/consulta/profesional}">
       <input name="provincia" th:value="${provincia}" hidden>
       <div class="form-group my-3">
         <label class="form-label">Seleccione especialidad</label>
@@ -43,13 +43,13 @@
   <div th:if="${paso==3}">
     <p th:text="'Usted selecciono la provincia de ' + ${provincia}"></p>
     <p th:text="'Usted selecciono la especialidad de ' + ${especialidad}"></p>
-    <form method="GET" th:action="@{/consulta/profesional}">
+    <form method="GET" th:action="@{/consulta/disponibilidad}">
       <input name="provincia" th:value="${provincia}" hidden>
       <input name="especialidad" th:value="${especialidad}" hidden>
       <div class="form-group my-3">
         <label class="form-label">Seleccione profesional</label>
         <select class="custom-select" name="profesional" required>
-          <option th:each="profesional : ${profesionales}" th:value="${profesional.id}" th:text="${profesional.email}">
+          <option th:each="profesional : ${profesionales}" th:value="${profesional}" th:text="${profesional}">
         </select>
       </div>
       <button type="submit" class="btn btn-primary mt-3 botones">Siguiente</button>
@@ -59,7 +59,7 @@
   <div th:if="${paso==4}">
     <p th:text="'Usted selecciono la provincia de ' + ${provincia}"></p>
     <p th:text="'Usted selecciono la especialidad de ' + ${especialidad}"></p>
-    <p th:text="'Usted selecciono el profesional ' + ${profesional.email}"></p>
+    <p th:text="'Usted selecciono el profesional ' + ${profesional}"></p>
     <form method="GET" th:action="@{/consulta/profesional}">
       <input name="profesional" th:value="${profesional}" hidden>
 

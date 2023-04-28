@@ -14,8 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.healthserviceapp.entity.Usuario;
-import com.example.healthserviceapp.enums.Especialidad;
-import com.example.healthserviceapp.enums.Provincias;
+import com.example.healthserviceapp.service.ProfesionalService;
 import com.example.healthserviceapp.service.UsuarioService;
 
 @Controller
@@ -25,10 +24,13 @@ public class ConsultaControlador {
     @Autowired
     private UsuarioService usuarioService;
 
+    @Autowired
+    private ProfesionalService profesionalService;
+
     @GetMapping("/provincia")
     public String provincias(HttpSession session, ModelMap modelo){
         modelo.put("paso", 1);
-        modelo.put("provincias", Provincias.values());
+        modelo.put("provincias", profesionalService.listarProvincias());
         return "consulta.html";
     }
 
@@ -36,7 +38,7 @@ public class ConsultaControlador {
     public String especialidades(@RequestParam String provincia, HttpSession session, ModelMap modelo){
         modelo.put("paso", 2);
         modelo.put("provincia", provincia);
-        modelo.put("especialidades", Especialidad.values());
+        modelo.put("especialidades", profesionalService.listarEspecialidadesPorProvincia(provincia));
         return "consulta.html";
     }
 
@@ -45,8 +47,7 @@ public class ConsultaControlador {
         modelo.put("paso", 3);
         modelo.put("provincia", provincia);
         modelo.put("especialidad", especialidad);
-        List<Usuario> profesionales = usuarioService.listarUsuarios();
-        modelo.put("profesionales", profesionales);
+        modelo.put("profesionales", profesionalService.listarProfesionalPorEspecialidadesPorProvincia(provincia, especialidad));
         return "consulta.html";
     }
 

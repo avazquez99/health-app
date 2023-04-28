@@ -8,8 +8,8 @@ import com.example.healthserviceapp.entity.Usuario;
 import com.example.healthserviceapp.enums.Especialidad;
 import com.example.healthserviceapp.enums.Provincias;
 import com.example.healthserviceapp.enums.Sexo;
+import com.example.healthserviceapp.repository.DisponibilidadRepository;
 import com.example.healthserviceapp.repository.ProfesionalRepository;
-import com.example.healthserviceapp.repository.UsuarioRepository;
 import static java.lang.Boolean.FALSE;
 import java.util.ArrayList;
 import java.util.Date;
@@ -24,11 +24,16 @@ import org.springframework.web.multipart.MultipartFile;
 public class ProfesionalService {
 
     @Autowired
-    ProfesionalRepository profesionalRepository;
+    private ProfesionalRepository profesionalRepository;
+
     @Autowired
-    UsuarioRepository usuarioRepository;
+    private UsuarioService usuarioService;
+
     @Autowired
     private ImagenService imagenService;
+
+    @Autowired
+    private DisponibilidadService disponibilidadService;
 
     @Transactional
     public void crearProfesional(String nombre, String apellido,
@@ -55,10 +60,10 @@ public class ProfesionalService {
         profesional.setImagen(imagen);
         profesional.setProvincia(provincia);
         profesional.setEspecialidad(especialidad);
-        profesional.setDisponibilidad(null);
+        profesional.setDisponibilidad(disponibilidadService.guardar(disponibilidad));
         profesionalRepository.save(profesional);
 
-        borrarProfesional(profesional);
+        usuarioService.eliminarUsuario(usuario.getId());
     }
 
     @Transactional
@@ -86,7 +91,6 @@ public class ProfesionalService {
         Optional<Profesional> respuesta = profesionalRepository.findById(profesional.getId());
 
         if (respuesta.isPresent()) {
-
             Profesional nuevo_profesional = respuesta.get();
 
             nuevo_profesional.setNombre(nombre);
@@ -102,9 +106,9 @@ public class ProfesionalService {
             String id_imagen = nuevo_profesional.getImagen().getId();
             Imagen imagen = imagenService.actualizar(id_imagen, archivo);
             nuevo_profesional.setImagen(imagen);
-            nuevo_profesional.setDisponibilidad(null);
+            String idDisponibilidad = profesional.getDisponibilidad().getId();
+            nuevo_profesional.setDisponibilidad(disponibilidadService.modificar(idDisponibilidad, disponibilidad));
             profesionalRepository.save(nuevo_profesional);
-
         }
 
     }

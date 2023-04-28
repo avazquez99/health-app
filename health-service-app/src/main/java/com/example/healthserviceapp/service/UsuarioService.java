@@ -79,6 +79,18 @@ public class UsuarioService implements UserDetailsService {
 
         if (presente.isPresent()) {
             usuario = presente.get();
+            usuarioRepository.delete(usuario);
+        }
+    }
+
+    @Transactional
+    public void darBaja(String id) {
+        Usuario usuario = new Usuario();
+
+        Optional<Usuario> presente = usuarioRepository.findById(id);
+
+        if (presente.isPresent()) {
+            usuario = presente.get();
             usuario.setActivo(FALSE);
             usuarioRepository.save(usuario);
         }

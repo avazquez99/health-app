@@ -31,4 +31,6 @@ public class Disponibilidad {
 
     @Temporal(TemporalType.TIME)
     private Date finDescanso;
+
+    private String[] dias;
 }

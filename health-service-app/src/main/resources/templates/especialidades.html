@@ -30,18 +30,81 @@
 
         <!-- SIDE BAR -->
 
-        <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-body-tertiary" style="width: 380px;">
-            <div class="d-flex align-items-center flex-shrink-0 p-3 text-decoration-none border-bottom">
-                <span class="fs-5 fw-semibold">Especialidades</span>
+        <div class="d-flex">
+            <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-body-tertiary me-5" style="width: 300px;">
+                <div class="d-flex align-items-center flex-shrink-0 p-3 text-decoration-none border-bottom">
+                    <span class="fs-5 fw-semibold">Especialidades</span>
+                </div>
+                <div class="list-group list-group-flush border-bottom scrollarea">
+                    <a th:each="especialidad : ${especialidades}" class="list-group-item list-group-item-action py-3 lh-sm">
+                        <div class=" d-flex w-100 align-items-center justify-content-between">
+                            <strong th:text="${especialidad}" class="mb-1"></strong>
+                        </div>
+                    </a>
+                </div>
             </div>
-            <div class="list-group list-group-flush border-bottom scrollarea">
-                <a th:each="especialidad : ${especialidades}" class="list-group-item list-group-item-action py-3 lh-sm">
-                    <div class=" d-flex w-100 align-items-center justify-content-between">
-                        <strong th:text="${especialidad}" class="mb-1"></strong>
-                    </div>
-                </a>
+
+
+            <!-- TABLA PROFESIONALES -->
+
+            <div class="mb-5 col-8">
+                <div>
+                <form class="d-flex col-4" role="search">
+                    <input class="form-control me-2" type="search" name="email" placeholder="Buscar" aria-label="Search">
+                    <button class="btn btn-outline-primary" type="submit">Buscar</button>
+                </form>
+            </div>
+                
+                <div class="mt-5">
+                <div class="table-responsive">
+                    <table class="table table-striped text-dark table-hover">
+                        <thead>
+                            <tr>
+
+                                <th>Profesional</th>
+                                <th>Precio de Consulta</th>
+                                <th>Rating</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+
+                                <td>
+                                    <div class="d-flex align-items-center"><img class="rounded-circle me-3" src="https://i.imgur.com/C4egmYM.jpg" width="30"><span class="ml-2">Christan M.</span></div>
+                                </td>
+                                <td>$750<br></td>
+                                <td class="fw-bold">8/10</td>
+                                <td>
+
+                                    <a href="#" class="link" th:if="${session.usuariosession != null}">Reservar Turno</a>
+                                </td>
+                                <td><i class="fa fa-external-link external-link"></i></td>
+                            </tr>
+                            <tr>
+
+                                <td>
+                                    <div class="d-flex align-items-center"><img class="rounded-circle me-3" src="https://i.imgur.com/0LKZQYM.jpg" width="30"><span class="ml-2">Maria Sam</span></div>
+                                </td>
+                                <td>$1000<br></td>
+                                <td class="fw-bold">9/10</td>
+                                <td>
+                                    <a href="#" class="link">Reservar Turno</a>
+                                </td>
+                                <td><i class="fa fa-external-link external-link"></i></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
+            </div>
+
+            
+
+
+
+
 
         <!-- FOOTER -->
 

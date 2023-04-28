@@ -5,6 +5,7 @@ import com.example.healthserviceapp.entity.Disponibilidad;
 import com.example.healthserviceapp.entity.Profesional;
 import com.example.healthserviceapp.entity.Usuario;
 import com.example.healthserviceapp.enums.Especialidad;
+import com.example.healthserviceapp.enums.ObraSocial;
 import com.example.healthserviceapp.enums.Provincias;
 import com.example.healthserviceapp.enums.Sexo;
 import com.example.healthserviceapp.service.ProfesionalService;
@@ -14,6 +15,7 @@ import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequestMapping("/profesional")
+@PreAuthorize("hasAnyRole('ROLE_PROFESIONAL')")
 public class ProfesionalControlador {
 
     @Autowired
@@ -32,14 +35,25 @@ public class ProfesionalControlador {
     @Autowired
     private UsuarioService usuarioServicio;
 
-    @GetMapping("/registrar")
-    public String registrarProfesional(ModelMap modelo) {
+    @GetMapping("/perfil")
+    public String vistaDatosPerfil(ModelMap modelo, HttpSession session) {
 
+        modelo.put("sexos", Sexo.values());
+        modelo.put("obrasSociales", ObraSocial.values());
         modelo.put("especialidades", Especialidad.values());
         modelo.put("provincias", Provincias.values());
-
+        String tipo = "";
+        
+        if (session.getAttribute("usuariosession") instanceof Usuario) {
+            tipo = "Usuario";           
+        }
+        if (session.getAttribute("usuariosession") instanceof Profesional) {
+            tipo = "Profesional";
+            Profesional profesional = (Profesional) session.getAttribute("usuariosession");
+            modelo.put("profesional", profesional);
+        }
+        modelo.put("tipo", tipo);
         return "profesional_form.html";
-
     }
 
     @GetMapping("/especialidades")
@@ -67,7 +81,7 @@ public class ProfesionalControlador {
     }
 
     @PostMapping("/registro")
-    public String registroProfesional(@RequestParam String id, String nombre, String apellido,
+    public String registroProfesional(String nombre, String apellido,
             Sexo sexo, String fechaNacimiento, String domicilio, Integer dni, MultipartFile imagen,
             Provincias provincia, String matricula, Especialidad especialidad, Disponibilidad disponibilidad,
             ModelMap modelo, HttpSession session) throws Exception {  ///FALTA LA DISPONIBILIDAD

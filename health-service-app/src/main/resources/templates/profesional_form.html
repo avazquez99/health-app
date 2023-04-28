@@ -82,19 +82,18 @@
                 </div>
 
                 <label class="form-label">Seleccionar Provincia</label>
-
-                <select class="custom-select" name="provincia" required th:if="${tipo} == 'Profesional">
-                    <option th:each="Provincias : ${provincias}" th:value="${provincias}" th:text="${provincias}" th:selected="${profesional.provincia}">
+                <select class="custom-select" name="provincia" required th:if="${tipo} == 'Profesional'">
+                    <option th:each="provincia : ${provincias}" th:value="${provincia}" th:text="${provincia}"  th:selected="${profesional.provincia}">
                 </select>
                 
                 <select class="custom-select" name="provincia" required th:if="${tipo} == 'Usuario'">
-                    <option th:each="Provincias : ${provincias}" th:value="${provincias}" th:text="${provincias}">
+                    <option th:each="provincia : ${provincias}" th:value="${provincia}" th:text="${provincia}">
                 </select>
+                <br>
 
                 <label class="form-label">Seleccionar Especialidad</label>
-
                 <select class="custom-select" name="especialidad" required th:if="${tipo} == 'Profesional'">
-                  <option th:each="Especialidad : ${especialidades}" th:value="${Especialidad}" th:text="${Especialidad}" th:selected="${paciente.especialidad}">
+                  <option th:each="Especialidad : ${especialidades}" th:value="${Especialidad}" th:text="${Especialidad}" th:selected="${profesional.especialidad}">
               </select>
               
               <select class="custom-select" name="especialidad" required th:if="${tipo} == 'Usuario'">

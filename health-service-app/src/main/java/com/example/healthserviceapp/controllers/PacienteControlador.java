@@ -10,6 +10,8 @@ import com.example.healthserviceapp.service.PacienteService;
 import com.example.healthserviceapp.service.UsuarioService;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -61,7 +63,7 @@ public class PacienteControlador {
 
             Paciente paciente = (Paciente) session.getAttribute("usuariosession");
             
-            Consulta consulta = consultaService.listarConsulta(paciente.getId());
+            List<Consulta> consulta = consultaService.listarConsulta(paciente.getId());
           
             modelo.addAttribute("consulta", consulta);
         

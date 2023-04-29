@@ -1,13 +1,9 @@
 package com.example.healthserviceapp.entity;
 
-import java.util.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -27,8 +23,9 @@ public class Consulta {
     @OneToOne
     private Paciente paciente;
 
-    @Temporal(TemporalType.TIME)
-    private Date fecha;
+    private String fecha;
+
+    private Integer horario;
 
     @OneToOne
     private Diagnostico diagnostico;

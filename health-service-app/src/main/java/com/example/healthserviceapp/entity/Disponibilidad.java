@@ -25,4 +25,8 @@ public class Disponibilidad {
     private Integer finDescanso;
 
     private String[] dias;
+
+    public Long totalDeTurnos(){
+        return new Long((salida - entrada) - (finDescanso - inicioDescanso));
+    }
 }

@@ -180,12 +180,16 @@ public class ProfesionalService {
     }
 
     @Transactional(readOnly = true)
-    public List<String> listarProfesionalPorEspecialidadesPorProvincia(String provincia, String especialidad) {
-        List<String> profesionales = new ArrayList();
+    public List<Profesional> listarProfesionalPorEspecialidadesPorProvincia(String provincia, String especialidad) {
+        List<Profesional> profesionales = new ArrayList();
         Provincias prov = Provincias.valueOf(provincia);
         Especialidad esp = Especialidad.valueOf(especialidad);
         profesionales = profesionalRepository.listarProfesionalPorEspecialidadesPorProvincia(prov, esp);
         return profesionales;
+    }
+
+    public Profesional getOne(String id) {
+        return profesionalRepository.getById(id);
     }
 
 }

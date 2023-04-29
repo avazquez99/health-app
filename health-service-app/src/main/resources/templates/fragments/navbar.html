@@ -11,6 +11,7 @@
                 <li><a th:href="@{/profesional/especialidades}" class="nav-link px-2 text-white btn btn-outline-primary">Especialidades</a></li>
                 <li><a th:href="@{/consulta/provincia}" class="nav-link px-2 text-white btn btn-outline-primary" th:if="${session.usuariosession != null and tipo=='Paciente'}">Reservar consulta</a></li>
                 <li><a th:href="@{/profesional/turno}" th:if="${session.usuariosession != null and tipo=='Paciente'}" class="nav-link px-2 text-white btn btn-outline-primary">Reservar turno</a></li>
+                <li><a th:href="@{/paciente/consulta}" class="nav-link px-2 text-white btn btn-outline-primary" th:if="${session.usuariosession != null and tipo=='Paciente'}">tus consultas</a></li>
             </ul>
 
             <div class="text-end d-flex">

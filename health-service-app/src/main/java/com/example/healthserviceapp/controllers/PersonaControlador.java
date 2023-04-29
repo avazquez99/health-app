@@ -29,7 +29,7 @@ public class PersonaControlador {
         String tipo = "";
         
         if (session.getAttribute("usuariosession") instanceof Usuario) {
-            tipo = "Usuario";           
+            tipo = "Usuario";
         }
         if (session.getAttribute("usuariosession") instanceof Paciente) {
             tipo = "Paciente";

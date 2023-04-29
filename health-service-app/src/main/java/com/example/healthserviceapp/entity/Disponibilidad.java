@@ -1,12 +1,8 @@
 package com.example.healthserviceapp.entity;
 
-import java.util.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -20,15 +16,17 @@ public class Disponibilidad {
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
 
-    @Temporal(TemporalType.TIME)
-    private Date entrada;
+    private Integer entrada;
 
-    @Temporal(TemporalType.TIME)
-    private Date salida;
+    private Integer salida;
 
-    @Temporal(TemporalType.TIME)
-    private Date inicioDescanso;
+    private Integer inicioDescanso;
 
-    @Temporal(TemporalType.TIME)
-    private Date finDescanso;
+    private Integer finDescanso;
+
+    private String[] dias;
+
+    public Long totalDeTurnos(){
+        return new Long((salida - entrada) - (finDescanso - inicioDescanso));
+    }
 }

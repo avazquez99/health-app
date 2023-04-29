@@ -9,31 +9,35 @@ import com.example.healthserviceapp.enums.Especialidad;
 import com.example.healthserviceapp.enums.Provincias;
 import com.example.healthserviceapp.enums.Sexo;
 import com.example.healthserviceapp.repository.ProfesionalRepository;
-import com.example.healthserviceapp.repository.UsuarioRepository;
 import static java.lang.Boolean.FALSE;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class ProfesionalService {
 
     @Autowired
-    ProfesionalRepository profesionalRepository;
+    private ProfesionalRepository profesionalRepository;
+
     @Autowired
-    UsuarioRepository usuarioRepository;
+    private UsuarioService usuarioService;
+
     @Autowired
     private ImagenService imagenService;
 
+    @Autowired
+    private DisponibilidadService disponibilidadService;
+
     @Transactional
     public void crearProfesional(String nombre, String apellido,
-            Sexo sexo, Date fechaNacimiento, String domicilio, Integer dni, 
-            MultipartFile archivo, Provincias provincia, String matricula, 
+            Sexo sexo, Date fechaNacimiento, String domicilio, Integer dni,
+            MultipartFile archivo, Provincias provincia, String matricula,
             Especialidad especialidad, Disponibilidad disponibilidad, Usuario usuario) throws MiException {
 
         verificarProfesional(nombre, apellido, domicilio, matricula);
@@ -50,15 +54,16 @@ public class ProfesionalService {
         profesional.setDni(dni);
         profesional.setDomicilio(domicilio);
         profesional.setFechaNacimiento(fechaNacimiento);
+        profesional.setMatricula(matricula);
         profesional.setSexo(sexo);
         Imagen imagen = imagenService.guardar(archivo);
         profesional.setImagen(imagen);
         profesional.setProvincia(provincia);
         profesional.setEspecialidad(especialidad);
-        profesional.setDisponibilidad(null);
+        profesional.setDisponibilidad(disponibilidadService.guardar(disponibilidad));
         profesionalRepository.save(profesional);
 
-        borrarProfesional(profesional);
+        usuarioService.eliminarUsuario(usuario.getId());
     }
 
     @Transactional
@@ -78,6 +83,18 @@ public class ProfesionalService {
 
     }
 
+    public List<Profesional> listarPorEspecialidad(Especialidad especialidad) {
+        List<Profesional> profesionales = new ArrayList();
+        profesionales = profesionalRepository.buscarPorEspecialidad(especialidad);
+        return profesionales;
+    }
+
+    public List<Profesional> listarPorLocalidad(Provincias provincia) {
+        List<Profesional> profesionales = new ArrayList();
+        profesionales = profesionalRepository.buscarPorLocalidad(provincia);
+        return profesionales;
+    }
+
     @Transactional
     public void modificarProfesional(Profesional profesional, String nombre, String apellido,
             Sexo sexo, Date fechaNacimiento, String domicilio, Integer dni, MultipartFile archivo,
@@ -86,7 +103,6 @@ public class ProfesionalService {
         Optional<Profesional> respuesta = profesionalRepository.findById(profesional.getId());
 
         if (respuesta.isPresent()) {
-
             Profesional nuevo_profesional = respuesta.get();
 
             nuevo_profesional.setNombre(nombre);
@@ -102,9 +118,9 @@ public class ProfesionalService {
             String id_imagen = nuevo_profesional.getImagen().getId();
             Imagen imagen = imagenService.actualizar(id_imagen, archivo);
             nuevo_profesional.setImagen(imagen);
-            nuevo_profesional.setDisponibilidad(null);
+            String idDisponibilidad = profesional.getDisponibilidad().getId();
+            nuevo_profesional.setDisponibilidad(disponibilidadService.modificar(idDisponibilidad, disponibilidad));
             profesionalRepository.save(nuevo_profesional);
-
         }
 
     }
@@ -146,6 +162,34 @@ public class ProfesionalService {
 
         }
 
+    }
+
+    @Transactional(readOnly = true)
+    public List<String> listarProvincias() {
+        List<String> provincias = new ArrayList();
+        provincias = profesionalRepository.listarProvincias();
+        return provincias;
+    }
+
+    @Transactional(readOnly = true)
+    public List<String> listarEspecialidadesPorProvincia(String provincia) {
+        List<String> especialidades = new ArrayList();
+        Provincias prov = Provincias.valueOf(provincia);
+        especialidades = profesionalRepository.listarEspecialidadesPorProvincia(prov);
+        return especialidades;
+    }
+
+    @Transactional(readOnly = true)
+    public List<Profesional> listarProfesionalPorEspecialidadesPorProvincia(String provincia, String especialidad) {
+        List<Profesional> profesionales = new ArrayList();
+        Provincias prov = Provincias.valueOf(provincia);
+        Especialidad esp = Especialidad.valueOf(especialidad);
+        profesionales = profesionalRepository.listarProfesionalPorEspecialidadesPorProvincia(prov, esp);
+        return profesionales;
+    }
+
+    public Profesional getOne(String id) {
+        return profesionalRepository.getById(id);
     }
 
 }

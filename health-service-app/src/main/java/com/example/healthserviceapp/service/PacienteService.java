@@ -104,4 +104,8 @@ public class PacienteService {
         }
     }
 
+    public Paciente getOne(String id) {
+        return pacienteRep.getById(id);
+    }
+
 }

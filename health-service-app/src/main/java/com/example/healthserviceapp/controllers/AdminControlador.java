@@ -39,7 +39,7 @@ public class AdminControlador {
     @GetMapping("/baja/{id}")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public String bajaUsuario(@PathVariable String id, ModelMap modelo) {
-        usuarioService.eliminarUsuario(id);
+        usuarioService.darBaja(id);
         return "redirect:/admin/dashboard";
     }
 

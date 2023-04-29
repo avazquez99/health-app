@@ -18,10 +18,11 @@
                         <h1 th:text="${iterador.profesional.provincia}"></h1>
                         <h2 class="mb-3" th:text="${iterador.profesional}"></h2>
                         <h2 class="mb-3" th:text="${iterador.fecha}"></h2>
+                        <a th:href="/consulta/eliminar/${iterador.id}">Darse de baja</a>
                     </div>
 
 
-
+                    
 
 
                     <a th:href="@{/}">Volver al Inicio</a>

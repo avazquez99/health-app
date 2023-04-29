@@ -12,4 +12,5 @@ public interface ConsultaRepository extends JpaRepository<Consulta, String>{
     
     @Query("SELECT c FROM Consulta c WHERE c.paciente.id = :id")
     public Consulta listarConsulta(@Param("id") String id);
+    
 }

@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.healthserviceapp.entity.Usuario;
+import com.example.healthserviceapp.service.ConsultaService;
 import com.example.healthserviceapp.service.ProfesionalService;
 import com.example.healthserviceapp.service.UsuarioService;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
 @RequestMapping("/consulta")
@@ -26,6 +28,9 @@ public class ConsultaControlador {
 
     @Autowired
     private ProfesionalService profesionalService;
+    
+    @Autowired
+    private ConsultaService consultaService;
 
     @GetMapping("/provincia")
     public String provincias(HttpSession session, ModelMap modelo){
@@ -59,5 +64,12 @@ public class ConsultaControlador {
         Usuario usuario = usuarioService.getOne(profesional);
         modelo.put("profesional", usuario);
         return "consulta.html";
+    }
+    
+    @GetMapping("/eliminar/{id}")
+    public String eliminarConsulta(@PathVariable String id){
+        
+        consultaService.eliminar(id);
+        return "redirect:/";
     }
 }

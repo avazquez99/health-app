@@ -13,6 +13,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -32,14 +33,14 @@ public class ConsultaControlador {
     private ConsultaService consultaService;
 
     @GetMapping("/provincia")
-    public String provincias(HttpSession session, ModelMap modelo){
+    public String provincias(HttpSession session, ModelMap modelo) {
         modelo.put("paso", 1);
         modelo.put("provincias", profesionalService.listarProvincias());
         return "consulta.html";
     }
 
     @GetMapping("/especialidad")
-    public String especialidades(@RequestParam String provincia, HttpSession session, ModelMap modelo){
+    public String especialidades(@RequestParam String provincia, HttpSession session, ModelMap modelo) {
         modelo.put("paso", 2);
         modelo.put("provincia", provincia);
         modelo.put("especialidades", profesionalService.listarEspecialidadesPorProvincia(provincia));
@@ -47,14 +48,16 @@ public class ConsultaControlador {
     }
 
     @GetMapping("/profesional")
-    public String profesionales(@RequestParam String provincia, @RequestParam String especialidad, HttpSession session, ModelMap modelo){
+    public String profesionales(@RequestParam String provincia, @RequestParam String especialidad, HttpSession session,
+            ModelMap modelo) {
         modelo.put("paso", 3);
-        modelo.put("profesionales", profesionalService.listarProfesionalPorEspecialidadesPorProvincia(provincia, especialidad));
+        modelo.put("profesionales",
+                profesionalService.listarProfesionalPorEspecialidadesPorProvincia(provincia, especialidad));
         return "consulta.html";
     }
 
     @GetMapping("/disponibilidad")
-    public String disponibilidadProfesional(@RequestParam String idProfesional, HttpSession session, ModelMap modelo){
+    public String disponibilidadProfesional(@RequestParam String idProfesional, HttpSession session, ModelMap modelo) {
         modelo.put("paso", 4);
         Profesional profesional = profesionalService.getOne(idProfesional);
         modelo.put("profesional", profesional);
@@ -75,7 +78,8 @@ public class ConsultaControlador {
     }
 
     @GetMapping("/horario")
-    public String horarioProfesional(@RequestParam String idProfesional, @RequestParam String fecha, HttpSession session, ModelMap modelo){
+    public String horarioProfesional(@RequestParam String idProfesional, @RequestParam String fecha,
+            HttpSession session, ModelMap modelo) {
         modelo.put("paso", 5);
         Profesional profesional = profesionalService.getOne(idProfesional);
         modelo.put("profesional", profesional);
@@ -83,12 +87,12 @@ public class ConsultaControlador {
         ArrayList<Integer> listaA = new ArrayList<>();
         Integer entrada = profesional.getDisponibilidad().getEntrada();
         Integer inicioDescanso = profesional.getDisponibilidad().getInicioDescanso();
-        for (int i=entrada; i<inicioDescanso; i++){
+        for (int i = entrada; i < inicioDescanso; i++) {
             listaA.add(i);
         }
         Integer finDescanso = profesional.getDisponibilidad().getFinDescanso();
         Integer salida = profesional.getDisponibilidad().getSalida();
-        for (int i=finDescanso; i<salida; i++){
+        for (int i = finDescanso; i < salida; i++) {
             listaA.add(i);
         }
         List<Integer> listaB = consultaService.listarHorarioPorProfesionalPorFecha(profesional, fecha);
@@ -100,14 +104,16 @@ public class ConsultaControlador {
     }
 
     @GetMapping("/reservar")
-    public String reservar(@RequestParam String idProfesional, @RequestParam String fecha, @RequestParam Integer horario, HttpSession session, ModelMap modelo){
+    public String reservar(@RequestParam String idProfesional, @RequestParam String fecha,
+            @RequestParam Integer horario, HttpSession session, ModelMap modelo) {
         Paciente paciente = (Paciente) session.getAttribute("usuariosession");
         consultaService.crearConsulta(idProfesional, paciente.getId(), fecha, horario);
         return "index.html";
     }
 
-    @GetMapping("/formulario_lindo")
-    public String formularioLindo(){
-        return "turno.html";
+    @GetMapping("/eliminar/{id}")
+    public String eliminarConsulta(@PathVariable String id) {
+        consultaService.eliminar(id);
+        return "redirect:/";
     }
 }

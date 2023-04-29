@@ -106,11 +106,18 @@
 
       <div class="mb-3">
         <label class="form-label">Seleccionar Dias Laborales</label>
-        <input type="checkbox" name="diasLaborales" th:if="${tipo} == 'Usuario'" th:each="dia :${dias_laborales}"
-          th:value="${dia}" th:text="${dia}"/>
-
-        <input type="checkbox" name="diasLaborales" th:if="${tipo} == 'Profesional'" th:each="dia :${dias_laborales}"
-          th:value="${dia}" th:text="${dia}" th:checked="${#arrays.contains(profesional.disponibilidad.dias, dia.toString())}"/>
+        <ul class="checkbox-list" th:if="${tipo} == 'Usuario'">
+          <li th:each="dia :${dias_laborales}">
+        <input type="checkbox" name="diasLaborales" 
+          th:value="${dia}" th:text="${dia}" style="margin-right: 10px;"/>
+        </li>
+        </ul>
+       <ul class="checkbox-list" th:if="${tipo} == 'Profesional'">
+        <li th:each="dia :${dias_laborales}">
+        <input type="checkbox" name="diasLaborales" 
+          th:value="${dia}" th:text="${dia}" style="margin-right: 10px;" th:checked="${#arrays.contains(profesional.disponibilidad.dias, dia.toString())}"/>
+        </li>
+      </ul>
       </div>
 
       <div class="mb-3">

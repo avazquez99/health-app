@@ -17,4 +17,7 @@ public interface ConsultaRepository extends JpaRepository<Consulta, String> {
 
     @Query("SELECT c.horario FROM Consulta c WHERE (c.profesional = :profesional AND c.fecha = :fechaConsulta)")
     public List<Integer> listarHorarioPorProfesionalPorFecha(@Param("profesional") Profesional profesional, @Param("fechaConsulta") String fecha);
+
+    @Query("SELECT c FROM Consulta c WHERE c.paciente.id = :id")
+    public List<Consulta> listarConsulta(@Param("id") String id);    
 }

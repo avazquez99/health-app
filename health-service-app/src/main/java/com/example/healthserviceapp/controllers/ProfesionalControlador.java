@@ -27,7 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequestMapping("/profesional")
-@PreAuthorize("hasAnyRole('ROLE_PROFESIONAL')")
+//@PreAuthorize("hasAnyRole('ROLE_PROFESIONAL')")
 public class ProfesionalControlador {
 
     @Autowired

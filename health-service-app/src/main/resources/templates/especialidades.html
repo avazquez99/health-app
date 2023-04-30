@@ -36,7 +36,7 @@
                     <span class="fs-5 fw-semibold">Especialidades</span>
                 </div>
                 <div class="list-group list-group-flush border-bottom scrollarea">
-                    <a th:each="especialidad : ${especialidades}" class="list-group-item list-group-item-action py-3 lh-sm">
+                    <a th:each="especialidad : ${especialidades}" th:href="@{/especialidad/profesionales/__${especialidad}__}" class="list-group-item list-group-item-action py-3 lh-sm">
                         <div class=" d-flex w-100 align-items-center justify-content-between">
                             <strong th:text="${especialidad}" class="mb-1"></strong>
                         </div>
@@ -49,15 +49,15 @@
 
             <div class="mb-5 col-8">
                 <div>
-                <form class="d-flex col-4" role="search">
-                    <input class="form-control me-2" type="search" name="email" placeholder="Buscar" aria-label="Search">
+                <form class="d-flex col-4" role="search" th:action="@{/especialidad/busqueda}">
+                    <input class="form-control me-2" type="search" name="nombre" placeholder="Buscar" aria-label="Search">
                     <button class="btn btn-outline-primary" type="submit">Buscar</button>
                 </form>
             </div>
                 
                 <div class="mt-5">
                 <div class="table-responsive">
-                    <table class="table table-striped text-dark table-hover">
+                    <table class="table table-striped text-dark table-hover" >
                         <thead>
                             <tr>
 
@@ -67,29 +67,17 @@
                                 <th></th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody th:each="profesional : ${profesionales}">
                             <tr>
 
                                 <td>
-                                    <div class="d-flex align-items-center"><img class="rounded-circle me-3" src="https://i.imgur.com/C4egmYM.jpg" width="30"><span class="ml-2">Christan M.</span></div>
+                                    <div class="d-flex align-items-center"><img class="rounded-circle me-3" src="https://i.imgur.com/C4egmYM.jpg" width="30"><span class="ml-2" th:text="${profesional.nombre}"></span></div>
                                 </td>
                                 <td>$750<br></td>
                                 <td class="fw-bold">8/10</td>
                                 <td>
 
                                     <a href="#" class="link" th:if="${session.usuariosession != null}">Reservar Turno</a>
-                                </td>
-                                <td><i class="fa fa-external-link external-link"></i></td>
-                            </tr>
-                            <tr>
-
-                                <td>
-                                    <div class="d-flex align-items-center"><img class="rounded-circle me-3" src="https://i.imgur.com/0LKZQYM.jpg" width="30"><span class="ml-2">Maria Sam</span></div>
-                                </td>
-                                <td>$1000<br></td>
-                                <td class="fw-bold">9/10</td>
-                                <td>
-                                    <a href="#" class="link">Reservar Turno</a>
                                 </td>
                                 <td><i class="fa fa-external-link external-link"></i></td>
                             </tr>

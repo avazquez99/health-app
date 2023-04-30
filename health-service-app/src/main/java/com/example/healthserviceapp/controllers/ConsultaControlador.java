@@ -108,7 +108,7 @@ public class ConsultaControlador {
             @RequestParam Integer horario, HttpSession session, ModelMap modelo) {
         Paciente paciente = (Paciente) session.getAttribute("usuariosession");
         consultaService.crearConsulta(idProfesional, paciente.getId(), fecha, horario);
-        return "index.html";
+        return "redirect:/";
     }
 
     @GetMapping("/eliminar/{id}")

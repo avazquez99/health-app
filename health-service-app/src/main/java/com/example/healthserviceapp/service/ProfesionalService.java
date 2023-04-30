@@ -73,6 +73,7 @@ public class ProfesionalService {
 
     }
 
+    @Transactional(readOnly = true)
     public List<Profesional> listarProfesionales() {
 
         List<Profesional> profesionales = new ArrayList();
@@ -81,6 +82,15 @@ public class ProfesionalService {
 
         return profesionales;
 
+    }
+
+    @Transactional(readOnly = true)
+    public List<Profesional> listarPorNombre(String nombre) {
+        List<Profesional> profesionales = new ArrayList();
+
+        profesionales = profesionalRepository.buscarPorNombre(nombre);
+
+        return profesionales;
     }
 
     public List<Profesional> listarPorEspecialidad(Especialidad especialidad) {
@@ -98,7 +108,8 @@ public class ProfesionalService {
     @Transactional
     public void modificarProfesional(Profesional profesional, String nombre, String apellido,
             Sexo sexo, Date fechaNacimiento, String domicilio, Integer dni, MultipartFile archivo,
-            Provincias provincia, String matricula, Especialidad especialidad, Disponibilidad disponibilidad) throws MiException {
+            Provincias provincia, String matricula, Especialidad especialidad, Disponibilidad disponibilidad)
+            throws MiException {
 
         Optional<Profesional> respuesta = profesionalRepository.findById(profesional.getId());
 
@@ -139,7 +150,8 @@ public class ProfesionalService {
 
     }
 
-    public void verificarProfesional(String nombre, String apellido, String domicilio, String matricula) throws MiException {
+    public void verificarProfesional(String nombre, String apellido, String domicilio, String matricula)
+            throws MiException {
 
         if (nombre == null || nombre.isEmpty() || nombre.trim().isEmpty()) {
 

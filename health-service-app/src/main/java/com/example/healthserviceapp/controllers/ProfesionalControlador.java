@@ -57,19 +57,6 @@ public class ProfesionalControlador {
         return "profesional_form.html";
     }
 
-    @GetMapping("/especialidades")
-    public String listaEspecialidades(ModelMap modelo) throws MiException {
-
-        List<Profesional> profesionales = profesionalServicio.listarProfesionales();
-        modelo.addAttribute("profesionales", profesionales);
-
-        // modelo.put("exito", "La lista de profesionales se muestra a continuación");
-        modelo.put("especialidades", Especialidad.values());
-
-        return "especialidades.html";
-
-    }
-
     @GetMapping("/turno")
     public String reservarTurno(ModelMap modelo) throws MiException {
 

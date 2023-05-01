@@ -57,9 +57,14 @@
   overflow: hidden;
 }
 
+
 .profesionales .container .col .titulo-seccion {
+  background-color: #fff;
   padding: 3.125rem;
   padding-right: 0;
+  border: 8px solid green;
+  border-style: double;
+  box-shadow: 0px 9px 32px -1px rgba(0, 0, 0, 0.5);
 }
 
 .profesionales .container .col .titulo-seccion h2 {

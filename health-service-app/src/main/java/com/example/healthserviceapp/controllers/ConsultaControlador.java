@@ -21,6 +21,7 @@ import com.example.healthserviceapp.entity.Paciente;
 import com.example.healthserviceapp.entity.Profesional;
 import com.example.healthserviceapp.service.ConsultaService;
 import com.example.healthserviceapp.service.ProfesionalService;
+import com.example.healthserviceapp.utility.Dias;
 
 @Controller
 @RequestMapping("/consulta")
@@ -65,8 +66,11 @@ public class ConsultaControlador {
         ArrayList<String> listaA = new ArrayList<>();
         LocalDate today = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;
-        for (LocalDate date = today; date.isBefore(today.plusDays(31)); date = date.plusDays(1)) {
-            listaA.add(date.format(formatter));
+        Dias dias = new Dias(profesional.getDisponibilidad().getDias());
+        for (LocalDate date = today; date.isBefore(today.plusDays(91)); date = date.plusDays(1)) {
+            if (dias.comprobar(date.getDayOfWeek())){
+                listaA.add(date.format(formatter));
+            }
         }
         Long nTurnos = profesional.getDisponibilidad().totalDeTurnos();
         List<String> listaB = consultaService.listarConsultasPorProfesionalAgrupadoPorFecha(profesional, nTurnos);

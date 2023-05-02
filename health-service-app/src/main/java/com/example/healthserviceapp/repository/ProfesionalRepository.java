@@ -28,7 +28,7 @@ public interface ProfesionalRepository extends JpaRepository<Profesional, String
     @Query("SELECT DISTINCT(p.especialidad) FROM Profesional p WHERE p.provincia = :provincia")
     public List<String> listarEspecialidadesPorProvincia(@Param("provincia") Provincias provincia);
 
-    @Query("SELECT DISTINCT(p) FROM Profesional p WHERE (p.provincia = :provincia AND p.especialidad = :especialidad)")
+    @Query("SELECT DISTINCT(p) FROM Profesional p WHERE (p.provincia = :provincia AND p.especialidad = :especialidad AND p.disponibilidad.dias IS NOT NULL)")
     public List<Profesional> listarProfesionalPorEspecialidadesPorProvincia(@Param("provincia") Provincias provincia,
             @Param("especialidad") Especialidad especialidad);
 

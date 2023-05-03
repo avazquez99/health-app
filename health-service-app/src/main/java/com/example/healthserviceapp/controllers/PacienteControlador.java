@@ -1,11 +1,12 @@
 package com.example.healthserviceapp.controllers;
 
 import com.example.healthserviceapp.entity.Consulta;
+import com.example.healthserviceapp.entity.ObraSocial;
 import com.example.healthserviceapp.entity.Paciente;
 import com.example.healthserviceapp.entity.Usuario;
-import com.example.healthserviceapp.enums.ObraSocial;
 import com.example.healthserviceapp.enums.Sexo;
 import com.example.healthserviceapp.service.ConsultaService;
+import com.example.healthserviceapp.service.ObraSocialService;
 import com.example.healthserviceapp.service.PacienteService;
 import com.example.healthserviceapp.service.UsuarioService;
 import java.text.SimpleDateFormat;
@@ -33,16 +34,19 @@ public class PacienteControlador {
     private UsuarioService usuarioService;
     @Autowired
     private ConsultaService consultaService;
+    @Autowired
+    private ObraSocialService obraSocialService;
 
     @PostMapping("/registro")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_PACIENTE', 'ROLE_PROFESIONAL')")
     public String crearPaciente(@RequestParam String nombre, @RequestParam String apellido, MultipartFile imagen,
             @RequestParam String domicilio, @RequestParam Integer dni, @RequestParam Sexo sexo,
-            @RequestParam String fechaNacimiento, @RequestParam ObraSocial obraSocial, HttpSession session) throws Exception {
+            @RequestParam String fechaNacimiento, @RequestParam String obraSocialNombre, HttpSession session) throws Exception {
 
         SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
-
         Date dataFormateada = formato.parse(fechaNacimiento);
+
+        ObraSocial obraSocial = obraSocialService.buscarPorNombre(obraSocialNombre);
 
         if (session.getAttribute("usuariosession") instanceof Paciente) {
             Paciente paciente = (Paciente) session.getAttribute("usuariosession");

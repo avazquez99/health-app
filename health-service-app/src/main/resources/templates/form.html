@@ -75,11 +75,11 @@
 
                 <label class="form-label">Seleccionar Obra Social</label>
 
-                <select class="custom-select" name="obraSocial" required th:if="${tipo} == 'Paciente'">
-                    <option th:each="ObraSocial : ${obrasSociales}" th:value="${ObraSocial}" th:text="${ObraSocial}" th:selected="${paciente.obraSocial}">
-                </select>
+                <select class="custom-select" name="obraSocialNombre" required th:if="${tipo} == 'Paciente'">
+                    <option th:each="ObraSocial : ${obrasSociales}" th:value="${ObraSocial}" th:text="${ObraSocial}" th:selected="${ObraSocial==paciente.obraSocial.nombre}">
+                </select>   
                 
-                <select class="custom-select" name="obraSocial" required th:if="${tipo} == 'Usuario'">
+                <select class="custom-select" name="obraSocialNombre" required th:if="${tipo} == 'Usuario'">
                     <option th:each="ObraSocial : ${obrasSociales}" th:value="${ObraSocial}" th:text="${ObraSocial}">
                 </select>
         </div>

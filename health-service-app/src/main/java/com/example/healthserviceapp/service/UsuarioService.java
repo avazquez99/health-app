@@ -113,7 +113,7 @@ public class UsuarioService implements UserDetailsService {
         return usuarioRepository.getById(id);
     }
 
-    @Transactional(readOnly=true)
+    @Transactional(readOnly = true)
     public List<Usuario> listarUsuarios() {
 
         List<Usuario> usuarios = new ArrayList();
@@ -165,5 +165,18 @@ public class UsuarioService implements UserDetailsService {
         HttpSession session = attr.getRequest().getSession(true);
         session.setAttribute("usuariosession", usuario);
         return new User(usuario.getEmail(), usuario.getPassword(), permisos);
+    }
+
+    @Transactional
+    public void crearUsuario(String email, String password, Rol rol) throws MiException {
+        Usuario presente = usuarioRepository.buscarPorEmail(email);
+        if (presente == null) {
+            Usuario usuario = new Usuario();
+            usuario.setEmail(email);
+            usuario.setPassword(new BCryptPasswordEncoder().encode(password));
+            usuario.setActivo(TRUE);
+            usuario.setRol(rol);
+            usuarioRepository.save(usuario);
+        }
     }
 }

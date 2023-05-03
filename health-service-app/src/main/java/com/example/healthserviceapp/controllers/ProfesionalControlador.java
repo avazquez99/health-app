@@ -6,9 +6,9 @@ import com.example.healthserviceapp.entity.Profesional;
 import com.example.healthserviceapp.entity.Usuario;
 import com.example.healthserviceapp.enums.DiasDeLaSemana;
 import com.example.healthserviceapp.enums.Especialidad;
-import com.example.healthserviceapp.enums.ObraSocial;
 import com.example.healthserviceapp.enums.Provincias;
 import com.example.healthserviceapp.enums.Sexo;
+import com.example.healthserviceapp.service.ObraSocialService;
 import com.example.healthserviceapp.service.ProfesionalService;
 import com.example.healthserviceapp.service.UsuarioService;
 import java.text.SimpleDateFormat;
@@ -27,7 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequestMapping("/profesional")
-//@PreAuthorize("hasAnyRole('ROLE_PROFESIONAL')")
+@PreAuthorize("hasAnyRole('ROLE_PROFESIONAL')")
 public class ProfesionalControlador {
 
     @Autowired
@@ -36,10 +36,13 @@ public class ProfesionalControlador {
     @Autowired
     private UsuarioService usuarioServicio;
 
+    @Autowired
+    private ObraSocialService obraSocialService;
+
     @GetMapping("/perfil")
     public String vistaDatosPerfil(ModelMap modelo, HttpSession session) {
         modelo.put("sexos", Sexo.values());
-        modelo.put("obrasSociales", ObraSocial.values());
+        modelo.put("obrasSociales", obraSocialService.listarObrasSociales());
         modelo.put("especialidades", Especialidad.values());
         modelo.put("provincias", Provincias.values());
         modelo.put("dias_laborales", DiasDeLaSemana.values());

@@ -1,10 +1,7 @@
 package com.example.healthserviceapp.entity;
 
 import javax.persistence.Entity;
-import javax.persistence.Enumerated;
-
-import com.example.healthserviceapp.enums.ObraSocial;
-import javax.persistence.EnumType;
+import javax.persistence.OneToOne;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,6 +10,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public final class Paciente extends Persona{
-    @Enumerated(EnumType.STRING)
+    @OneToOne
     private ObraSocial obraSocial;
 }

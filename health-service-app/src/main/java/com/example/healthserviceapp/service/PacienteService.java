@@ -2,9 +2,9 @@ package com.example.healthserviceapp.service;
 
 import com.example.healthserviceapp.Exceptions.MiException;
 import com.example.healthserviceapp.entity.Imagen;
+import com.example.healthserviceapp.entity.ObraSocial;
 import com.example.healthserviceapp.entity.Paciente;
 import com.example.healthserviceapp.entity.Usuario;
-import com.example.healthserviceapp.enums.ObraSocial;
 import com.example.healthserviceapp.enums.Sexo;
 import com.example.healthserviceapp.repository.PacienteRepository;
 import com.example.healthserviceapp.repository.UsuarioRepository;

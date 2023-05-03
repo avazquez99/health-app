@@ -82,4 +82,22 @@ public class ImagenService {
         return imagenRepository.findAll();
     }
 
+    public Imagen defaultImagen(){
+        try {
+            Imagen imagen = new Imagen();
+            Resource resource = resourceLoader.getResource("classpath:/static/img/defaultProfile.jpg");
+            InputStream input = resource.getInputStream();
+            File imagenPredeterminada = resource.getFile();
+            byte[] bytes = Files.readAllBytes(imagenPredeterminada.toPath());
+            imagen.setMime("image/jpg");
+            imagen.setNombre("defaultProfile");
+            imagen.setContenido(bytes);
+            imagenRepository.save(imagen);
+            return imagen;
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+        return null;
+    }
+
 }

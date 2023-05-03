@@ -55,7 +55,7 @@ public class PacienteControlador {
 
         } else if (session.getAttribute("usuariosession") instanceof Usuario) {
             Usuario usuario = (Usuario) session.getAttribute("usuariosession");
-            pacienteService.createPaciente(nombre, apellido, sexo, dataFormateada, domicilio, dni, usuario, imagen, obraSocial);
+            pacienteService.guardarPaciente(nombre, apellido, sexo, dataFormateada, domicilio, dni, usuario, imagen, obraSocial);
             usuarioService.loadUserByUsername(usuario.getEmail());
         }
         return "redirect:/";

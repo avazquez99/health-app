@@ -111,7 +111,7 @@ public class ConsultaControlador {
     public String reservar(@RequestParam String idProfesional, @RequestParam String fecha,
             @RequestParam Integer horario, HttpSession session, ModelMap modelo) {
         Paciente paciente = (Paciente) session.getAttribute("usuariosession");
-        consultaService.crearConsulta(idProfesional, paciente.getId(), fecha, horario);
+        consultaService.guardarConsulta(idProfesional, paciente.getId(), fecha, horario);
         return "redirect:/";
     }
 

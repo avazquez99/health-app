@@ -42,7 +42,7 @@ public class ProfesionalControlador {
     @GetMapping("/perfil")
     public String vistaDatosPerfil(ModelMap modelo, HttpSession session) {
         modelo.put("sexos", Sexo.values());
-        modelo.put("obrasSociales", obraSocialService.listarObrasSociales());
+        modelo.put("obrasSociales", obraSocialService.listarNombresObrasSociales());
         modelo.put("especialidades", Especialidad.values());
         modelo.put("provincias", Provincias.values());
         modelo.put("dias_laborales", DiasDeLaSemana.values());
@@ -95,7 +95,7 @@ public class ProfesionalControlador {
             usuarioServicio.loadUserByUsername(profesional.getEmail());
         } else if (session.getAttribute("usuariosession") instanceof Usuario) {
             Usuario usuario = (Usuario) session.getAttribute("usuariosession");
-            profesionalServicio.crearProfesional(nombre, apellido, sexo, dataFormateada, domicilio, dni, imagen,
+            profesionalServicio.guardarProfesional(nombre, apellido, sexo, dataFormateada, domicilio, dni, imagen,
                     provincia, matricula, especialidad, disponibilidad, usuario);
             usuarioServicio.loadUserByUsername(usuario.getEmail());
         }

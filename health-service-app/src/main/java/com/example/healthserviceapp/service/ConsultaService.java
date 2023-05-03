@@ -36,7 +36,7 @@ public class ConsultaService {
     }
 
     @Transactional
-    public void crearConsulta(String idProfesional, String idPaciente, String fecha, Integer horario) {
+    public void guardarConsulta(String idProfesional, String idPaciente, String fecha, Integer horario) {
         Optional<Profesional> respuestaProfesional = profesionalRepository.findById(idProfesional);
         Optional<Paciente> respuestaPaciente = pacienteRepository.findById(idPaciente);
         if (respuestaProfesional.isPresent() && respuestaPaciente.isPresent()) {

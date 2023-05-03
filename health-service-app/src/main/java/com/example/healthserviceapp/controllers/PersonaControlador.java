@@ -5,6 +5,9 @@ import com.example.healthserviceapp.entity.Persona;
 import com.example.healthserviceapp.entity.Profesional;
 import com.example.healthserviceapp.entity.Usuario;
 import com.example.healthserviceapp.enums.Sexo;
+import com.example.healthserviceapp.service.ObraSocialService;
+import com.example.healthserviceapp.service.ProfesionalService;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,13 +25,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/perfil")
 public class PersonaControlador {
+    @Autowired
+    private ObraSocialService obraSocialService;
+
+    @Autowired
+    private ProfesionalService profesionalService;
    
     @GetMapping("/datos")
     @PreAuthorize("hasAnyRole('ROLE_PACIENTE', 'ROLE_PROFESIONAL')")
     public String vistaDatosPerfil(ModelMap modelo, HttpSession session) {
 
         modelo.put("sexos", Sexo.values());
-        modelo.put("obrasSociales", obraSocialService.listarObrasSociales());
+        modelo.put("obrasSociales", obraSocialService.listarNombresObrasSociales());
         String tipo = "";
 
         if (session.getAttribute("usuariosession") instanceof Usuario) {

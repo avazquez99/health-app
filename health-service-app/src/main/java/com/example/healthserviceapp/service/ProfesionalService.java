@@ -35,7 +35,7 @@ public class ProfesionalService {
     private DisponibilidadService disponibilidadService;
 
     @Transactional
-    public void crearProfesional(String nombre, String apellido,
+    public void guardarProfesional(String nombre, String apellido,
             Sexo sexo, Date fechaNacimiento, String domicilio, Integer dni,
             MultipartFile archivo, Provincias provincia, String matricula,
             Especialidad especialidad, Disponibilidad disponibilidad, Usuario usuario) throws MiException {

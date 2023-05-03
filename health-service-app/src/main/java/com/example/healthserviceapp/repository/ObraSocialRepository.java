@@ -13,8 +13,11 @@ import com.example.healthserviceapp.entity.ObraSocial;
 @Repository
 public interface ObraSocialRepository extends JpaRepository<ObraSocial, String>{
     @Query("SELECT DISTINCT(o.nombre) FROM ObraSocial o")
-    public List<String> listarObrasSociales();
+    public List<String> listarNombresObrasSociales();
 
     @Query("SELECT o FROM ObraSocial o WHERE o.nombre = :nombre")
     public Optional<ObraSocial> buscarPorNombre(@Param("nombre") String nombre);
+
+    @Query("SELECT DISTINCT(o) FROM ObraSocial o")
+    public List<ObraSocial> listarObrasSociales();
 }

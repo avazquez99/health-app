@@ -28,7 +28,7 @@ public class PacienteService {
     private UsuarioRepository usuarioRep;
 
     @Transactional
-    public void createPaciente(String nombre, String apellido,
+    public void guardarPaciente(String nombre, String apellido,
             Sexo sexo, Date fechaNacimiento, String domicilio, Integer dni,
             Usuario usuario, MultipartFile archivo, ObraSocial obraSocial) throws MiException {
 
@@ -108,4 +108,8 @@ public class PacienteService {
         return pacienteRep.getById(id);
     }
 
+    @Transactional
+    public void crearPaciente(Paciente paciente){
+        pacienteRep.save(paciente);
+    }
 }

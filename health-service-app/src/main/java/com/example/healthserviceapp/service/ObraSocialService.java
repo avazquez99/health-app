@@ -30,8 +30,8 @@ public class ObraSocialService {
         return null;
     }
 
-    public List<String> listarObrasSociales(){
-        return obraSocialRepository.listarObrasSociales();
+    public List<String> listarNombresObrasSociales(){
+        return obraSocialRepository.listarNombresObrasSociales();
     }
 
     public void crearObraSocial(String nombre, Double precio){
@@ -41,5 +41,9 @@ public class ObraSocialService {
             ObraSocial nuevaObraSocial = new ObraSocial(nombre, precio);
             obraSocialRepository.save(nuevaObraSocial);
         }
+    }
+
+    public List<ObraSocial> listarObrasSociales(){
+        return obraSocialRepository.listarObrasSociales();
     }
 }

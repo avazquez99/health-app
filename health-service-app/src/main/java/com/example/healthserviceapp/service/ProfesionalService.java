@@ -176,6 +176,12 @@ public class ProfesionalService {
 
     }
 
+@Transactional(readOnly = true)
+public Profesional buscarProfesional(String id){
+    Profesional profesional = profesionalRepository.buscarPorId(id);
+    return profesional;
+}
+
     @Transactional(readOnly = true)
     public List<String> listarProvincias() {
         List<String> provincias = new ArrayList();

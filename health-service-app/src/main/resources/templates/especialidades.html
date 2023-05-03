@@ -70,8 +70,8 @@
                         <tbody th:each="profesional : ${profesionales}">
                             <tr>
 
-                                <td>
-                                    <div class="d-flex align-items-center"><img class="rounded-circle me-3" src="https://i.imgur.com/C4egmYM.jpg" width="30"><span class="ml-2" th:text="${profesional.nombre}"></span></div>
+                                <td>   
+                                    <div class="d-flex align-items-center"><img class="rounded-circle me-3" id="previewImg" src="#" alt="Tu imagen" th:src="@{/perfil/imagen/profesional/__${profesional.id}__}" width="30"><span class="ml-2" th:text="${profesional.nombre}"></span></div>
                                 </td>
                                 <td>$750<br></td>
                                 <td class="fw-bold">8/10</td>

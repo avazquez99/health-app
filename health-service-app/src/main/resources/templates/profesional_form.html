@@ -67,10 +67,17 @@
 
       <div class="mb-3">
         <label for="fecha">Fecha De Nacimiento</label>
-        <input type="date" name="fechaNacimiento" id="fecha" required th:if="${tipo} == 'Profesional'"
+        <input type="date" name="fechaNacimiento" id="fecha" max="" required th:if="${tipo} == 'Profesional'"
           th:value="${#dates.format(profesional.fechaNacimiento, 'yyyy-MM-dd')}">
-        <input type="date" name="fechaNacimiento" id="fecha" required th:if="${tipo} == 'Usuario'">
+        <input type="date" name="fechaNacimiento" id="fecha" max="" required th:if="${tipo} == 'Usuario'">
       </div>
+      <script>
+        function setMaxDate() {
+          var today = new Date().toISOString().split('T')[0];
+          document.getElementById("fecha").setAttribute("max", today);
+        }
+        setMaxDate();
+      </script>
 
       <div class="mb-3">
         <label class="form-label">Ingresar Matricula</label>
@@ -108,16 +115,16 @@
         <label class="form-label">Seleccionar Dias Laborales</label>
         <ul class="checkbox-list" th:if="${tipo} == 'Usuario'">
           <li th:each="dia :${dias_laborales}">
-        <input type="checkbox" name="diasLaborales" 
-          th:value="${dia}" th:text="${dia}" style="margin-right: 10px;"/>
-        </li>
+            <input type="checkbox" name="diasLaborales" th:value="${dia}" th:text="${dia}"
+              style="margin-right: 10px;" />
+          </li>
         </ul>
-       <ul class="checkbox-list" th:if="${tipo} == 'Profesional'">
-        <li th:each="dia :${dias_laborales}">
-        <input type="checkbox" name="diasLaborales" 
-          th:value="${dia}" th:text="${dia}" style="margin-right: 10px;" th:checked="${#arrays.contains(profesional.disponibilidad.dias, dia.toString())}"/>
-        </li>
-      </ul>
+        <ul class="checkbox-list" th:if="${tipo} == 'Profesional'">
+          <li th:each="dia :${dias_laborales}">
+            <input type="checkbox" name="diasLaborales" th:value="${dia}" th:text="${dia}" style="margin-right: 10px;"
+              th:checked="${#arrays.contains(profesional.disponibilidad.dias, dia.toString())}" />
+          </li>
+        </ul>
       </div>
 
       <div class="mb-3">
@@ -134,13 +141,17 @@
         </div>
         <div th:if="${tipo} == 'Profesional'">
           <label class="form-label">Inicio de jornada</label>
-          <input type="number" name="entrada" min="0" max="23" step="1" th:value="${profesional.disponibilidad.entrada}" required>
+          <input type="number" name="entrada" min="0" max="23" step="1" th:value="${profesional.disponibilidad.entrada}"
+            required>
           <label class="form-label">Inicio de descanso</label>
-          <input type="number" name="inicio_descanso" min="0" max="23" step="1" th:value="${profesional.disponibilidad.inicioDescanso}" required>
+          <input type="number" name="inicio_descanso" min="0" max="23" step="1"
+            th:value="${profesional.disponibilidad.inicioDescanso}" required>
           <label class="form-label">Fin de descanso</label>
-          <input type="number" name="fin_descanso" min="0" max="23" step="1" th:value="${profesional.disponibilidad.finDescanso}" required>
+          <input type="number" name="fin_descanso" min="0" max="23" step="1"
+            th:value="${profesional.disponibilidad.finDescanso}" required>
           <label class="form-label">Fin de jornada</label>
-          <input type="number" name="salida" min="0" max="23" step="1" th:value="${profesional.disponibilidad.salida}" required>
+          <input type="number" name="salida" min="0" max="23" step="1" th:value="${profesional.disponibilidad.salida}"
+            required>
         </div>
       </div>
       <button type="submit" class="btn btn-primary mt-3 botones">Enviar</button>

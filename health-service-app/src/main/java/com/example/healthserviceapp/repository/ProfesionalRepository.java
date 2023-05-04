@@ -37,4 +37,7 @@ public interface ProfesionalRepository extends JpaRepository<Profesional, String
     
     @Query("SELECT p FROM Profesional p WHERE p.id = :id")
     public Profesional buscarPorId(@Param("id") String id);
+
+    @Query("SELECT COUNT(p) FROM Profesional p")
+    public Integer contarProfesionales();
 }

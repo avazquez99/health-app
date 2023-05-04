@@ -55,6 +55,7 @@ public class AdminControlador {
     public String buscarPorEmail(String email, ModelMap model) {
         Usuario usuario = usuarioRep.buscarPorEmail(email);
         model.addAttribute("usuarios", usuario);
+        model.put("roles", Rol.values());
         return "panel.html";
     }
 

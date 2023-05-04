@@ -10,7 +10,7 @@ import com.example.healthserviceapp.repository.PacienteRepository;
 import com.example.healthserviceapp.repository.UsuarioRepository;
 import java.util.Date;
 import java.util.Optional;
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -111,5 +111,10 @@ public class PacienteService {
     @Transactional
     public void crearPaciente(Paciente paciente){
         pacienteRep.save(paciente);
+    }
+
+    @Transactional(readOnly = true)
+    public Integer contarPacientes(){
+        return pacienteRep.contarPacientes();
     }
 }

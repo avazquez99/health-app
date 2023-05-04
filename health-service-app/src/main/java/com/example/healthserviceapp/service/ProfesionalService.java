@@ -210,4 +210,13 @@ public Profesional buscarProfesional(String id){
         return profesionalRepository.getById(id);
     }
 
+    @Transactional
+    public void crearProfesional(Profesional profesional){
+        profesionalRepository.save(profesional);
+    }
+
+    @Transactional(readOnly = true)
+    public Integer contarProfesionales(){
+        return profesionalRepository.contarProfesionales();
+    }
 }

@@ -1,6 +1,7 @@
 
 package com.example.healthserviceapp.controllers;
 
+import com.example.healthserviceapp.entity.Calificacion;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -19,9 +20,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.healthserviceapp.entity.Paciente;
 import com.example.healthserviceapp.entity.Profesional;
+import com.example.healthserviceapp.repository.ProfesionalRepository;
+import com.example.healthserviceapp.service.CalificacionService;
 import com.example.healthserviceapp.service.ConsultaService;
 import com.example.healthserviceapp.service.ProfesionalService;
 import com.example.healthserviceapp.utility.Dias;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 @RequestMapping("/consulta")
@@ -32,6 +36,13 @@ public class ConsultaControlador {
 
     @Autowired
     private ConsultaService consultaService;
+    
+    @Autowired
+    private CalificacionService calificacionService;
+    
+    @Autowired
+    private ProfesionalRepository profesionalRepository;
+    
 
     @GetMapping("/provincia")
     public String provincias(HttpSession session, ModelMap modelo) {
@@ -119,5 +130,15 @@ public class ConsultaControlador {
     public String eliminarConsulta(@PathVariable String id) {
         consultaService.eliminar(id);
         return "redirect:/";
+    }
+    
+    @PostMapping("/calificar")
+    public String crearCalificacion(String id, @RequestParam int calificacion, ModelMap modelo){
+        calificacionService.crearCalificacion(calificacion, id);
+        Profesional profesional = profesionalRepository.buscarPorId(id);
+        modelo.addAttribute("profesional", profesional);
+        return "redirect:/";
+        
+        
     }
 }

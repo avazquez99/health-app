@@ -2,43 +2,50 @@
 
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-<head>
-  <title>Tus consultas</title>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-  <link rel="stylesheet" href="/css/error.css">
-</head>
+    <head>
+        <title>Tus consultas</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+              integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+        <link rel="stylesheet" href="/css/error.css">
+    </head>
 
-<body>
+    <body>
 
-  <hr>
-  <a href="/" class="btn btn-primary">Volver a inicio</a>
+        <hr>
+        <a href="/" class="btn btn-primary">Volver a inicio</a>
 
-  <div class="container">
-    <div class="row">
+        <div class="container">
+            <div class="row">
 
 
-      <div class="card border-primary mb-3" style="max-width: 25rem; margin: 0 20px;background-color: #e9f5fb;"
-        th:each="iterador : ${consulta}">
-        <div class="card-header" th:text="${'Consulta de ' + iterador.profesional.especialidad}"></div>
-        <div class="card-body">
-          <h5 class="card-title" th:text="${'A las ' + iterador.horario+':00'}"></h5>
-          <h5 class="card-title" th:text="${'El dia ' + iterador.fecha}"></h5>
-          <p class="card-text" th:text="${'En ' + iterador.profesional.domicilio}"></p>
-          </p>
-          <p class="card-text" th:text="${'Con '+ iterador.profesional.nombre + ' ' + iterador.profesional.apellido}">
-          </p>
-        </div>
-        <a class="btn btn-primary mb-3" th:href="@{/consulta/eliminar/__${iterador.id}__}">Dar de baja consulta</a>
-      </div>
+                <div class="card border-primary mb-3" style="max-width: 25rem; margin: 0 20px;background-color: #e9f5fb;"
+                     th:each="iterador : ${consulta}">
+                    <div class="card-header" th:text="${'Consulta de ' + iterador.profesional.especialidad}"></div>
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${'A las ' + iterador.horario+':00'}"></h5>
+                        <h5 class="card-title" th:text="${'El dia ' + iterador.fecha}"></h5>
+                        <p class="card-text" th:text="${'En ' + iterador.profesional.domicilio}"></p>
+                        </p>
+                        <p class="card-text" th:text="${'Con '+ iterador.profesional.nombre + ' ' + iterador.profesional.apellido}">
+                        </p>
+                    </div>
+                    <form class="formulario p-3" th:action="@{/consulta/calificar/__${iterador.profesional.id}__}" method="POST" enctype="multipart/form-data">
+<!--                        <input hidden th:value="${iterador.profesional.id}" name="id">-->
+                        <label class="form-label">Calificacion:</label>
+                        <input class="form-control" type="number" name="calificacion">
+                        <button type="submit" class="btn btn-outline-primary mt-3 botones col-12">Calificar</button>
+                    </form>
+                        
+                        <a class="btn btn-primary mb-3" th:href="@{/consulta/eliminar/__${iterador.id}__}">Dar de baja consulta</a>
+                </div>
 
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
-        crossorigin="anonymous"></script>
+                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+                        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+                crossorigin="anonymous"></script>
 
-      <div th:replace="fragments/footer :: footer"></div>
-</body>
+                <div th:replace="fragments/footer :: footer"></div>
+                </body>
 
-</html>
+                </html>

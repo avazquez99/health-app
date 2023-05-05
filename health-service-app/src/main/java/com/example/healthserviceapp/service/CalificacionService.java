@@ -48,6 +48,7 @@ public class CalificacionService {
         }
         if (cantCalificaciones > 0) {
             profesional.setCalificacion(sumaCalificaciones/cantCalificaciones);
+            profesionalRepository.save(profesional);
             
 
         } else {

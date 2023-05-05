@@ -132,12 +132,13 @@ public class ConsultaControlador {
         return "redirect:/";
     }
     
-    @PostMapping("/calificar")
-    public String crearCalificacion(String id, @RequestParam int calificacion, ModelMap modelo){
+    @PostMapping("/calificar/{id}")
+    public String crearCalificacion(@PathVariable String id, @RequestParam int calificacion, ModelMap modelo){
         calificacionService.crearCalificacion(calificacion, id);
+        calificacionService.promedioCalificacion(id);
         Profesional profesional = profesionalRepository.buscarPorId(id);
         modelo.addAttribute("profesional", profesional);
-        return "redirect:/";
+        return "redirect:/especialidades";
         
         
     }

@@ -57,10 +57,10 @@
                     </a>
                 </div>
 
+
                 <div th:if="${session.usuariosession != null}" sec:authorize="hasAuthority('ROLE_ADMIN')">
-                    <a th:href="@{/admin/dashboard}" class="btn btn-light me-3" type="button" aria-expanded="false">
-                        Dashboard
-                    </a>
+                    <a th:href="@{/obras_sociales}" class="btn btn-light me-3" type="button" aria-expanded="false">Obras Sociales</a>
+                    <a th:href="@{/admin/dashboard}" class="btn btn-light me-3" type="button" aria-expanded="false">Dashboard</a>
                 </div>
 
                 <div th:if="${session.usuariosession != null}">

@@ -33,7 +33,7 @@ public class PersonaControlador {
    
     @GetMapping("/datos")
     @PreAuthorize("hasAnyRole('ROLE_PACIENTE', 'ROLE_PROFESIONAL')")
-    public String vistaDatosPerfil(ModelMap modelo, HttpSession session) {
+    public String vistaDatosPerfil(HttpSession session, ModelMap modelo) {
 
         modelo.put("sexos", Sexo.values());
         modelo.put("obrasSociales", obraSocialService.listarNombresObrasSociales());
@@ -41,6 +41,8 @@ public class PersonaControlador {
 
         if (session.getAttribute("usuariosession") instanceof Usuario) {
             tipo = "Usuario";
+            Usuario usuario = (Usuario) session.getAttribute("usuariosession");
+            modelo.put("usuario", usuario);
         }
         if (session.getAttribute("usuariosession") instanceof Paciente) {
             tipo = "Paciente";

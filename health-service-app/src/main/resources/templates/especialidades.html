@@ -30,13 +30,13 @@
 
         <!-- SIDE BAR -->
 
-        <div class="d-flex">
+        <div class="d-flex" id="listado">
             <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-body-tertiary me-5" style="width: 300px;">
                 <div class="d-flex align-items-center flex-shrink-0 p-3 text-decoration-none border-bottom">
                     <span class="fs-5 fw-semibold">Especialidades</span>
                 </div>
                 <div class="list-group list-group-flush border-bottom scrollarea">
-                    <a th:each="especialidad : ${especialidades}" th:href="@{/especialidad/profesionales/__${especialidad}__}" class="list-group-item list-group-item-action py-3 lh-sm">
+                    <a th:each="especialidad : ${especialidades}" th:href="@{/especialidad/profesionales/__${especialidad}__}+'#listado'" class="list-group-item list-group-item-action py-3 lh-sm">
                         <div class=" d-flex w-100 align-items-center justify-content-between">
                             <strong th:text="${especialidad}" class="mb-1"></strong>
                         </div>

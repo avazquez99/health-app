@@ -83,7 +83,7 @@
                                             th:text="${profesional.nombre + ' ' + profesional.apellido}"></span></div>
                                 </td>
                                 <td>$750<br></td>
-                                <td class="fw-bold">8/10</td>
+                                <td class="fw-bold" th:text="${profesional.calificacion}"></td>
                                 <td>
                                     <a href="#" class="link" th:if="${session.usuariosession != null}">Reservar
                                         Turno</a>

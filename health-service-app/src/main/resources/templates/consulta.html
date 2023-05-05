@@ -95,7 +95,7 @@
                             <form method="GET" th:action="@{/consulta/horario}">
                                 <input name="idProfesional" th:value="${profesional.id}" hidden>
                                 <h1>Días disponibles</h1>
-                                <input type="text" id="calendario" name="fecha">
+                                <input type="text" id="calendario" name="fecha" required>
                                 <button type="submit" class="btn btn-primary mt-3 botones" id="boton4">Siguiente</button>
                             </form>
                         </div>

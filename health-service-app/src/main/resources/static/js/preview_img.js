@@ -8,6 +8,6 @@ function actualizarVistaPrevia() {
     if (archivoSeleccionado) {
         lector.readAsDataURL(archivoSeleccionado);
     } else {
-        vistaPrevia.src = "#";
+        vistaPrevia.src = "/img/defaultProfile.jpg";
     }
 }

@@ -9,10 +9,12 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import com.example.healthserviceapp.entity.Consulta;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -127,9 +129,14 @@ public class ConsultaControlador {
     }
 
     @GetMapping("/eliminar/{id}")
-    public String eliminarConsulta(@PathVariable String id) {
+    public String eliminarConsulta(@PathVariable String id, Model modelo, HttpSession session) {
         consultaService.eliminar(id);
-        return "redirect:/";
+        Paciente paciente = (Paciente) session.getAttribute("usuariosession");
+            
+            List<Consulta> consulta = consultaService.listarConsulta(paciente.getId());
+          
+            modelo.addAttribute("consulta", consulta);
+        return "consulta_paciente.html";
     }
     
     @PostMapping("/calificar/{id}")

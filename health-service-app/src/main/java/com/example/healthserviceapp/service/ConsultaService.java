@@ -48,6 +48,8 @@ public class ConsultaService {
             consulta.setFecha(fecha);
             consulta.setHorario(horario);
             consulta.setDiagnostico(null);
+            Double precio = profesional.getPrecioConsulta() - paciente.getObraSocial().getPrecio();
+            consulta.setPrecio(precio);
             consultaRepository.save(consulta);
         }
     }

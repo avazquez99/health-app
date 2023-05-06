@@ -35,4 +35,6 @@ public class Profesional extends Persona{
     private List<Calificacion> calificaciones = new ArrayList<>();
     
     private double calificacion;
+
+    private Double precioConsulta;
 }

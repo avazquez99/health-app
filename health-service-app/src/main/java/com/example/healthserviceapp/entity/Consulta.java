@@ -29,4 +29,6 @@ public class Consulta {
 
     @OneToOne
     private Diagnostico diagnostico;
+
+    private Double precio;
 }

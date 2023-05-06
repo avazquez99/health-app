@@ -108,7 +108,7 @@ public class DataInitializer implements CommandLineRunner {
 
     private Integer intRandom(Integer min, Integer max) {
         Random random = new Random();
-        int numero = random.nextInt(max) + min;
+        int numero = random.nextInt(max - min) + min;
         return numero;
     }
 
@@ -158,6 +158,8 @@ public class DataInitializer implements CommandLineRunner {
         profesional.setDisponibilidad(disponibilidadService.guardar(disponibilidad));
         Provincias provincia = (Provincias) randomOfArray(Provincias.values());
         profesional.setProvincia(provincia);
+        Double precio = new Double(intRandom(1000, 10000));
+        profesional.setPrecioConsulta(precio);
         profesionalService.crearProfesional(profesional);
     }
 

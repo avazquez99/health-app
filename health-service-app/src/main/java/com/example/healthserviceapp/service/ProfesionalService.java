@@ -38,7 +38,7 @@ public class ProfesionalService {
     public void guardarProfesional(String nombre, String apellido,
             Sexo sexo, Date fechaNacimiento, String domicilio, Integer dni,
             MultipartFile archivo, Provincias provincia, String matricula,
-            Especialidad especialidad, Disponibilidad disponibilidad, Usuario usuario) throws MiException {
+            Especialidad especialidad, Disponibilidad disponibilidad, Usuario usuario, Double precio) throws MiException {
 
         verificarProfesional(nombre, apellido, domicilio, matricula);
 
@@ -61,6 +61,7 @@ public class ProfesionalService {
         profesional.setProvincia(provincia);
         profesional.setEspecialidad(especialidad);
         profesional.setDisponibilidad(disponibilidadService.guardar(disponibilidad));
+        profesional.setPrecioConsulta(precio);
         profesionalRepository.save(profesional);
 
         usuarioService.eliminarUsuario(usuario.getId());
@@ -108,7 +109,7 @@ public class ProfesionalService {
     @Transactional
     public void modificarProfesional(Profesional profesional, String nombre, String apellido,
             Sexo sexo, Date fechaNacimiento, String domicilio, Integer dni, MultipartFile archivo,
-            Provincias provincia, String matricula, Especialidad especialidad, Disponibilidad disponibilidad)
+            Provincias provincia, String matricula, Especialidad especialidad, Disponibilidad disponibilidad, Double precio)
             throws MiException {
 
         Optional<Profesional> respuesta = profesionalRepository.findById(profesional.getId());
@@ -126,6 +127,7 @@ public class ProfesionalService {
             nuevo_profesional.setEspecialidad(especialidad);
             nuevo_profesional.setMatricula(matricula);
             nuevo_profesional.setProvincia(provincia);
+            nuevo_profesional.setPrecioConsulta(precio);
             String id_imagen = nuevo_profesional.getImagen().getId();
             Imagen imagen = imagenService.actualizar(id_imagen, archivo);
             nuevo_profesional.setImagen(imagen);

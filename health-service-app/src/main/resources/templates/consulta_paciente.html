@@ -22,17 +22,17 @@
                 th:each="iterador : ${consulta}">
                 <div class="card-header" th:text="${'Consulta de ' + iterador.profesional.especialidad}"></div>
                 <div class="card-body">
-                    <h5 class="card-title" th:text="${'A las ' + iterador.horario+':00'}"></h5>
-                    <h5 class="card-title" th:text="${'El dia ' + iterador.fecha}"></h5>
+                    <h5 class="card-title" th:text="${iterador.fecha + ' a las ' + iterador.horario+':00'}"></h5>
                     <p class="card-text" th:text="${'En ' + iterador.profesional.domicilio}"></p>
-                    </p>
                     <p class="card-text"
-                        th:text="${'Con '+ iterador.profesional.nombre + ' ' + iterador.profesional.apellido}">
-                    </p>
+                        th:text="${'Con '+ iterador.profesional.nombre + ' ' + iterador.profesional.apellido}"></p>
+                    <p class="card-text" th:text="${'$' + iterador.precio}"></p>
                 </div>
-                <p th:if="${#dates.format(#dates.createNow(), 'yyyy-MM-dd') < iterador.fecha}">Solo podras calificar luego de la consulta</p>
+                <p th:if="${#dates.format(#dates.createNow(), 'yyyy-MM-dd') < iterador.fecha}">Solo podras calificar
+                    luego de la consulta</p>
                 <form class="formulario p-3" th:action="@{/consulta/calificar/__${iterador.profesional.id}__}"
-                    method="POST" enctype="multipart/form-data" th:if="${#dates.format(#dates.createNow(), 'yyyy-MM-dd') >=  iterador.fecha}">
+                    method="POST" enctype="multipart/form-data"
+                    th:if="${#dates.format(#dates.createNow(), 'yyyy-MM-dd') >=  iterador.fecha}">
                     <label class="form-label">Calificacion:</label>
                     <input class="form-control" type="number" name="calificacion">
                     <button type="submit" class="btn btn-outline-primary mt-3 botones col-12">Calificar</button>

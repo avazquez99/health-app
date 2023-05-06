@@ -76,7 +76,7 @@ public class ProfesionalControlador {
             Sexo sexo, String fechaNacimiento, String domicilio, Integer dni, MultipartFile imagen,
             Provincias provincia, String matricula, Especialidad especialidad,
             String[] diasLaborales, Integer entrada, Integer inicio_descanso, Integer fin_descanso, Integer salida,
-            ModelMap modelo, HttpSession session) throws Exception {
+            ModelMap modelo, HttpSession session, Double precio) throws Exception {
 
         SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
         Date dataFormateada = formato.parse(fechaNacimiento);
@@ -91,12 +91,12 @@ public class ProfesionalControlador {
         if (session.getAttribute("usuariosession") instanceof Profesional) {
             Profesional profesional = (Profesional) session.getAttribute("usuariosession");
             profesionalServicio.modificarProfesional(profesional, nombre, apellido, sexo, dataFormateada, domicilio,
-                    dni, imagen, provincia, matricula, especialidad, disponibilidad);
+                    dni, imagen, provincia, matricula, especialidad, disponibilidad, precio);
             usuarioServicio.loadUserByUsername(profesional.getEmail());
         } else if (session.getAttribute("usuariosession") instanceof Usuario) {
             Usuario usuario = (Usuario) session.getAttribute("usuariosession");
             profesionalServicio.guardarProfesional(nombre, apellido, sexo, dataFormateada, domicilio, dni, imagen,
-                    provincia, matricula, especialidad, disponibilidad, usuario);
+                    provincia, matricula, especialidad, disponibilidad, usuario, precio);
             usuarioServicio.loadUserByUsername(usuario.getEmail());
         }
         return "redirect:/";

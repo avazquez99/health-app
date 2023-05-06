@@ -35,7 +35,7 @@
                         luego de la consulta</p>
                     <form class="formulario p-3" th:action="@{/consulta/calificar/__${iterador.profesional.id}__}"
                           method="POST" enctype="multipart/form-data"
-                          th:if="${(#dates.format(#dates.createNow(), 'yyyy-MM-dd') >= iterador.fecha and #dates.format(#dates.createNow(), 'HH') >= iterador.horario.toString())}">
+                          th:if="${((#dates.format(#dates.createNow(), 'yyyy-MM-dd') > iterador.fecha) or (#dates.format(#dates.createNow(), 'yyyy-MM-dd') == iterador.fecha and #dates.format(#dates.createNow(), 'HH') >= iterador.horario.toString()))}">
                         <form class="formulario"
                               th:action="@{/consulta/calificar/__${iterador.profesional.id}__}" method="POST"
                               enctype="multipart/form-data">

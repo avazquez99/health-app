@@ -1,5 +1,6 @@
 package com.example.healthserviceapp.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -27,6 +28,7 @@ public class Consulta {
 
     private Integer horario;
 
-    @OneToOne
-    private Diagnostico diagnostico;
+    @Column(name = "diagnostico", length = 6000)
+    private String diagnostico;
+    
 }

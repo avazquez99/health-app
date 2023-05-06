@@ -26,6 +26,29 @@ public class ConsultaService {
     private PacienteRepository pacienteRepository;
 
     @Transactional(readOnly = true)
+    public List<Consulta> listarHistorial(String id) {
+        return consultaRepository.listarConsulta(id);
+    }
+
+    @Transactional
+    public void ingresarDiagnostico(String id, String diagnostico) {
+
+        Optional<Consulta> resp = consultaRepository.findById(id);
+       
+        Consulta consulta = new Consulta();
+        if (resp.isPresent()) {
+            consulta = resp.get();
+            consulta.setDiagnostico(diagnostico);
+            consultaRepository.save(consulta);
+        }
+    }
+
+    @Transactional(readOnly = true)
+    public List<Paciente> listarPacientes(String id) {
+        return consultaRepository.listarPacientesPorProfesional(id);
+    }
+
+    @Transactional(readOnly = true)
     public List<String> listarConsultasPorProfesionalAgrupadoPorFecha(Profesional profesional, Long nTurnos) {
         return consultaRepository.listarConsultasPorProfesionalAgrupadoPorFecha(profesional, nTurnos);
     }

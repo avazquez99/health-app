@@ -9,6 +9,7 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import com.example.healthserviceapp.entity.Consulta;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -27,7 +28,6 @@ import com.example.healthserviceapp.utility.Dias;
 
 @Controller
 @RequestMapping("/consulta")
-@PreAuthorize("hasAnyRole('ROLE_PACIENTE')")
 public class ConsultaControlador {
     @Autowired
     private ProfesionalService profesionalService;
@@ -35,6 +35,38 @@ public class ConsultaControlador {
     @Autowired
     private ConsultaService consultaService;
 
+    @PreAuthorize("hasAnyRole('ROLE_PROFESIONAL')")
+    @GetMapping("/paciente")
+    public String pacientes(HttpSession session, ModelMap modelo) {
+
+        Profesional profesional = (Profesional) session.getAttribute("usuariosession");
+
+        modelo.addAttribute("pacientes", consultaService.listarPacientes(profesional.getId()));
+        modelo.addAttribute("paso", 1);
+
+        return "pacientes.html";
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_PROFESIONAL')")
+    @GetMapping("/consultas")    
+    public String listarConsultasPaciente(ModelMap modelo, @RequestParam String idPaciente){
+
+        modelo.addAttribute("paso", 2);
+        modelo.addAttribute("consulta", consultaService.listarHistorial(idPaciente));
+        return "pacientes.html";
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_PROFESIONAL')")
+    @GetMapping("/diagnostico")
+    public String darDiagnostico(ModelMap modelo, @RequestParam String id, String diagnostico, @RequestParam String idPaciente) {
+        System.out.println("diagnostico: " + diagnostico + " id consulta: " + id + " id paciente: " + idPaciente);
+        consultaService.ingresarDiagnostico(id, diagnostico);
+        modelo.addAttribute("paso", 2);
+        modelo.addAttribute("consulta", consultaService.listarHistorial(idPaciente));
+        return "pacientes.html";
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_PACIENTE')")
     @GetMapping("/provincia")
     public String provincias(HttpSession session, ModelMap modelo) {
         modelo.put("paso", 1);
@@ -42,6 +74,7 @@ public class ConsultaControlador {
         return "consulta.html";
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_PACIENTE')")
     @GetMapping("/especialidad")
     public String especialidades(@RequestParam String provincia, HttpSession session, ModelMap modelo) {
         modelo.put("paso", 2);
@@ -50,6 +83,7 @@ public class ConsultaControlador {
         return "consulta.html";
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_PACIENTE')")
     @GetMapping("/profesional")
     public String profesionales(@RequestParam String provincia, @RequestParam String especialidad, HttpSession session,
             ModelMap modelo) {
@@ -59,6 +93,7 @@ public class ConsultaControlador {
         return "consulta.html";
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_PACIENTE')")
     @GetMapping("/disponibilidad")
     public String disponibilidadProfesional(@RequestParam String idProfesional, HttpSession session, ModelMap modelo) {
         modelo.put("paso", 4);
@@ -70,7 +105,7 @@ public class ConsultaControlador {
         DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;
         Dias dias = new Dias(profesional.getDisponibilidad().getDias());
         for (LocalDate date = today; date.isBefore(today.plusDays(91)); date = date.plusDays(1)) {
-            if (dias.comprobar(date.getDayOfWeek())){
+            if (dias.comprobar(date.getDayOfWeek())) {
                 listaA.add(date.format(formatter));
             }
         }
@@ -83,6 +118,7 @@ public class ConsultaControlador {
         return "consulta.html";
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_PACIENTE')")
     @GetMapping("/horario")
     public String horarioProfesional(@RequestParam String idProfesional, @RequestParam String fecha,
             HttpSession session, ModelMap modelo) {
@@ -109,6 +145,7 @@ public class ConsultaControlador {
         return "consulta.html";
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_PACIENTE')")
     @GetMapping("/reservar")
     public String reservar(@RequestParam String idProfesional, @RequestParam String fecha,
             @RequestParam Integer horario, HttpSession session, ModelMap modelo) {
@@ -117,14 +154,15 @@ public class ConsultaControlador {
         return "redirect:/";
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_PACIENTE')")
     @GetMapping("/eliminar/{id}")
     public String eliminarConsulta(@PathVariable String id, Model modelo, HttpSession session) {
         consultaService.eliminar(id);
         Paciente paciente = (Paciente) session.getAttribute("usuariosession");
-            
-            List<Consulta> consulta = consultaService.listarConsulta(paciente.getId());
-          
-            modelo.addAttribute("consulta", consulta);
+
+        List<Consulta> consulta = consultaService.listarConsulta(paciente.getId());
+
+        modelo.addAttribute("consulta", consulta);
         return "consulta_paciente.html";
     }
 }

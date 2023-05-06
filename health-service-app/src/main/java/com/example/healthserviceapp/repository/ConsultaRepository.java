@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.data.repository.query.Param;
 
 import com.example.healthserviceapp.entity.Consulta;
+import com.example.healthserviceapp.entity.Paciente;
 import com.example.healthserviceapp.entity.Profesional;
 
 @Repository
@@ -20,4 +21,7 @@ public interface ConsultaRepository extends JpaRepository<Consulta, String> {
 
     @Query("SELECT c FROM Consulta c WHERE c.paciente.id = :id ORDER BY c.fecha ASC")
     public List<Consulta> listarConsulta(@Param("id") String id);    
+
+    @Query("SELECT DISTINCT(c.paciente) FROM Consulta c WHERE c.profesional.id = :id")
+    public List<Paciente> listarPacientesPorProfesional(@Param("id") String id);
 }

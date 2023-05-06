@@ -60,7 +60,7 @@
                         </div>
 
                         <div class="ms-3 main active" th:if="${paso==2}">
-                            <p id="opcionSeleccionada" class="text-success opcionSeleccionada" th:text="'Usted selecciono la provincia de ' + ${provincia}"></p>
+                            <p id="opcionSeleccionada" class="text-success opcionSeleccionada" th:text="'Usted selecciono la provincia de ' + ${#strings.capitalizeWords(provincia.replaceAll('_', ' ').toLowerCase())}"></p>
                             <form method="GET" th:action="@{/consulta/profesional}" id="formulario2">
                                 <input name="provincia" th:value="${provincia}" hidden>
                                 <div class="form-group my-3">
@@ -74,7 +74,7 @@
                         </div>
 
                         <div class="ms-3 main active" th:if="${paso==3}">
-                            <p class="text-success opcionSeleccionada" th:text="'Usted selecciono la provincia de ' + ${profesionales[0].provincia}"></p>
+                            <p class="text-success opcionSeleccionada" th:text="'Usted selecciono la provincia de ' + ${#strings.capitalizeWords(profesionales[0].provincia.toString().replaceAll('_', ' ').toLowerCase())}"></p>
                             <p class="text-success opcionSeleccionada" th:text="'Usted selecciono la especialidad de ' + ${profesionales[0].especialidad}"></p>
                             <form method="GET" th:action="@{/consulta/disponibilidad}">
                                 <div class="form-group my-3">
@@ -89,7 +89,7 @@
                         </div>
 
                         <div class="ms-3 main active" th:if="${paso==4}">
-                            <p class="text-success opcionSeleccionada" th:text="'Usted selecciono la provincia de ' + ${profesional.provincia}"></p>
+                            <p class="text-success opcionSeleccionada" th:text="'Usted selecciono la provincia de ' + ${#strings.capitalizeWords(profesional.provincia.toString().replaceAll('_', ' ').toLowerCase())}"></p>
                             <p class="text-success opcionSeleccionada" th:text="'Usted selecciono la especialidad de ' + ${profesional.especialidad}"></p>
                             <p class="text-success opcionSeleccionada" th:text="'Usted selecciono el profesional ' + ${profesional.nombre + ' ' + profesional.apellido}"></p>
                             <form method="GET" th:action="@{/consulta/horario}">
@@ -101,7 +101,7 @@
                         </div>
 
                         <div class="ms-3 main active" th:if="${paso==5}">
-                            <p class="text-success opcionSeleccionada" th:text="'Usted selecciono la provincia de ' + ${profesional.provincia}"></p>
+                            <p class="text-success opcionSeleccionada" th:text="'Usted selecciono la provincia de ' + ${#strings.capitalizeWords(profesional.provincia.toString().replaceAll('_', ' ').toLowerCase())}"></p>
                             <p class="text-success opcionSeleccionada" th:text="'Usted selecciono la especialidad de ' + ${profesional.especialidad}"></p>
                             <p class="text-success opcionSeleccionada" th:text="'Usted selecciono el profesional ' + ${profesional.nombre + ' ' + profesional.apellido}"></p>
                             <p class="text-success" th:text="'Usted selecciono el fecha ' + ${fecha}"></p>

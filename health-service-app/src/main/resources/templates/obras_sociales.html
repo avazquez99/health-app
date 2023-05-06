@@ -18,8 +18,8 @@
 
   <div class="container mb-5 ms-auto col-5">
     <form class="d-flex" role="search" th:action="@{/obras_sociales/crear}">
-      <input type="text" name="nombre" placeholder="XYZ">
-      <input type="number" name="precio" placeholder="12.3" step="any">
+      <input type="text" name="nombre" placeholder="XYZ" style="margin-right: 10px;" required>
+      <input type="number" name="precio" placeholder="12.3" style="margin-right: 10px;" min="0" step="any" required>
       <button class="btn btn-outline-primary" type="submit">Crear nueva Obra Social</button>
     </form>
   </div>

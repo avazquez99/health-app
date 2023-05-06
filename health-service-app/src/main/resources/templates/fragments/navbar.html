@@ -45,14 +45,16 @@
                         Perfil
                     </button>
                     <ul class="dropdown-menu">
-                        <li>
-                            <a class="dropdown-item linkP" th:href="@{/consulta/provincia}"
-                                th:if="${session.usuariosession != null and session.usuariosession.getRol().toString().equals('PACIENTE')}">Reserva
-                                un turno</a>
-                        </li>
-                        <li><a class="dropdown-item linkP" th:href="@{/paciente/consulta}"
-                                th:if="${session.usuariosession != null and session.usuariosession.getRol().toString().equals('PACIENTE')}">Tus
-                                consultas</a></li>
+                        <div
+                            th:if="${#session.getAttribute('usuariosession') instanceof T(com.example.healthserviceapp.entity.Paciente)}">
+                            <li><a class="dropdown-item linkP" th:href="@{/consulta/provincia}">Reserva un turno</a>
+                            </li>
+                            <li><a class="dropdown-item linkP" th:href="@{/paciente/consulta}">Tusconsultas</a></li>
+                        </div>
+                        <div
+                            th:if="${!(#session.getAttribute('usuariosession') instanceof T(com.example.healthserviceapp.entity.Paciente))}">
+                            <li>Complete los datos básicos para mas opciones</li>
+                        </div>
                         <li><a class="dropdown-item linkP" th:href="@{/perfil/datos}" type="button"
                                 aria-expanded="false">Modificar perfil</a></li>
                     </ul>
@@ -106,8 +108,8 @@
                         </div>
 
                         <div class="form-group">
-                            <input type="checkbox" name="terms" required> Acepto Los <a href="#"
-                                data-bs-toggle="modal" data-bs-target="#termsModal">Términos y Condiciones</a>
+                            <input type="checkbox" name="terms" required> Acepto Los <a href="#" data-bs-toggle="modal"
+                                data-bs-target="#termsModal">Términos y Condiciones</a>
                         </div>
 
                         <div class="form-group">
@@ -129,7 +131,7 @@
                 </div>
                 <div class="modal-body">
                     <h2>Seguridad</h2>
-                    <p>Sus Datos Personales solo podran ser accedidos por el administrador y profesionales 
+                    <p>Sus Datos Personales solo podran ser accedidos por el administrador y profesionales
                         con lo que usted haya o vaya a tener consulta, su contraseña no sera visible para nadie,
                         estara encriptada en la base de datos.
                     </p>

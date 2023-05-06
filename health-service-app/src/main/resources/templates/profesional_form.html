@@ -80,7 +80,7 @@
                                     <div class="input-group">
                                         <label class="input-group-text" for="inputGroupSelect01">Sexo:</label>
                                         <select class="form-select" name="sexo" required th:if="${tipo} == 'Profesional'">
-                                            <option th:each="sexo : ${sexos}" th:value="${sexo}" th:text="${sexo}" th:selected="${profesional.sexo}">
+                                            <option th:each="sexo : ${sexos}" th:value="${sexo}" th:text="${sexo}" th:selected="${profesional.sexo == sexo}">
                                         </select>
                                         <select class="form-select" name="sexo" required th:if="${tipo} == 'Usuario'">
                                             <option th:each="sexo : ${sexos}" th:value="${sexo}" th:text="${sexo}">

@@ -49,7 +49,7 @@
                             th:if="${#session.getAttribute('usuariosession') instanceof T(com.example.healthserviceapp.entity.Paciente)}">
                             <li><a class="dropdown-item linkP" th:href="@{/consulta/provincia}">Reserva un turno</a>
                             </li>
-                            <li><a class="dropdown-item linkP" th:href="@{/paciente/consulta}">Tusconsultas</a></li>
+                            <li><a class="dropdown-item linkP" th:href="@{/paciente/consulta}">Tus consultas</a></li>
                         </div>
                         <div
                             th:if="${!(#session.getAttribute('usuariosession') instanceof T(com.example.healthserviceapp.entity.Paciente))}">

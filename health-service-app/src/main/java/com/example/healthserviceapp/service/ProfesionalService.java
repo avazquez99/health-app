@@ -62,6 +62,7 @@ public class ProfesionalService {
         profesional.setEspecialidad(especialidad);
         profesional.setDisponibilidad(disponibilidadService.guardar(disponibilidad));
         profesional.setPrecioConsulta(precio);
+        profesional.setCalificacion(0d);
         profesionalRepository.save(profesional);
 
         usuarioService.eliminarUsuario(usuario.getId());
@@ -135,7 +136,6 @@ public class ProfesionalService {
             nuevo_profesional.setDisponibilidad(disponibilidadService.modificar(idDisponibilidad, disponibilidad));
             profesionalRepository.save(nuevo_profesional);
         }
-
     }
 
     @Transactional
@@ -220,5 +220,16 @@ public Profesional buscarProfesional(String id){
     @Transactional(readOnly = true)
     public Integer contarProfesionales(){
         return profesionalRepository.contarProfesionales();
+    }
+
+    @Transactional
+    public void guardarCalificacion(String id, Double promedio) {
+        Optional<Profesional> respuesta = profesionalRepository.findById(id);
+
+        if (respuesta.isPresent()) {
+            Profesional profesional = respuesta.get();
+            profesional.setCalificacion(promedio);
+            profesionalRepository.save(profesional);
+        }
     }
 }

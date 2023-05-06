@@ -160,6 +160,7 @@ public class DataInitializer implements CommandLineRunner {
         profesional.setProvincia(provincia);
         Double precio = new Double(intRandom(1000, 10000));
         profesional.setPrecioConsulta(precio);
+        profesional.setCalificacion(0d);
         profesionalService.crearProfesional(profesional);
     }
 

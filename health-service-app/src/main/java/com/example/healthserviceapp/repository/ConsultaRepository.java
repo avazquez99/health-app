@@ -20,4 +20,7 @@ public interface ConsultaRepository extends JpaRepository<Consulta, String> {
 
     @Query("SELECT c FROM Consulta c WHERE c.paciente.id = :id ORDER BY c.fecha ASC")
     public List<Consulta> listarConsulta(@Param("id") String id);    
+
+    @Query("SELECT AVG(c.calificacion) FROM Consulta c WHERE (c.calificacion != NULL and c.profesional.id = :id)")
+    public Double promedioCalificacionPorProfesional(@Param("id") String id);
 }

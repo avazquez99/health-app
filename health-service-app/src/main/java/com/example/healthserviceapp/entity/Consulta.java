@@ -31,4 +31,6 @@ public class Consulta {
     private Diagnostico diagnostico;
 
     private Double precio;
+
+    private Integer calificacion;
 }

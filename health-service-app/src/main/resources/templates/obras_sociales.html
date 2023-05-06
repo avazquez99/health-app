@@ -51,7 +51,7 @@
             <button class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Modificar precio</button>
             <ul class="dropdown-menu">
               <div>
-                <form class="d-flex" th:action="@{/obras_sociales/modificarPrecio}">
+                <form class="d-flex p-3" th:action="@{/obras_sociales/modificarPrecio}">
                   <input class="form-control" type="text" name="id" th:value="${obraSocial.id}" hidden>
                   <input class="form-control" type="number" name="precio" th:value="${obraSocial.precio}" step="any">
                   <button class="btn btn-outline-primary" type="submit">Guardar</button>
@@ -61,7 +61,7 @@
             <button class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Modificar nombre</button>
             <ul class="dropdown-menu">
               <div>
-                <form class="d-flex" th:action="@{/obras_sociales/modificarNombre}">
+                <form class="d-flex p-3" th:action="@{/obras_sociales/modificarNombre}">
                   <input class="form-control" type="text" name="id" th:value="${obraSocial.id}" hidden>
                   <input class="form-control" type="text" name="nombre" th:value="${obraSocial.nombre}">
                   <button class="btn btn-outline-primary" type="submit">Guardar</button>

@@ -53,7 +53,7 @@
                             <ul class="dropdown-menu">
                                 <div>
 
-                                    <form class="d-flex" th:action="@{/admin/rol/__${usuario.id}__}">
+                                    <form class="d-flex p-3" th:action="@{/admin/rol/__${usuario.id}__}">
                                         <div class="input-group">
                                             <select class="form-select" name="rol">
                                                 <option th:each="rol : ${roles}" th:value="${rol}" th:text="${rol}"

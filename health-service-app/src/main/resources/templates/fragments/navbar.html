@@ -65,9 +65,17 @@
 
 
                 <div th:if="${session.usuariosession != null}" sec:authorize="hasAuthority('ROLE_PROFESIONAL')">
-                    <a th:href="@{/profesional/perfil}" class="btn btn-light me-3" type="button" aria-expanded="false">
+                    <button class="btn btn-light dropdown-toggle me-3" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Perfil
-                    </a>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <div
+                            th:if="${#session.getAttribute('usuariosession') instanceof T(com.example.healthserviceapp.entity.Profesional)}">
+                            <li><a class="dropdown-item linkP">Historial de pacientes</a></li>
+                        </div>
+                        <li><a class="dropdown-item linkP" th:href="@{/profesional/perfil}" type="button"
+                               aria-expanded="false">Modificar perfil</a></li>
+                    </ul>
                 </div>
 
 

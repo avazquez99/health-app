@@ -146,7 +146,5 @@ public class ConsultaControlador {
         Profesional profesional = profesionalRepository.buscarPorId(id);
         modelo.addAttribute("profesional", profesional);
         return "redirect:/especialidades";
-        
-        
     }
 }

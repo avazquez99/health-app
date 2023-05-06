@@ -35,7 +35,4 @@ public class Calificacion {
     
     @ManyToOne
     private Profesional profesional; //Esto lo relacionaría con el médico que calificamos
-    
-    
-    
 }

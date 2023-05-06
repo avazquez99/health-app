@@ -31,11 +31,11 @@
                         th:text="${'Con '+ iterador.profesional.nombre + ' ' + iterador.profesional.apellido}"></p>
                     <p class="card-text" th:text="${'$' + iterador.precio}"></p>
                 </div>
-                <p th:if="${#dates.format(#dates.createNow(), 'yyyy-MM-dd') < iterador.fecha}">Solo podras calificar
+                <p th:if="${(#dates.format(#dates.createNow(), 'yyyy-MM-dd') <= iterador.fecha and #dates.format(#dates.createNow(), 'HH') < iterador.horario.toString())}">Solo podras calificar
                     luego de la consulta</p>
                 <form class="formulario p-3" th:action="@{/consulta/calificar/__${iterador.profesional.id}__}"
                     method="POST" enctype="multipart/form-data"
-                    th:if="${(#dates.format(#dates.createNow(), 'yyyy-MM-dd') >=  iterador.fecha)}">
+                    th:if="${(#dates.format(#dates.createNow(), 'yyyy-MM-dd') >= iterador.fecha and #dates.format(#dates.createNow(), 'HH') >= iterador.horario.toString())}">
                     <form class="formulario p-3 align-items-center"
                         th:action="@{/consulta/calificar/__${iterador.profesional.id}__}" method="POST"
                         enctype="multipart/form-data">

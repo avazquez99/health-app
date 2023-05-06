@@ -53,12 +53,14 @@
                             <ul class="dropdown-menu">
                                 <div>
 
-                                    <form th:action="@{/admin/rol/__${usuario.id}__}">  
-                                        <select class="custom-select-rol" name="rol">
-                                            <option th:each="rol : ${roles}" th:value="${rol}" th:text="${rol}"
-                                                    td:selected="${rol==usuario.rol}">
-                                        </select>   
-                                        <button type="submit">Guardar</button>
+                                    <form class="d-flex p-3" th:action="@{/admin/rol/__${usuario.id}__}">
+                                        <div class="input-group">
+                                            <select class="form-select" name="rol">
+                                                <option th:each="rol : ${roles}" th:value="${rol}" th:text="${rol}"
+                                                        td:selected="${rol==usuario.rol}">
+                                            </select>
+                                        </div>  
+                                        <button class="btn btn-outline-primary" type="submit">Guardar</button>
 
                                     </form>
                                 </div>  

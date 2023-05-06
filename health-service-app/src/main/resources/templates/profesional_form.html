@@ -80,7 +80,7 @@
                                     <div class="input-group">
                                         <label class="input-group-text" for="inputGroupSelect01">Sexo:</label>
                                         <select class="form-select" name="sexo" required th:if="${tipo} == 'Profesional'">
-                                            <option th:each="sexo : ${sexos}" th:value="${sexo}" th:text="${sexo}" th:selected="${profesional.sexo}">
+                                            <option th:each="sexo : ${sexos}" th:value="${sexo}" th:text="${sexo}" th:selected="${profesional.sexo == sexo}">
                                         </select>
                                         <select class="form-select" name="sexo" required th:if="${tipo} == 'Usuario'">
                                             <option th:each="sexo : ${sexos}" th:value="${sexo}" th:text="${sexo}">
@@ -190,6 +190,14 @@
                                                        th:checked="${#arrays.contains(profesional.disponibilidad.dias, dia.toString())}" />
                                             </li>
                                         </ul>
+                                        <div class="col-md-6">
+                                            <div class="input-group">
+                                                <label class="input-group-text" for="inputGroupSelect01">Precio de Consulta:</label><br>
+                                                <input class="form-control" type="number" name="precio" placeholder="1234" min="0" step="any" required th:if="${tipo} == 'Profesional'"
+                                                       th:value="${profesional.precioConsulta}">
+                                                <input class="form-control" type="number" name="precio" placeholder="1234" min="0" step="any" required th:if="${tipo} == 'Usuario'">
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

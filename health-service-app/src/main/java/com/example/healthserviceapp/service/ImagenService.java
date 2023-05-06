@@ -5,7 +5,6 @@ import com.example.healthserviceapp.entity.Imagen;
 import com.example.healthserviceapp.repository.ImagenRepository;
 
 import java.io.File;
-import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.List;
 import java.util.Optional;
@@ -44,7 +43,6 @@ public class ImagenService {
         }
         try {
             Resource resource = resourceLoader.getResource("classpath:/static/img/defaultProfile.jpg");
-            InputStream input = resource.getInputStream();
             File imagenPredeterminada = resource.getFile();
             byte[] bytes = Files.readAllBytes(imagenPredeterminada.toPath());
             imagen.setMime("image/jpg");
@@ -86,7 +84,6 @@ public class ImagenService {
         try {
             Imagen imagen = new Imagen();
             Resource resource = resourceLoader.getResource("classpath:/static/img/defaultProfile.jpg");
-            InputStream input = resource.getInputStream();
             File imagenPredeterminada = resource.getFile();
             byte[] bytes = Files.readAllBytes(imagenPredeterminada.toPath());
             imagen.setMime("image/jpg");

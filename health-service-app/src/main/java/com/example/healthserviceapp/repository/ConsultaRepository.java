@@ -24,4 +24,7 @@ public interface ConsultaRepository extends JpaRepository<Consulta, String> {
 
     @Query("SELECT DISTINCT(c.paciente) FROM Consulta c WHERE c.profesional.id = :id")
     public List<Paciente> listarPacientesPorProfesional(@Param("id") String id);
+    
+    @Query("SELECT AVG(c.calificacion) FROM Consulta c WHERE (c.calificacion != NULL and c.profesional.id = :id)")
+    public Double promedioCalificacionPorProfesional(@Param("id") String id);
 }

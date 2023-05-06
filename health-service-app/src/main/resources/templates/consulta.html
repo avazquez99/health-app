@@ -81,7 +81,7 @@
                                     <h1>Seleccione su profesional</h1>
                                     <select class="custom-select" name="idProfesional" required>
                                         <option th:each="profesional : ${profesionales}" th:value="${profesional.id}"
-                                                th:text="${profesional.nombre + ' ' + profesional.apellido}">
+                                                th:text="${profesional.nombre + ' ' + profesional.apellido + '&emsp;&emsp;$' + (profesional.precioConsulta - #session.getAttribute('usuariosession').obraSocial.precio) + '&emsp;&emsp;' + profesional.calificacion + ' ☆'}">
                                     </select>
                                 </div>
                                 <button type="submit" class="btn btn-primary mt-3 botones" id="boton3">Siguiente</button>

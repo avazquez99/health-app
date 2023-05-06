@@ -25,6 +25,7 @@ import com.example.healthserviceapp.entity.Profesional;
 import com.example.healthserviceapp.service.ConsultaService;
 import com.example.healthserviceapp.service.ProfesionalService;
 import com.example.healthserviceapp.utility.Dias;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 @RequestMapping("/consulta")
@@ -34,6 +35,7 @@ public class ConsultaControlador {
 
     @Autowired
     private ConsultaService consultaService;
+    
 
     @PreAuthorize("hasAnyRole('ROLE_PROFESIONAL')")
     @GetMapping("/paciente")
@@ -164,5 +166,15 @@ public class ConsultaControlador {
 
         modelo.addAttribute("consulta", consulta);
         return "consulta_paciente.html";
+    }
+    
+    @PostMapping("/calificar/{id}")
+    public String guardarCalificacion(@PathVariable String id, @RequestParam int calificacion, ModelMap modelo){
+        consultaService.guardarCalificacion(id, calificacion);
+        Consulta consulta = consultaService.buscarConsulta(id);
+        String idProfesional = consulta.getProfesional().getId();
+        Double promedio = consultaService.promedioCalificacionPorProfesional(idProfesional);
+        profesionalService.guardarCalificacion(idProfesional, promedio);
+        return "redirect:/paciente/consulta";
     }
 }

@@ -38,7 +38,7 @@ public class ProfesionalService {
     public void guardarProfesional(String nombre, String apellido,
             Sexo sexo, Date fechaNacimiento, String domicilio, Integer dni,
             MultipartFile archivo, Provincias provincia, String matricula,
-            Especialidad especialidad, Disponibilidad disponibilidad, Usuario usuario) throws MiException {
+            Especialidad especialidad, Disponibilidad disponibilidad, Usuario usuario, Double precio) throws MiException {
 
         verificarProfesional(nombre, apellido, domicilio, matricula);
 
@@ -61,6 +61,8 @@ public class ProfesionalService {
         profesional.setProvincia(provincia);
         profesional.setEspecialidad(especialidad);
         profesional.setDisponibilidad(disponibilidadService.guardar(disponibilidad));
+        profesional.setPrecioConsulta(precio);
+        profesional.setCalificacion(0d);
         profesionalRepository.save(profesional);
 
         usuarioService.eliminarUsuario(usuario.getId());
@@ -108,7 +110,7 @@ public class ProfesionalService {
     @Transactional
     public void modificarProfesional(Profesional profesional, String nombre, String apellido,
             Sexo sexo, Date fechaNacimiento, String domicilio, Integer dni, MultipartFile archivo,
-            Provincias provincia, String matricula, Especialidad especialidad, Disponibilidad disponibilidad)
+            Provincias provincia, String matricula, Especialidad especialidad, Disponibilidad disponibilidad, Double precio)
             throws MiException {
 
         Optional<Profesional> respuesta = profesionalRepository.findById(profesional.getId());
@@ -126,6 +128,7 @@ public class ProfesionalService {
             nuevo_profesional.setEspecialidad(especialidad);
             nuevo_profesional.setMatricula(matricula);
             nuevo_profesional.setProvincia(provincia);
+            nuevo_profesional.setPrecioConsulta(precio);
             String id_imagen = nuevo_profesional.getImagen().getId();
             Imagen imagen = imagenService.actualizar(id_imagen, archivo);
             nuevo_profesional.setImagen(imagen);
@@ -133,7 +136,6 @@ public class ProfesionalService {
             nuevo_profesional.setDisponibilidad(disponibilidadService.modificar(idDisponibilidad, disponibilidad));
             profesionalRepository.save(nuevo_profesional);
         }
-
     }
 
     @Transactional
@@ -218,5 +220,16 @@ public Profesional buscarProfesional(String id){
     @Transactional(readOnly = true)
     public Integer contarProfesionales(){
         return profesionalRepository.contarProfesionales();
+    }
+
+    @Transactional
+    public void guardarCalificacion(String id, Double promedio) {
+        Optional<Profesional> respuesta = profesionalRepository.findById(id);
+
+        if (respuesta.isPresent()) {
+            Profesional profesional = respuesta.get();
+            profesional.setCalificacion(promedio);
+            profesionalRepository.save(profesional);
+        }
     }
 }

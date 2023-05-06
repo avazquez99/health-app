@@ -26,4 +26,8 @@ public class Profesional extends Persona{
     
     @Enumerated(EnumType.STRING)
     private Provincias provincia;
+    
+    private Double calificacion;
+
+    private Double precioConsulta;
 }

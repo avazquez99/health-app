@@ -71,6 +71,8 @@ public class ConsultaService {
             consulta.setFecha(fecha);
             consulta.setHorario(horario);
             consulta.setDiagnostico(null);
+            Double precio = profesional.getPrecioConsulta() - paciente.getObraSocial().getPrecio();
+            consulta.setPrecio(precio);
             consultaRepository.save(consulta);
         }
     }
@@ -88,5 +90,34 @@ public class ConsultaService {
             consulta = resp.get();
             consultaRepository.delete(consulta);
         }
+    }
+
+    @Transactional
+    public void guardarCalificacion(String id, Integer calificacion) {
+        Optional<Consulta> resp = consultaRepository.findById(id);
+        Consulta consulta = new Consulta();
+        if (resp.isPresent()) {
+            consulta = resp.get();
+            consulta.setCalificacion(calificacion);
+            consultaRepository.save(consulta);
+        }
+    }
+
+    @Transactional(readOnly = true)
+    public Double promedioCalificacionPorProfesional(String id) {
+        try {
+            return consultaRepository.promedioCalificacionPorProfesional(id);   
+        } catch (Exception e) {
+            return 0d;
+        }
+    }
+
+    @Transactional
+    public Consulta buscarConsulta(String id) {
+        Optional<Consulta> resp = consultaRepository.findById(id);
+        if (resp.isPresent()) {
+            return resp.get();
+        }
+        return null;
     }
 }

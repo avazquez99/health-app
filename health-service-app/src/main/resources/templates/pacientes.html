@@ -17,48 +17,55 @@
   <a href="/" class="btn btn-primary">Volver a inicio</a>
 
   <div class="ms-3 main active" th:if="${paso==1}">
-    <form method="GET" th:action="@{/consulta/consultas}" >
-        <div class="form-group my-3">
-            <h1>Seleccione un paciente</h1>
-            <select id="paciente" class="custom-select" name="idPaciente" required>
-                <option th:each="paciente : ${pacientes}" th:value="${paciente.id}" th:text="${paciente.nombre}">                 
-            </select>
-        </div>
-        <button type="submit" class="btn btn-primary mt-3 botones next_button" id="boton1">Siguiente</button>
+    <form method="GET" th:action="@{/consulta/consultas}">
+      <div class="form-group my-3">
+        <h1>Seleccione un paciente</h1>
+        <select id="paciente" class="custom-select" name="idPaciente" required>
+          <option th:each="paciente : ${pacientes}" th:value="${paciente.id}" th:text="${paciente.nombre}">
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary mt-3 botones next_button" id="boton1">Siguiente</button>
     </form>
-</div>
+  </div>
 
 
   <div class="container">
     <div class="row">
-
+      <div class="card" th:if="${paso==2}">
+        <h2 class="card-title">Información del paciente</h2>
+        <!-- <p class="card-text" th:text="${'Sexo: ' + paciente.sexo}"></p>
+        <p class="card-text" th:text="${'fecha de nacimiento: ' + paciente.fechaNacimiento}"></p> -->
+        <p class="card-text" th:text="${'Sexo: '}"></p>
+        <p class="card-text" th:text="${'fecha de nacimiento: ' + }"></p>
+      </div>
 
       <div class="card border-primary mb-3" style="max-width: 25rem; margin: 0 20px;background-color: #e9f5fb;"
         th:each="iterador : ${consulta}" th:if="${paso==2}">
-        <div class="card-header" th:text="${'Consulta de ' + iterador.profesional.especialidad}"></div>
+        <div class="card-header" th:text="${'Consulta del dia ' + iterador.fecha}"></div>
         <div class="card-body">
-          <h5 class="card-title" th:text="${'A las ' + iterador.horario+':00'}"></h5>
+          <h5 class="card-title">Información del paciente</h5>
           <h5 class="card-title" th:text="${'El dia ' + iterador.fecha}"></h5>
-          <p class="card-text" th:text="${'En ' + iterador.profesional.domicilio}"></p>
+          <p class="card-text" th:text="${'Sexo: ' + iterador.paciente.sexo}"></p>
           </p>
-          <p class="card-text" th:text="${'Con '+ iterador.profesional.nombre + ' ' + iterador.profesional.apellido}">
+          <p class="card-text" th:text="${'fecha de nacimiento: ' + iterador.paciente.fechaNacimiento}"></p>
           </p>
           <p class="card-text">Diagnostico:</p>
-          <form method="GET" th:action="@{/consulta/diagnostico}" th:if="${iterador.diagnostico == null and iterador.profesional.id == session.usuariosession.getId()} ">
+          <form method="GET" th:action="@{/consulta/diagnostico}"
+            th:if="${iterador.diagnostico == null and iterador.profesional.id == session.usuariosession.getId()} ">
             <div class="form-group my-3">
-                <input type="text" name="diagnostico" placeholder="Ingrese el diagnostico del paciente">
+              <input type="text" name="diagnostico" placeholder="Ingrese el diagnostico del paciente">
             </div>
             <input hidden th:value="${iterador.id}" name="id">
             <input hidden th:value="${iterador.paciente.id}" name="idPaciente">
             <button type="submit" class="btn btn-primary mt-3 botones next_button">enviar</button>
-        </form>
-        <div th:if="${iterador.diagnostico != null}">
+          </form>
+          <div th:if="${iterador.diagnostico != null}">
             <p th:text="${iterador.diagnostico}"></p>
+          </div>
+          <div th:if="${iterador.profesional.id != session.usuariosession.getId() and iterador.diagnostico == null}">
+            <p>El diagnostico está vacio y es de otro profesional por lo que no tiene acceso a modificarla</p>
+          </div>
         </div>
-        <div th:if="${iterador.profesional.id != session.usuariosession.getId() and iterador.diagnostico == null}">
-             <p>El diagnostico está vacio y es de otro profesional por lo que no tiene acceso a modificarla</p>
-        </div>
-        </div>     
       </div>
 
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"

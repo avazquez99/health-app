@@ -31,12 +31,12 @@
 
   <div class="container">
     <div class="row">
-      <div class="card" th:if="${paso==2}">
+      <div class="card" th:if="${paso==2}" th:each="iterador : ${paciente}">
         <h2 class="card-title">Información del paciente</h2>
-        <!-- <p class="card-text" th:text="${'Sexo: ' + paciente.sexo}"></p>
-        <p class="card-text" th:text="${'fecha de nacimiento: ' + paciente.fechaNacimiento}"></p> -->
-        <p class="card-text" th:text="${'Sexo: '}"></p>
-        <p class="card-text" th:text="${'fecha de nacimiento: ' + }"></p>
+        <p class="card-text" th:text="${'Sexo: ' + iterador.sexo}"></p>
+        <p class="card-text" th:text="${'fecha de nacimiento: ' + iterador.fechaNacimiento}"></p>
+        <!-- <p class="card-text" th:text="${'Sexo: '}"></p>
+        <p class="card-text" th:text="${'fecha de nacimiento: ' + }"></p> -->
       </div>
 
       <div class="card border-primary mb-3" style="max-width: 25rem; margin: 0 20px;background-color: #e9f5fb;"

@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.example.healthserviceapp.entity.Paciente;
 import com.example.healthserviceapp.entity.Profesional;
 import com.example.healthserviceapp.service.ConsultaService;
+import com.example.healthserviceapp.service.PacienteService;
 import com.example.healthserviceapp.service.ProfesionalService;
 import com.example.healthserviceapp.utility.Dias;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,6 +37,8 @@ public class ConsultaControlador {
     @Autowired
     private ConsultaService consultaService;
     
+    @Autowired
+    private PacienteService pacienteService;
 
     @PreAuthorize("hasAnyRole('ROLE_PROFESIONAL')")
     @GetMapping("/paciente")
@@ -55,6 +58,7 @@ public class ConsultaControlador {
 
         modelo.addAttribute("paso", 2);
         modelo.addAttribute("consulta", consultaService.listarHistorial(idPaciente));
+        modelo.addAttribute("paciente", pacienteService.listarUnPaciente(idPaciente));
         return "pacientes.html";
     }
 

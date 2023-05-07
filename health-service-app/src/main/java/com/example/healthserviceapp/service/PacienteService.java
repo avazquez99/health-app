@@ -57,6 +57,11 @@ public class PacienteService {
         borrarUsuario(usuario);
     }
 
+    @Transactional(readOnly = true)
+    public Paciente listarUnPaciente(String id){
+        return pacienteRep.getOne(id);
+    }
+
     @Transactional
     public void borrarUsuario(Usuario usuario) {
         usuarioRep.delete(usuario);

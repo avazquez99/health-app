@@ -46,7 +46,7 @@ public class ConsultaService {
     @Transactional(readOnly = true)
     public List<Paciente> listarPacientes(String id) {
         return consultaRepository.listarPacientesPorProfesional(id);
-    }
+    }    
 
     @Transactional(readOnly = true)
     public List<String> listarConsultasPorProfesionalAgrupadoPorFecha(Profesional profesional, Long nTurnos) {

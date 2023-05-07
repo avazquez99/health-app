@@ -17,18 +17,20 @@
   <hr>
   <a href="/" class="btn btn-primary">Volver a inicio</a>
 
-  <div class="ms-3 main active" th:if="${paso==1}">
+  <div class="container"
+    style="padding: 5px;width: 350px;border: 1px solid #A8A8B7;-moz-border-radius: 10px;-webkit-border-radius: 10px;background: #fff;"
+    th:if="${paso==1}">
     <form method="GET" th:action="@{/consulta/consultas}">
       <div class="form-group my-3">
-        <h5>Seleccione un paciente</h5>
-        <select id="paciente" class="custom-select" name="idPaciente" required>
+        <h3 class="text-primary" fw-bold>Seleccione un paciente</h3>
+        <select id="paciente" class="custom-select" style="margin-top: 20px;" name="idPaciente" required>
           <option th:each="paciente : ${pacientes}" th:value="${paciente.id}" th:text="${paciente.nombre}">
         </select>
       </div>
-      <button type="submit" class="btn btn-primary mt-3 botones next_button" id="boton1">Siguiente</button>
+      <button type="submit" class="btn btn-primary mt-3 botones next_button"
+        style="margin-left: auto; margin-right: auto;" id="boton1">Siguiente</button>
     </form>
   </div>
-
 
   <div class="container">
     <div class="row">

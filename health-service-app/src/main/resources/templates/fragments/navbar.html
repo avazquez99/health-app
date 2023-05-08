@@ -14,7 +14,7 @@
                 </li>
                 <li>
                     <a class="nav-link px-2 text-white btn btn-outline-primary" th:href="@{/consulta/paciente}"
-                        th:if="${session.usuariosession != null and #session.getAttribute('usuariosession') instanceof T(com.example.healthserviceapp.entity.Profesional)}">Historial
+                    sec:authorize="hasAuthority('ROLE_PROFESIONAL')">Historial
                         de pacientes</a>
                 </li>
             </ul>

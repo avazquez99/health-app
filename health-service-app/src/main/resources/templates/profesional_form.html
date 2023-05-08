@@ -30,7 +30,7 @@
                             th:src="@{/perfil/imagen}" />
                         <span class="text-black-50 mb-3" th:text="${paciente.email}"
                             th:if="${tipo} == 'Paciente'"></span>
-                        <span class="text-black-50 mb-3" th:text="${usuario.email}" th:if="${tipo} == 'Usuario'"></span>
+                        <!-- <span class="text-black-50 mb-3" th:text="${usuario.email}" th:if="${tipo} == 'Usuario'"></span> -->
                         <input class="form-control" type="file" name="imagen" id="formFile" accept="image/*"
                             maxlength="1048575 " onchange="validarTamanoArchivo(); actualizarVistaPrevia();">
                         <p id="mensaje-error">Limite maximo = 1MB</p>

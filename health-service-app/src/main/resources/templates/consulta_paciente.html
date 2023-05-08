@@ -37,12 +37,12 @@
                     enctype="multipart/form-data"
                     th:if="${((#dates.format(#dates.createNow(), 'yyyy-MM-dd') > iterador.fecha) or (#dates.format(#dates.createNow(), 'yyyy-MM-dd') == iterador.fecha and #dates.format(#dates.createNow(), 'HH') >= iterador.horario.toString()))}">
                     <div class="align-items-center row">
-                        <label class="rating-label">
+                        <label class="rating-label" style="display: flex; justify-content: center;">
                             <input class="rating" max="5" readonly step="0.01"
                                 th:style="'--fill:#777;'+'--value:__${iterador.calificacion}__'" type="range"
                                 th:if="${iterador.calificacion != null}">
                         </label>
-                        <label class="rating-label">
+                        <label class="rating-label" style="display: flex; justify-content: center;">
                             <input class="rating" name="calificacion" max="5"
                                 oninput="this.style.setProperty('--value', `${this.valueAsNumber}`)" step="1"
                                 style="--value:0" type="range" th:if="${iterador.calificacion == null}">

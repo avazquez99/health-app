@@ -48,7 +48,8 @@
           <td th:text="${obraSocial.precio}"></td>
           <td>
             <a class="me-3 btn btn-warning" th:href="@{/obras_sociales/eliminar/__${obraSocial.id}__}">Eliminar</a>
-            <button class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Modificar precio</button>
+            <button class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Modificar
+              precio</button>
             <ul class="dropdown-menu">
               <div>
                 <form class="d-flex p-3" th:action="@{/obras_sociales/modificarPrecio}">
@@ -58,7 +59,8 @@
                 </form>
               </div>
             </ul>
-            <button class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Modificar nombre</button>
+            <button class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Modificar
+              nombre</button>
             <ul class="dropdown-menu">
               <div>
                 <form class="d-flex p-3" th:action="@{/obras_sociales/modificarNombre}">

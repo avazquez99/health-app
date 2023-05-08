@@ -43,23 +43,17 @@ public class ConsultaControlador {
     @PreAuthorize("hasAnyRole('ROLE_PROFESIONAL')")
     @GetMapping("/paciente")
     public String pacientes(HttpSession session, ModelMap modelo) {
-
         Profesional profesional = (Profesional) session.getAttribute("usuariosession");
-
         modelo.addAttribute("pacientes", consultaService.listarPacientes(profesional.getId()));
-        modelo.addAttribute("paso", 1);
-
-        return "pacientes.html";
+        return "pacientes_paso1.html";
     }
 
     @PreAuthorize("hasAnyRole('ROLE_PROFESIONAL')")
     @GetMapping("/consultas")    
     public String listarConsultasPaciente(ModelMap modelo, @RequestParam String idPaciente){
-
-        modelo.addAttribute("paso", 2);
         modelo.addAttribute("consulta", consultaService.listarHistorial(idPaciente));
         modelo.addAttribute("paciente", pacienteService.listarUnPaciente(idPaciente));
-        return "pacientes.html";
+        return "pacientes_paso2.html";
     }
 
     @PreAuthorize("hasAnyRole('ROLE_PROFESIONAL')")
@@ -67,7 +61,6 @@ public class ConsultaControlador {
     public String darDiagnostico(ModelMap modelo, @RequestParam String id, String diagnostico, @RequestParam String idPaciente) {
         System.out.println("diagnostico: " + diagnostico + " id consulta: " + id + " id paciente: " + idPaciente);
         consultaService.ingresarDiagnostico(id, diagnostico);
-        modelo.addAttribute("paso", 2);
         modelo.addAttribute("consulta", consultaService.listarHistorial(idPaciente));
         return "pacientes.html";
     }
@@ -75,34 +68,30 @@ public class ConsultaControlador {
     @PreAuthorize("hasAnyRole('ROLE_PACIENTE')")
     @GetMapping("/provincia")
     public String provincias(HttpSession session, ModelMap modelo) {
-        modelo.put("paso", 1);
         modelo.put("provincias", profesionalService.listarProvincias());
-        return "consulta.html";
+        return "consulta_paso1.html";
     }
 
     @PreAuthorize("hasAnyRole('ROLE_PACIENTE')")
     @GetMapping("/especialidad")
     public String especialidades(@RequestParam String provincia, HttpSession session, ModelMap modelo) {
-        modelo.put("paso", 2);
         modelo.put("provincia", provincia);
         modelo.put("especialidades", profesionalService.listarEspecialidadesPorProvincia(provincia));
-        return "consulta.html";
+        return "consulta_paso2.html";
     }
 
     @PreAuthorize("hasAnyRole('ROLE_PACIENTE')")
     @GetMapping("/profesional")
     public String profesionales(@RequestParam String provincia, @RequestParam String especialidad, HttpSession session,
             ModelMap modelo) {
-        modelo.put("paso", 3);
         modelo.put("profesionales",
                 profesionalService.listarProfesionalPorEspecialidadesPorProvincia(provincia, especialidad));
-        return "consulta.html";
+        return "consulta_paso3.html";
     }
 
     @PreAuthorize("hasAnyRole('ROLE_PACIENTE')")
     @GetMapping("/disponibilidad")
     public String disponibilidadProfesional(@RequestParam String idProfesional, HttpSession session, ModelMap modelo) {
-        modelo.put("paso", 4);
         Profesional profesional = profesionalService.getOne(idProfesional);
         modelo.put("profesional", profesional);
 
@@ -121,14 +110,13 @@ public class ConsultaControlador {
             listaA.remove(item);
         }
         modelo.put("fechas", listaA);
-        return "consulta.html";
+        return "consulta_paso4.html";
     }
 
     @PreAuthorize("hasAnyRole('ROLE_PACIENTE')")
     @GetMapping("/horario")
     public String horarioProfesional(@RequestParam String idProfesional, @RequestParam String fecha,
             HttpSession session, ModelMap modelo) {
-        modelo.put("paso", 5);
         Profesional profesional = profesionalService.getOne(idProfesional);
         modelo.put("profesional", profesional);
         modelo.put("fecha", fecha);
@@ -148,7 +136,7 @@ public class ConsultaControlador {
             listaA.remove(item);
         }
         modelo.put("horarios", listaA);
-        return "consulta.html";
+        return "consulta_paso5.html";
     }
 
     @PreAuthorize("hasAnyRole('ROLE_PACIENTE')")

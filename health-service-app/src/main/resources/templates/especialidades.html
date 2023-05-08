@@ -84,8 +84,10 @@
                                 </td>
                                 <td th:text="${'$ ' + profesional.precioConsulta}"></td>
                                 <td class="fw-bold" th:text="${profesional.calificacion}"></td>
-                                <td th:if="${#session.getAttribute('usuariosession') instanceof T(com.example.healthserviceapp.entity.Paciente)}">
-                                    <a class="link" th:href="@{/consulta/disponibilidad?idProfesional=__${profesional.id}__}">ReservarTurno</a>
+                                <td
+                                    th:if="${#session.getAttribute('usuariosession') instanceof T(com.example.healthserviceapp.entity.Paciente)}">
+                                    <a class="link"
+                                        th:href="@{/consulta/disponibilidad?idProfesional=__${profesional.id}__}">ReservarTurno</a>
                                 </td>
                                 <td><i class="fa fa-external-link external-link"></i></td>
                             </tr>

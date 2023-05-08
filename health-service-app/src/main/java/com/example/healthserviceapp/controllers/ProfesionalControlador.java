@@ -50,6 +50,8 @@ public class ProfesionalControlador {
 
         if (session.getAttribute("usuariosession") instanceof Usuario) {
             tipo = "Usuario";
+            Usuario usuario = (Usuario) session.getAttribute("usuariosession");
+            modelo.put("usuario", usuario);
         }
         if (session.getAttribute("usuariosession") instanceof Profesional) {
             tipo = "Profesional";

@@ -62,7 +62,8 @@ public class ConsultaControlador {
         System.out.println("diagnostico: " + diagnostico + " id consulta: " + id + " id paciente: " + idPaciente);
         consultaService.ingresarDiagnostico(id, diagnostico);
         modelo.addAttribute("consulta", consultaService.listarHistorial(idPaciente));
-        return "pacientes.html";
+        modelo.addAttribute("paciente", pacienteService.listarUnPaciente(idPaciente));
+        return "pacientes_paso2.html";
     }
 
     @PreAuthorize("hasAnyRole('ROLE_PACIENTE')")
